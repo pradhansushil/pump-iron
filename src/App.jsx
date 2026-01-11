@@ -3,6 +3,9 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import MemberDashboard from "./pages/MemberDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+import MemberRoute from "./components/MemberRoute";
+import AdminRoute from "./components/AdminRoute";
 
 export default function App() {
   return (
@@ -20,7 +23,7 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route
-          path="/member-dashboard"
+          path="/dashboard"
           element={
             <MemberRoute>
               <MemberDashboard />
@@ -31,7 +34,7 @@ export default function App() {
           path="/admin"
           element={
             <AdminRoute>
-              <Admin />
+              <AdminDashboard />
             </AdminRoute>
           }
         />
