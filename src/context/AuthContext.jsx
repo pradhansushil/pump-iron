@@ -72,8 +72,24 @@ export function AuthProvider({ children }) {
   }
 
   // Login function - signs in existing user
-  function login(email, password) {
-    return signInWithEmailAndPassword(auth, email, password);
+  async function login(email, password) {
+    // 1. Authenticate the user
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    // 2. Fetch their role from Firestore
+    const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
+    const userData = userDoc.data();
+
+    // 3. Return the complete user object with role
+    return {
+      uid: userCredential.user.uid,
+      email: userCredential.user.email,
+      role: userData?.role || "member", // fallback to "member" if no role found
+    };
   }
 
   // Logout function - signs out current user
