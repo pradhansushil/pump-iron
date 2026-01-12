@@ -1,3 +1,19 @@
+/**
+ * SignupPage Component
+ *
+ * Purpose: Registers new users and automatically logs them in as "member" role.
+ * - All new users → /dashboard (default member role)
+ * - Validates password confirmation before submission
+ * - Handles validation, error messages, and loading states
+ *
+ * Interview Notes:
+ * - Demonstrates controlled form inputs with multi-field validation
+ * - Shows client-side password matching validation
+ * - Uses AuthContext for centralized auth state management
+ * - Implements proper error handling with user-friendly messages
+ * - Automatic login after signup for streamlined UX
+ */
+
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -28,8 +44,8 @@ export default function SignupPage() {
       // Call signup function from AuthContext
       await signup(email, password, "member");
 
-      // On success, navigate to home page
-      navigate("/");
+      // New users are always "member" role, navigate to dashboard
+      navigate("/dashboard");
     } catch (err) {
       // Extract a user-friendly message
       let friendlyMessage = err.message;

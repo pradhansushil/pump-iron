@@ -1,3 +1,18 @@
+/**
+ * LoginPage Component
+ *
+ * Purpose: Authenticates existing users and routes them based on role.
+ * - Admins → /admin
+ * - Members → /dashboard
+ * - Handles validation, error messages, and loading states
+ *
+ * Interview Notes:
+ * - Demonstrates controlled form inputs and form validation
+ * - Shows role-based routing/access control
+ * - Uses AuthContext for centralized auth state management
+ * - Implements proper error handling for async operations
+ */
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -22,9 +37,18 @@ export default function LoginPage() {
       setError("");
       setLoading(true);
 
-      await login(email, password);
+      const user = await login(email, password);
 
-      navigate("/");
+      if (user.role === "admin") {
+        console.log("Navigating to /admin");
+        navigate("/admin");
+      } else if (user.role === "member") {
+        console.log("Navigating to /dashboard");
+        navigate("/dashboard");
+      } else {
+        console.log("Navigating to / (fallback)");
+        navigate("/");
+      }
     } catch (err) {
       console.error("Login error:", err);
 
