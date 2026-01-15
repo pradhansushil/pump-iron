@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
@@ -6,18 +6,16 @@ import MemberDashboard from "./pages/MemberDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import MemberRoute from "./components/MemberRoute";
 import AdminRoute from "./components/AdminRoute";
+import GymTestPage from "./pages/GymTestPage";
+import Navbar from "./components/Navbar"; // Import the Navbar component
 
 export default function App() {
   return (
     <div className="app">
-      {/* Navigation menu */}
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/signup">Signup</Link>
-      </nav>
+      {/* Navbar component handles all navigation logic */}
+      <Navbar />
 
-      {/* Defines which component renders for each URL path */}
+      {/* Routes define which component renders for each URL path */}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -38,6 +36,7 @@ export default function App() {
             </AdminRoute>
           }
         />
+        <Route path="/test" element={<GymTestPage />} />
       </Routes>
     </div>
   );
