@@ -40,12 +40,12 @@ export const createMember = async (uid, memberData) => {
       name: memberData.name,
       email: memberData.email,
       phone: memberData.phone,
-      membershipPlan: memberData.membershipPlan, // "basic" | "standard" | "premium"
-      status: "active", // Default to active for new members
-      joinDate: Timestamp.now(), // Current timestamp
-      nextBillingDate: Timestamp.fromDate(nextBilling), // 30 days from now
-      bookedClasses: [], // Empty array initially
-      paymentMethod: memberData.paymentMethod || null, // Optional field
+      membershipPlan: memberData.membershipPlan,
+      status: "active",
+      joinDate: Timestamp.now(),
+      nextBillingDate: Timestamp.fromDate(nextBilling),
+      bookedClasses: [],
+      paymentMethod: memberData.paymentMethod || null,
     };
 
     // Write the document to Firestore
@@ -140,7 +140,7 @@ export const getPaymentsByMember = async (memberId) => {
     const q = query(
       paymentsRef,
       where("memberId", "==", memberId),
-      orderBy("date", "desc")
+      orderBy("date", "desc"),
     );
 
     // Execute the query
@@ -185,6 +185,25 @@ export const getAllClasses = async () => {
     return classes;
   } catch (error) {
     console.error("Error getting all classes:", error);
+    return [];
+  }
+};
+
+export const getBookingsByMember = async (memberId) => {
+  try {
+    // Get the member document
+    const member = await getMemberById(memberId);
+
+    // If member doesn't exist, return empty array
+    if (!member) {
+      console.log("No member found with id:", memberId);
+      return [];
+    }
+
+    // Return the bookedClasses array, or empty array if it doesn't exist
+    return member.bookedClasses || [];
+  } catch (error) {
+    console.error("Error getting bookings for member:", error);
     return [];
   }
 };
