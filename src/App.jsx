@@ -8,12 +8,14 @@ import MemberRoute from "./components/MemberRoute";
 import AdminRoute from "./components/AdminRoute";
 import GymTestPage from "./pages/GymTestPage";
 import Navbar from "./components/Navbar"; // Import the Navbar component
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   return (
     <div className="app">
       {/* Navbar component handles all navigation logic */}
       <Navbar />
+      <Toaster position="top-right" />
 
       {/* Routes define which component renders for each URL path */}
       <Routes>
