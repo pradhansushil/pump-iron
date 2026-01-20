@@ -58,7 +58,7 @@ export function AuthProvider({ children }) {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
-      password
+      password,
     );
 
     // use setDoc to store the value of role. firebase auth cannot store this, only auth data (email and password).
@@ -77,7 +77,7 @@ export function AuthProvider({ children }) {
     const userCredential = await signInWithEmailAndPassword(
       auth,
       email,
-      password
+      password,
     );
 
     // 2. Fetch their role from Firestore
