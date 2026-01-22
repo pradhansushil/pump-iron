@@ -88,7 +88,6 @@ export default function MemberDashboard() {
     }
   };
   if (loading) return <LoadingSpinner message="Loading your dashboard..." />;
-  if (error) return <div>Error: {error}</div>;
   if (!memberData) return <div>No Member Data </div>;
 
   const firstName = memberData.name.split(" ")[0];
