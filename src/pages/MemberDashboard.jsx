@@ -88,7 +88,6 @@ export default function MemberDashboard() {
     }
   };
   if (loading) return <LoadingSpinner message="Loading your dashboard..." />;
-  console.log("Loading rendered!");
   if (error) return <div>Error: {error}</div>;
   if (!memberData) return <div>No Member Data </div>;
 
@@ -103,6 +102,20 @@ export default function MemberDashboard() {
 
   return (
     <div>
+      {error && (
+        <div>
+          <p>Unable to load dashboard data</p>
+          <button
+            onClick={() => {
+              setError(null);
+              fetchDashboardData();
+            }}
+          >
+            Retry
+          </button>
+        </div>
+      )}
+
       {/* left side */}
       <div>
         <h1>Welcome back, {firstName}!</h1>
