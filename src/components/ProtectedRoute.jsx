@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import LoadingSpinner from "./LoadingSpinner";
 
 export default function ProtectedRoute({ children }) {
   const { currentUser, loading } = useAuth();
@@ -7,7 +8,7 @@ export default function ProtectedRoute({ children }) {
   /* IMPORTANT: Wait for auth check to complete before redirecting.
   Without this, logged-in users get redirected to login on page refresh*/
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner message="Checking authentication..." />;
   }
 
   // Redirect to login and replace history to prevent back-button loops
