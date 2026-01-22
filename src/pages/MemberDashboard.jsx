@@ -18,6 +18,7 @@ import {
   formatPaymentMethod,
   getStatusColor,
 } from "../utils/formatters";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function MemberDashboard() {
   /** what lines 20-28 are doing: declaring state variables and setter functions.
@@ -86,8 +87,8 @@ export default function MemberDashboard() {
       setLoading(false);
     }
   };
-
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingSpinner message="Loading your dashboard..." />;
+  console.log("Loading rendered!");
   if (error) return <div>Error: {error}</div>;
   if (!memberData) return <div>No Member Data </div>;
 
@@ -100,14 +101,7 @@ export default function MemberDashboard() {
     year: "numeric",
   });
 
-  console.log("bookings length:", bookings.length);
-  console.log("bookings data:", bookings);
-  return loading ? (
-    <div>
-      <div></div>
-      <p>Loading your dashboard...</p>
-    </div>
-  ) : (
+  return (
     <div>
       {/* left side */}
       <div>
