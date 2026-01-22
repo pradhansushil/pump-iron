@@ -100,142 +100,163 @@ export default function MemberDashboard() {
   });
 
   return (
-    <div>
-      {error && (
+    <main aria-labelledby="error-message">
+      <div>
+        {error && (
+          <div>
+            <p id="error-message">Unable to load dashboard data</p>
+            <button
+              onClick={() => {
+                setError(null);
+                fetchDashboardData();
+              }}
+            >
+              Retry
+            </button>
+          </div>
+        )}
+
+        <header>
+          {/* left side */}
+          <div>
+            <h1>Welcome back, {firstName}!</h1>
+            <p>{formattedDate}</p>
+          </div>
+          {/* Right side */}
+          <div>
+            <button
+              aria-label={
+                notificationCount > 0
+                  ? `View ${notificationCount} notifications`
+                  : "View notifications"
+              }
+              onClick={() => toast("Notifications coming soon!")}
+            >
+              🔔
+            </button>
+            {notificationCount > 0 && <span>{notificationCount}</span>}
+          </div>
+        </header>
         <div>
-          <p>Unable to load dashboard data</p>
-          <button
-            onClick={() => {
-              setError(null);
-              fetchDashboardData();
-            }}
-          >
-            Retry
-          </button>
+          <div>
+            <section aria-labelledby="membership-header">
+              <h2 id="membership-header">Membership Status</h2>
+              <p>{memberData.membershipPlan}</p>
+              <span
+                style={{
+                  backgroundColor:
+                    memberData.status === "active" ? "green" : "red",
+                  color: "white",
+                  padding: "4px 8px",
+                  borderRadius: "4px",
+                }}
+              >
+                {memberData.status}
+              </span>
+            </section>
+          </div>
+
+          {/* Card 2: Next Class */}
+          <div>
+            <section aria-labelledby="next-class-heading">
+              <h2 id="next-class-heading">Next Class</h2>
+              {nextClass ? (
+                <div>
+                  <p>{nextClass.className}</p>
+                  <p>
+                    {nextClass.dateTime.toDate().toLocaleString("en-US", {
+                      weekday: "long",
+                      month: "long",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "2-digit",
+                    })}
+                  </p>
+                  <p>Instructor: {nextClass.instructor}</p>
+                </div>
+              ) : (
+                <p>No upcoming classes scheduled</p>
+              )}
+            </section>
+          </div>
+
+          {/* Card 3: Quick Action */}
+          <div>
+            <section aria-labelledby="quick-action-header">
+              <h2 id="quick-action-header">Quick Action</h2>
+              <button onClick={() => navigate("/schedule")}>
+                Book a Class
+              </button>
+            </section>
+          </div>
         </div>
-      )}
 
-      {/* left side */}
-      <div>
-        <h1>Welcome back, {firstName}!</h1>
-        <p>{formattedDate}</p>
-      </div>
-      {/* Right side */}
-      <div>
-        <button onClick={() => toast("Notifications coming soon!")}>🔔</button>
-        {notificationCount > 0 && <span>{notificationCount}</span>}
-      </div>
-
-      <div>
         <div>
-          <h2>Membership Status</h2>
-          <p>{memberData.membershipPlan}</p>
-          <span
-            style={{
-              backgroundColor: memberData.status === "active" ? "green" : "red",
-              color: "white",
-              padding: "4px 8px",
-              borderRadius: "4px",
-            }}
-          >
-            {memberData.status}
-          </span>
-        </div>
+          <h2>Recent Payments</h2>
 
-        {/* Card 2: Next Class */}
-        <div>
-          <h2>Next Class</h2>
-          {nextClass ? (
-            <div>
-              <p>{nextClass.className}</p>
-              <p>
-                {nextClass.dateTime.toDate().toLocaleString("en-US", {
-                  weekday: "long",
-                  month: "long",
-                  day: "numeric",
-                  hour: "numeric",
-                  minute: "2-digit",
-                })}
-              </p>
-              <p>Instructor: {nextClass.instructor}</p>
-            </div>
+          {payments.length === 0 ? (
+            <p>No payment history yet</p>
           ) : (
-            <p>No upcoming classes scheduled</p>
+            <>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Payment Method</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {payments.map((payment) => (
+                    <tr key={payment.id}>
+                      <td>{formatDate(payment.date)}</td>
+                      <td>{formatCurrency(payment.amount)}</td>
+                      <td>{formatPaymentMethod(payment.method)}</td>
+                      <td>
+                        <span
+                          style={{
+                            backgroundColor: getStatusColor(payment.status),
+                            color: "white",
+                            padding: "4px 8px",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          {payment.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <Link to={"/payments"}> View Full Payment History </Link>
+            </>
           )}
         </div>
 
-        {/* Card 3: Quick Action */}
-        <div>
-          <h2>Quick Action</h2>
-          <button onClick={() => navigate("/schedule")}>Book a Class</button>
-        </div>
-      </div>
-
-      <div>
-        <h2>Recent Payments</h2>
-
-        {payments.length === 0 ? (
-          <p>No payment history yet</p>
-        ) : (
-          <>
-            <table>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Amount</th>
-                  <th>Payment Method</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {payments.map((payment) => (
-                  <tr key={payment.id}>
-                    <td>{formatDate(payment.date)}</td>
-                    <td>{formatCurrency(payment.amount)}</td>
-                    <td>{formatPaymentMethod(payment.method)}</td>
-                    <td>
-                      <span
-                        style={{
-                          backgroundColor: getStatusColor(payment.status),
-                          color: "white",
-                          padding: "4px 8px",
-                          borderRadius: "4px",
-                        }}
-                      >
-                        {payment.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <Link to={"/payments"}> View Full Payment History </Link>
-          </>
+        {bookings.length >= 1 && (
+          <div>
+            <h2>Upcoming Classes</h2>
+            {bookings.map((booking) => (
+              <div key={booking.id}>
+                <h3>{booking.className}</h3>
+                <p>{booking.instructor}</p>
+                <p>{formatDate(booking.dateTime)}</p>
+                <a href="#">View Details</a>
+                <button
+                  onClick={() => {
+                    setSelectedBookingId(booking.id);
+                    setCancelModalOpen(true);
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            ))}
+          </div>
         )}
       </div>
-
-      {bookings.length >= 1 && (
-        <div>
-          <h2>Upcoming Classes</h2>
-          {bookings.map((booking) => (
-            <div key={booking.id}>
-              <h3>{booking.className}</h3>
-              <p>{booking.instructor}</p>
-              <p>{formatDate(booking.dateTime)}</p>
-              <a href="#">View Details</a>
-              <button
-                onClick={() => {
-                  setSelectedBookingId(booking.id);
-                  setCancelModalOpen(true);
-                }}
-              >
-                Cancel
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+    </main>
   );
 }
