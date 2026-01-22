@@ -102,7 +102,12 @@ export default function MemberDashboard() {
 
   console.log("bookings length:", bookings.length);
   console.log("bookings data:", bookings);
-  return (
+  return loading ? (
+    <div>
+      <div></div>
+      <p>Loading your dashboard...</p>
+    </div>
+  ) : (
     <div>
       {/* left side */}
       <div>
