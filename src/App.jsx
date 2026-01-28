@@ -6,7 +6,6 @@ import MemberDashboard from "./pages/MemberDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import MemberRoute from "./components/MemberRoute";
 import AdminRoute from "./components/AdminRoute";
-import GymTestPage from "./pages/GymTestPage";
 import Navbar from "./components/Navbar"; // Import the Navbar component
 import { Toaster } from "react-hot-toast";
 
@@ -38,7 +37,6 @@ export default function App() {
             </AdminRoute>
           }
         />
-        <Route path="/test" element={<GymTestPage />} />
       </Routes>
     </div>
   );
