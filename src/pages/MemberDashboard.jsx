@@ -19,6 +19,8 @@ import {
   getStatusColor,
 } from "../utils/formatters";
 import LoadingSpinner from "../components/LoadingSpinner";
+import CancelModal from "../components/CancelModal";
+import { cancelBooking } from "../services/bookingServices";
 
 export default function MemberDashboard() {
   /** what lines 20-28 are doing: declaring state variables and setter functions.
@@ -61,22 +63,20 @@ export default function MemberDashboard() {
     }
 
     try {
-      const [member, paymentsData, bookingsData] = await Promise.all([
+      const [member, paymentsData] = await Promise.all([
         getMemberById(currentUser.uid),
         getPaymentsByMember(currentUser.uid),
-        getBookingsByMember(currentUser.uid),
       ]);
 
-      const upcoming = bookingsData
+      // Get upcoming bookings from member's bookedClasses
+      const upcomingBookings = (member.bookedClasses || [])
         .filter((booking) => booking.dateTime.toDate() >= new Date())
         .sort((a, b) => a.dateTime.toDate() - b.dateTime.toDate());
 
-      const next = upcoming[0] || null;
-
       setMemberData(member);
       setPayments(paymentsData.slice(0, 3));
-      setBookings(upcoming.slice(1, 6));
-      setNextClass(next);
+      setNextClass(upcomingBookings[0] || null);
+      setBookings(upcomingBookings);
     } catch (error) {
       console.error(error);
       toast.error(
@@ -98,6 +98,31 @@ export default function MemberDashboard() {
     day: "numeric",
     year: "numeric",
   });
+
+  const handleCancelBooking = async () => {
+    try {
+      console.log("🔥 handleCancelBooking called");
+      console.log("selectedBookingId:", selectedBookingId);
+      console.log("typeof selectedBookingId:", typeof selectedBookingId);
+      console.log("bookings array:", bookings);
+
+      const result = await cancelBooking(selectedBookingId, currentUser.uid);
+      console.log(("result", result));
+
+      if (result.success) {
+        setBookings(
+          bookings.filter((booking) => booking.id !== selectedBookingId),
+        );
+        toast.success(result.message);
+        setCancelModalOpen(false);
+      } else {
+        toast.error(result.error);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("An unexpected error occurred. Please try again.");
+    }
+  };
 
   return (
     <main aria-labelledby="error-message">
@@ -246,6 +271,8 @@ export default function MemberDashboard() {
                 <a href="#">View Details</a>
                 <button
                   onClick={() => {
+                    console.log("cancel button clicked");
+                    console.log("setting cancel modal to true");
                     setSelectedBookingId(booking.id);
                     setCancelModalOpen(true);
                   }}
@@ -256,6 +283,12 @@ export default function MemberDashboard() {
             ))}
           </div>
         )}
+
+        <CancelModal
+          isOpen={cancelModalOpen}
+          onClose={() => setCancelModalOpen(false)}
+          onConfirm={async () => await handleCancelBooking()}
+        />
       </div>
     </main>
   );
