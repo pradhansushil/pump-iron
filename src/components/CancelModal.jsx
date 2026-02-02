@@ -15,7 +15,7 @@ export default function CancelModal({ isOpen, onClose, onConfirm }) {
     return () => {
       document.removeEventListener("keydown", handleEscape);
     };
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   return (
     isOpen && (
