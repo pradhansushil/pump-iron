@@ -35,6 +35,7 @@ export default function MemberDashboard() {
   const [error, setError] = useState(null);
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
   const [selectedBookingId, setSelectedBookingId] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [notificationCount, setNotificationCount] = useState(3);
 
   /** what this is doing: subscribing to useAuth from AuthContext.
@@ -63,13 +64,14 @@ export default function MemberDashboard() {
     }
 
     try {
-      const [member, paymentsData] = await Promise.all([
+      const [member, paymentsData, bookingsData] = await Promise.all([
         getMemberById(currentUser.uid),
         getPaymentsByMember(currentUser.uid),
+        getBookingsByMember(currentUser.uid),
       ]);
 
-      // Get upcoming bookings from member's bookedClasses
-      const upcomingBookings = (member.bookedClasses || [])
+      // Get upcoming bookings
+      const upcomingBookings = bookingsData
         .filter((booking) => booking.dateTime.toDate() >= new Date())
         .sort((a, b) => a.dateTime.toDate() - b.dateTime.toDate());
 
