@@ -125,11 +125,11 @@ export default function MemberDashboard() {
   };
 
   return (
-    <main aria-labelledby="error-message">
+    <main aria-labelledby="dashboard-heading">
       <div>
         {error && (
           <div>
-            <p id="error-message">Unable to load dashboard data</p>
+            <p>Unable to load dashboard data</p>
             <button
               onClick={() => {
                 setError(null);
@@ -144,7 +144,7 @@ export default function MemberDashboard() {
         <header>
           {/* left side */}
           <div>
-            <h1>Welcome back, {firstName}!</h1>
+            <h1 id="dashboard-heading">Welcome back, {firstName}!</h1>
             <p>{formattedDate}</p>
           </div>
           {/* Right side */}
@@ -260,29 +260,53 @@ export default function MemberDashboard() {
           )}
         </div>
 
-        {bookings.length >= 1 && (
-          <div>
-            <h2>Upcoming Classes</h2>
-            {bookings.map((booking) => (
-              <div key={booking.id}>
-                <h3>{booking.className}</h3>
-                <p>{booking.instructor}</p>
-                <p>{formatDate(booking.dateTime)}</p>
-                <a href="#">View Details</a>
-                <button
-                  onClick={() => {
-                    console.log("cancel button clicked");
-                    console.log("setting cancel modal to true");
-                    setSelectedBookingId(booking.id);
-                    setCancelModalOpen(true);
-                  }}
-                >
-                  Cancel
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
+        <div>
+          <h2>Upcoming Classes</h2>
+          {bookings.length >= 1 ? (
+            <div>
+              {bookings.map((booking) => (
+                <div key={booking.id}>
+                  <div>
+                    <h3>{booking.className}</h3>
+                  </div>
+                  <div>
+                    <p>
+                      {booking.instructor} | {formatDate(booking.dateTime)}
+                    </p>
+                  </div>
+                  <div>
+                    <button
+                      onClick={() => navigate(`/classes/${booking.classId}`)}
+                    >
+                      View Details
+                    </button>
+                    <button
+                      onClick={() => {
+                        console.log("cancel button clicked");
+                        console.log("setting cancel modal to true");
+                        setSelectedBookingId(booking.id);
+                        setCancelModalOpen(true);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div>
+              <p>No classes booked yet</p>
+              <p>
+                Ready to get started? Browse our schedule and book your first
+                class!
+              </p>
+              <button onClick={() => navigate("/schedule")}>
+                Explore Schedule
+              </button>
+            </div>
+          )}
+        </div>
 
         <CancelModal
           isOpen={cancelModalOpen}
