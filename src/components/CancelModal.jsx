@@ -19,28 +19,30 @@ export default function CancelModal({ isOpen, onClose, onConfirm }) {
 
   return (
     isOpen && (
-      <div 
+      <div
         onClick={onClose}
         style={{
-          position: 'fixed',
+          position: "fixed",
           top: 0,
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          zIndex: 1000
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          zIndex: 1000,
         }}
       >
-        <div 
+        <div
+          role="dialog"
+          aria-modal="true"
           onClick={(e) => e.stopPropagation()}
           style={{
-            backgroundColor: 'white',
-            padding: '2rem',
-            borderRadius: '8px',
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+            backgroundColor: "white",
+            padding: "2rem",
+            borderRadius: "8px",
+            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
           }}
         >
           <p>Are you sure you want to cancel this class?</p>
