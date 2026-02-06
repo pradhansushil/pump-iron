@@ -33,38 +33,39 @@ export default function Classes() {
   if (loading) return <LoadingSpinner message="Loading classes..." />;
 
   const handleBookClass = async (classId) => {
-    const classData = classes.find((c) => c.id === classId);
-    const memberData = await getMemberById(currentUser.uid);
-
-    if (!classData) {
-      toast.error("Class not found. Please refresh the page.");
-      return;
-    }
-
-    if (classData.currentBookings >= classData.capacity) {
-      toast.error("This class is full.");
-      return;
-    }
-
-    //Edge case: member document doesn't exist (shouldn't happen, but a safety net)
-    if (!memberData) {
-      toast.error("Member profile not found. Please contact support.");
-      return;
-    }
-
-    if (memberData.status != "active") {
-      setError(
-        "You need to be have a membership to book. go to plans to be a gym member.",
-      );
-      return;
-    }
-
-    if (memberData.bookedClasses.includes(classId)) {
-      toast.error("You've already booked this class");
-      return;
-    }
+    setBookingLoading(classId);
 
     try {
+      const classData = classes.find((c) => c.id === classId);
+      const memberData = await getMemberById(currentUser.uid);
+
+      if (!classData) {
+        toast.error("Class not found. Please refresh the page.");
+        return;
+      }
+
+      if (classData.currentBookings >= classData.capacity) {
+        toast.error("This class is full.");
+        return;
+      }
+
+      if (!memberData) {
+        toast.error("Member profile not found. Please contact support.");
+        return;
+      }
+
+      if (memberData.status != "active") {
+        setError(
+          "You need to have a membership to book. go to plans to be a gym member.",
+        );
+        return;
+      }
+
+      if (memberData.bookedClasses.includes(classId)) {
+        toast.error("You've already booked this class");
+        return;
+      }
+
       await updateClassBookings(classId, {
         currentBookings: increment(1),
       });
@@ -76,10 +77,9 @@ export default function Classes() {
       toast.success("Class booked successfully.");
       setError(null);
     } catch (error) {
-      // set this to toast once it's working
       toast.error(`Booking failed: ${error}`);
     } finally {
-      // set bookingloading
+      setBookingLoading(null);
     }
   };
 
@@ -96,11 +96,16 @@ export default function Classes() {
             <p>Available spots: {c.capacity - c.currentBookings}</p>
             <p>{c.description}</p>
             <button
+              disabled={c.id === bookingLoading}
               onClick={() => {
-                if (!currentUser) navigate("/login");
+                if (!currentUser) {
+                  navigate("/login");
+                } else {
+                  handleBookClass(c.id);
+                }
               }}
             >
-              {currentUser ? "Book" : "Login to Book"}
+              Book
             </button>
           </li>
         ))}
