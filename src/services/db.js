@@ -84,30 +84,30 @@ export const getClassById = async (classId) => {
 };
 
 // 10.6: Get member by their uid
-  export const getMemberById = async (uid) => {
-    try {
-      // Create a reference to the member document
-      const memberRef = doc(db, MEMBERS, uid);
+export const getMemberById = async (uid) => {
+  try {
+    // Create a reference to the member document
+    const memberRef = doc(db, MEMBERS, uid);
 
-      // Get the document snapshot
-      const memberSnapshot = await getDoc(memberRef);
+    // Get the document snapshot
+    const memberSnapshot = await getDoc(memberRef);
 
-      // Check if the document exists
-      if (memberSnapshot.exists()) {
-        // Extract and return the data
-        const memberData = memberSnapshot.data();
-        console.log("Member found:", memberData);
-        return memberData;
-      } else {
-        // Document doesn't exist
-        console.log("No member found with uid:", uid);
-        return null;
-      }
-    } catch (error) {
-      console.error("Error getting member:", error);
+    // Check if the document exists
+    if (memberSnapshot.exists()) {
+      // Extract and return the data
+      const memberData = memberSnapshot.data();
+      console.log("Member found:", memberData);
+      return memberData;
+    } else {
+      // Document doesn't exist
+      console.log("No member found with uid:", uid);
       return null;
     }
-  };
+  } catch (error) {
+    console.error("Error getting member:", error);
+    return null;
+  }
+};
 
 // 10.7: Update member information
 export const updateMember = async (uid, updates) => {
@@ -224,8 +224,13 @@ export const getBookingsByMember = async (memberId) => {
       return [];
     }
 
+    const classIds = member.bookedClasses || [];
+    const classes = await Promise.all(
+      classIds.map((classId) => getClassById(classId)),
+    );
+
     // Return the bookedClasses array, or empty array if it doesn't exist
-    return member.bookedClasses || [];
+    return classes;
   } catch (error) {
     console.error("Error getting bookings for member:", error);
     return [];
