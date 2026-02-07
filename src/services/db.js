@@ -59,31 +59,55 @@ export const createMember = async (uid, memberData) => {
   }
 };
 
-// 10.6: Get member by their uid
-export const getMemberById = async (uid) => {
+export const getClassById = async (classId) => {
   try {
-    // Create a reference to the member document
-    const memberRef = doc(db, MEMBERS, uid);
+    // Create a reference to the class document
+    const classRef = doc(db, CLASSES, classId);
 
     // Get the document snapshot
-    const memberSnapshot = await getDoc(memberRef);
+    const classSnapshot = await getDoc(classRef);
 
     // Check if the document exists
-    if (memberSnapshot.exists()) {
+    if (classSnapshot.exists()) {
       // Extract and return the data
-      const memberData = memberSnapshot.data();
-      console.log("Member found:", memberData);
-      return memberData;
+      const classData = classSnapshot.data();
+      return { id: classId, ...classData };
     } else {
       // Document doesn't exist
-      console.log("No member found with uid:", uid);
       return null;
     }
   } catch (error) {
-    console.error("Error getting member:", error);
+    // replace with toast.error
+    console.error("Error getting class:", error);
     return null;
   }
 };
+
+// 10.6: Get member by their uid
+  export const getMemberById = async (uid) => {
+    try {
+      // Create a reference to the member document
+      const memberRef = doc(db, MEMBERS, uid);
+
+      // Get the document snapshot
+      const memberSnapshot = await getDoc(memberRef);
+
+      // Check if the document exists
+      if (memberSnapshot.exists()) {
+        // Extract and return the data
+        const memberData = memberSnapshot.data();
+        console.log("Member found:", memberData);
+        return memberData;
+      } else {
+        // Document doesn't exist
+        console.log("No member found with uid:", uid);
+        return null;
+      }
+    } catch (error) {
+      console.error("Error getting member:", error);
+      return null;
+    }
+  };
 
 // 10.7: Update member information
 export const updateMember = async (uid, updates) => {
