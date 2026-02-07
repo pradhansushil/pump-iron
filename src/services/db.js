@@ -229,8 +229,11 @@ export const getBookingsByMember = async (memberId) => {
       classIds.map((classId) => getClassById(classId)),
     );
 
-    // Return the bookedClasses array, or empty array if it doesn't exist
-    return classes;
+    // Filter out null values in case a class was deleted but still exists in the member's bookedClasses array (data consistency protection)
+    const validClasses = classes.filter((classObj) => classObj !== null);
+
+    // Return array of full class objects
+    return validClasses;
   } catch (error) {
     console.error("Error getting bookings for member:", error);
     return [];
