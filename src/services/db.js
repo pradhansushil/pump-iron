@@ -15,6 +15,8 @@ import {
   Timestamp,
 } from "firebase/firestore";
 
+import { calculateNextOccurrence } from "../utils/dateHelpers";
+
 // Collection name constants - prevents typos and ensures consistency
 export const MEMBERS = "members";
 export const PAYMENTS = "payments";
@@ -232,8 +234,22 @@ export const getBookingsByMember = async (memberId) => {
     // Filter out null values in case a class was deleted but still exists in the member's bookedClasses array (data consistency protection)
     const validClasses = classes.filter((classObj) => classObj !== null);
 
+    const bookings = validClasses.map((classObj) => {
+      const nextDate = calculateNextOccurrence(classObj.day, classObj.time);
+      const dateTimeTimestamp = Timestamp.fromDate(nextDate);
+      return {
+        id: classObj.id,
+        classId: classObj.id,
+        className: classObj.name,
+        instructor: classObj.instructor,
+        dateTime: dateTimeTimestamp,
+        day: classObj.day,
+        time: classObj.time,
+      };
+    });
+
     // Return array of full class objects
-    return validClasses;
+    return bookings;
   } catch (error) {
     console.error("Error getting bookings for member:", error);
     return [];
