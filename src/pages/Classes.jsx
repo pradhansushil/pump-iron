@@ -105,7 +105,11 @@ export default function Classes() {
                 }
               }}
             >
-              Book
+              {c.id === bookingLoading
+                ? "Booking..."
+                : currentUser
+                  ? "Book"
+                  : "Login to Book"}
             </button>
           </li>
         ))}
