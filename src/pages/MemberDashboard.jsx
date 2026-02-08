@@ -50,45 +50,43 @@ export default function MemberDashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchDashboardData = async () => {
+      if (!currentUser) {
+        navigate("/login");
+        return;
+      }
+
+      try {
+        const [member, paymentsData, bookingsData] = await Promise.all([
+          getMemberById(currentUser.uid),
+          getPaymentsByMember(currentUser.uid),
+          getBookingsByMember(currentUser.uid),
+        ]);
+
+        const now = new Date();
+
+        const upcomingBookings = bookingsData
+          .filter((booking) => booking.dateTime.toDate() >= now)
+          .sort((a, b) => a.dateTime.toDate() - b.dateTime.toDate());
+
+        setMemberData(member);
+        setPayments(paymentsData.slice(0, 3));
+        setNextClass(upcomingBookings[0] || null);
+        setBookings(upcomingBookings);
+      } catch (error) {
+        console.error(error);
+        toast.error(
+          "Unable to load your dashboard data. Please check your connection and try again.",
+        );
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchDashboardData();
-  }, []);
+  }, [currentUser, navigate]);
 
-  const fetchDashboardData = async () => {
-    /** what this is doing: seeing if the currentUser is not null. if it is, redirect them to /login and exit early
-     * why: prevents unauthorized users from accessing protected routes.
-     * what would happen if removed: Users would be able to access protected routes.
-     */
-    if (!currentUser) {
-      navigate("/login");
-      return;
-    }
-
-    try {
-      const [member, paymentsData, bookingsData] = await Promise.all([
-        getMemberById(currentUser.uid),
-        getPaymentsByMember(currentUser.uid),
-        getBookingsByMember(currentUser.uid),
-      ]);
-
-      // Get upcoming bookings
-      const upcomingBookings = bookingsData
-        .filter((booking) => booking.dateTime.toDate() >= new Date())
-        .sort((a, b) => a.dateTime.toDate() - b.dateTime.toDate());
-
-      setMemberData(member);
-      setPayments(paymentsData.slice(0, 3));
-      setNextClass(upcomingBookings[0] || null);
-      setBookings(upcomingBookings);
-    } catch (error) {
-      console.error(error);
-      toast.error(
-        "Unable to load your dashboard data. Please check your connection and try again.",
-      );
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
   if (loading) return <LoadingSpinner message="Loading your dashboard..." />;
   if (!memberData) return <div>No Member Data </div>;
 
@@ -135,7 +133,7 @@ export default function MemberDashboard() {
             <button
               onClick={() => {
                 setError(null);
-                fetchDashboardData();
+                window.location.reload();
               }}
             >
               Retry
