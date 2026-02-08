@@ -70,6 +70,12 @@ const Navbar = () => {
 
         {/* Navigation Links */}
         <div className="nav-links">
+          <Link
+            to="/classes"
+            className={isActive("/classes") ? "nav-link active" : "nav-link"}
+          >
+            Classes
+          </Link>
           {!currentUser ? (
             // ========== GUEST NAVIGATION ==========
             <>
