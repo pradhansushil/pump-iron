@@ -58,6 +58,7 @@ export default function Classes() {
         setError(
           "You need to have a membership to book. go to plans to be a gym member.",
         );
+        window.scrollTo({ top: 0, behavior: "smooth" });
         return;
       }
 
