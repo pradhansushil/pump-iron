@@ -34,7 +34,7 @@ export default function MemberDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
-  const [selectedBookingId, setSelectedBookingId] = useState(null);
+  const [selectedClassId, setSelectedClassId] = useState(null);
   // eslint-disable-next-line no-unused-vars
   const [notificationCount, setNotificationCount] = useState(3);
 
@@ -101,19 +101,14 @@ export default function MemberDashboard() {
 
   const handleCancelBooking = async () => {
     try {
-      const result = await cancelBooking(selectedBookingId, currentUser.uid);
-
-      if (result.success) {
-        setBookings(
-          bookings.filter((booking) => booking.id !== selectedBookingId),
-        );
-        toast.success(result.message);
-        setCancelModalOpen(false);
-      } else {
-        toast.error(result.error);
-      }
+      const result = await cancelBooking(selectedClassId, currentUser.uid);
+      console.log(result);
+      toast.success(result.message);
     } catch (error) {
-      toast.error("An unexpected error occurred. Please try again.");
+      toast.error(error.message);
+    } finally {
+      setBookings(bookings.filter((booking) => booking.id !== selectedClassId));
+      setCancelModalOpen(false);
     }
   };
 
@@ -275,9 +270,7 @@ export default function MemberDashboard() {
                     </button>
                     <button
                       onClick={() => {
-                        console.log("cancel button clicked");
-                        console.log("setting cancel modal to true");
-                        setSelectedBookingId(booking.id);
+                        setSelectedClassId(booking.id);
                         setCancelModalOpen(true);
                       }}
                     >

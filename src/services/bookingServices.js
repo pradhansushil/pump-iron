@@ -23,7 +23,7 @@ export const cancelBooking = async (classId, userId) => {
 
     // Step 7: Update class document (increment capacity)
     await updateDoc(doc(db, "classes", classId), {
-      capacity: increment(1),
+      currentBookings: increment(-1),
     });
 
     // Step 8: Return success
