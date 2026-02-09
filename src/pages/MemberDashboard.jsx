@@ -101,13 +101,7 @@ export default function MemberDashboard() {
 
   const handleCancelBooking = async () => {
     try {
-      console.log("🔥 handleCancelBooking called");
-      console.log("selectedBookingId:", selectedBookingId);
-      console.log("typeof selectedBookingId:", typeof selectedBookingId);
-      console.log("bookings array:", bookings);
-
       const result = await cancelBooking(selectedBookingId, currentUser.uid);
-      console.log(("result", result));
 
       if (result.success) {
         setBookings(
@@ -119,7 +113,6 @@ export default function MemberDashboard() {
         toast.error(result.error);
       }
     } catch (error) {
-      console.error(error);
       toast.error("An unexpected error occurred. Please try again.");
     }
   };
