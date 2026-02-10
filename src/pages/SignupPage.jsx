@@ -104,7 +104,7 @@ export default function SignupPage() {
 
         {error && <div>{error}</div>}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           {/* Full Name */}
           <div>
             <label htmlFor="name">Full Name *</label>
