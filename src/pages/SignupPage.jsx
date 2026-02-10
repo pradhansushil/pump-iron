@@ -49,6 +49,10 @@ export default function SignupPage() {
       return setError("Please enter a valid phone number");
     }
 
+    if (!paymentMethod) {
+      return setError("Please select a payment method");
+    }
+
     try {
       setError("");
       setLoading(true);
@@ -63,7 +67,7 @@ export default function SignupPage() {
         email,
         phone,
         membershipPlan,
-        paymentMethod: paymentMethod || null,
+        paymentMethod: paymentMethod,
       };
 
       const result = await createMember(uid, memberData);
@@ -157,9 +161,10 @@ export default function SignupPage() {
 
           {/* Payment Method (Optional) */}
           <div>
-            <label htmlFor="paymentMethod">Payment Method (Optional)</label>
+            <label htmlFor="paymentMethod">Payment Method</label>
             <select
               id="paymentMethod"
+              required
               value={paymentMethod}
               onChange={(e) => setPaymentMethod(e.target.value)}
             >
