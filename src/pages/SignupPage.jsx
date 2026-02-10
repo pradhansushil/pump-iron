@@ -159,7 +159,7 @@ export default function SignupPage() {
             </select>
           </div>
 
-          {/* Payment Method (Optional) */}
+          {/* Payment Method */}
           <div>
             <label htmlFor="paymentMethod">Payment Method</label>
             <select
