@@ -165,7 +165,7 @@ export const getPaymentsByMember = async (memberId) => {
     // Build query: get all payments where memberId matches, sorted by date (newest first)
     const q = query(
       paymentsRef,
-      where("memberId", "==", memberId),
+      where("userId", "==", memberId),
       orderBy("date", "desc"),
     );
 
