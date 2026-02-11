@@ -139,12 +139,15 @@ export const createPayment = async (paymentData) => {
 
     // Create the payment document with the provided data
     await setDoc(newPaymentRef, {
-      memberId: paymentData.memberId,
+      userId: paymentData.memberId,
       amount: paymentData.amount,
-      date: paymentData.date || Timestamp.now(), // Use provided date or current timestamp
+      date: paymentData.date || Timestamp.now(),
+      dueDate: paymentData.dueDate,
       method: paymentData.method, // e.g., "credit_card", "cash", "bank_transfer"
       status: paymentData.status, // "completed" | "pending" | "failed"
       description: paymentData.description,
+      email: paymentData.email,
+      createdAt: Timestamp.now(),
     });
 
     console.log("Payment created successfully with ID:", newPaymentRef.id);
