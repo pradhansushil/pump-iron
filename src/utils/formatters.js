@@ -15,13 +15,15 @@ export function formatCurrency(amount) {
 
 export function formatPaymentMethod(method) {
   switch (method) {
-    case "credit_card":
+    case "credit card":
       return "Credit Card";
+    case "debit card":
+      return "Debit Card";
     case "cash":
       return "Cash";
-    case "bank_transfer":
+    case "bank transfer":
       return "Bank Transfer";
-    case "qr_code":
+    case "qr code":
       return "QR Code";
     default:
       return "Unknown Payment Method";
