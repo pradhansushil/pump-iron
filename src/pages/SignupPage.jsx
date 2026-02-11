@@ -173,6 +173,7 @@ export default function SignupPage() {
               <option value="debit_card">Debit Card</option>
               <option value="bank_transfer">Bank Transfer</option>
               <option value="cash">Cash</option>
+              <option value="qr_code">Qr Code</option>
             </select>
           </div>
 
