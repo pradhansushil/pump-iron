@@ -17,7 +17,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { createMember } from "../services/db";
+import { createMember, createPayment, updateMember } from "../services/db";
+import { Timestamp } from "firebase/firestore";
 
 export default function SignupPage() {
   // Form state
@@ -38,6 +39,14 @@ export default function SignupPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const amount = {
+      basic: 29,
+      standard: 49,
+      premium: 79,
+    };
+
+    const planPrice = amount[membershipPlan];
 
     // Validate passwords match
     if (password !== confirmPassword) {
@@ -76,7 +85,35 @@ export default function SignupPage() {
         throw new Error(result.error || "Failed to create member profile");
       }
 
-      // Success! Navigate to dashboard
+      // Member created successfully, now try payment with retries
+      let paymentResult;
+      let attempts = 0;
+
+      while (attempts < 3) {
+        paymentResult = await createPayment({
+          memberId: uid,
+          amount: planPrice,
+          date: Timestamp.now(),
+          dueDate: Timestamp.now(),
+          method: paymentMethod,
+          status: "completed",
+          description: "First month's payment",
+          email: email,
+        });
+
+        if (paymentResult.success) {
+          break;
+        }
+
+        attempts++;
+      }
+
+      // If payment failed after retries, mark member as inactive
+      if (!paymentResult.success) {
+        await updateMember(uid, { status: "inactive" });
+      }
+
+      // Navigate to dashboard
       navigate("/dashboard");
     } catch (err) {
       // Handle errors with user-friendly messages
@@ -169,11 +206,11 @@ export default function SignupPage() {
               onChange={(e) => setPaymentMethod(e.target.value)}
             >
               <option value="">Select payment method</option>
-              <option value="credit_card">Credit Card</option>
-              <option value="debit_card">Debit Card</option>
-              <option value="bank_transfer">Bank Transfer</option>
+              <option value="credit card">Credit Card</option>
+              <option value="debit card">Debit Card</option>
+              <option value="bank transfer">Bank Transfer</option>
               <option value="cash">Cash</option>
-              <option value="qr_code">Qr Code</option>
+              <option value="qr code">QR Code</option>
             </select>
           </div>
 
