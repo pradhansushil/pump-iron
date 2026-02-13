@@ -150,6 +150,31 @@ export default function MemberDashboard() {
             {notificationCount > 0 && <span>{notificationCount}</span>}
           </div>
         </header>
+
+        {memberData.status === "inactive" && (
+          <div
+            style={{
+              backgroundColor: "#fef2f2",
+              border: "1px solid #ef4444",
+              padding: "16px",
+              borderRadius: "8px",
+              marginBottom: "24px",
+            }}
+          >
+            <h3 style={{ color: "#dc2626", marginBottom: "8px" }}>
+              Payment Processing Failed
+            </h3>
+            <p style={{ marginBottom: "12px" }}>
+              Your account is inactive because we couldn't process your initial
+              payment. Please update your payment method to activate your
+              membership.
+            </p>
+            <button onClick={() => navigate("/payments")}>
+              Update Payment Method
+            </button>
+          </div>
+        )}
+
         <div>
           <div>
             <section aria-labelledby="membership-header">
