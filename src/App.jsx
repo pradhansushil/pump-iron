@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import Payments from "./pages/Payments";
 import MemberDashboard from "./pages/MemberDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import MemberRoute from "./components/MemberRoute";
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/classes" element={<Classes />} />
         <Route
           path="/dashboard"
           element={
@@ -30,7 +32,14 @@ export default function App() {
             </MemberRoute>
           }
         />
-        <Route path="/classes" element={<Classes />} />
+        <Route
+          path="/payments"
+          element={
+            <MemberRoute>
+              <Payments />
+            </MemberRoute>
+          }
+        />
         <Route
           path="/admin"
           element={
