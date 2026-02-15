@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { getMemberById, getPaymentsByMember } from "../services/db";
+import UpdatePaymentMethodModal from "../components/UpdatePaymentMethodModal";
 import {
   formatCurrency,
   formatDate,
@@ -13,6 +14,7 @@ export default function Payments() {
   const [payments, setPayments] = useState([]);
   const [memberData, setMemberData] = useState(null);
   const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { currentUser } = useAuth();
 
@@ -61,7 +63,9 @@ export default function Payments() {
               : "No payment method on file"}
           </span>
         </p>
-        <button>Update Payment Method</button>
+        <button onClick={() => setIsModalOpen(true)}>
+          Update Payment Method
+        </button>
 
         {payments.length > 0 ? (
           <div>
@@ -95,6 +99,13 @@ export default function Payments() {
           </div>
         ) : (
           "No payment records found"
+        )}
+
+        {isModalOpen && (
+          <UpdatePaymentMethodModal
+            method={memberData.paymentMethod}
+            onClose={() => setIsModalOpen(false)}
+          />
         )}
       </>
     )
