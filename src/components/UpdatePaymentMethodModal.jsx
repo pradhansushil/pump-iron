@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState } from "react";
 import CreditCardForm from "./payment-forms/CreditCardForm";
 
 export default function UpdatePaymentMethodModal({ method, onClose }) {
@@ -14,10 +14,10 @@ export default function UpdatePaymentMethodModal({ method, onClose }) {
         value={selectedMethod}
         onChange={(e) => setSelectedMethod(e.target.value)}
       >
-        <option value="Credit Card">Credit Card</option>
-        <option value="Cash">Cash</option>
-        <option value="Bank Transfer">Bank Transfer</option>
-        <option value="QR Code">QR Code</option>
+        <option value="credit card">Credit Card</option>
+        <option value="cash">Cash</option>
+        <option value="bank transfer">Bank Transfer</option>
+        <option value="qr code">QR Code</option>
       </select>
 
       {selectedMethod === "Credit Card" && (
