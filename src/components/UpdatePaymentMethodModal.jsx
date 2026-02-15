@@ -1,5 +1,7 @@
 import { useState } from "react";
 import CreditCardForm from "./payment-forms/CreditCardForm";
+import BankTransferForm from "./payment-forms/BankTransferForm";
+import QRCodeForm from "./payment-forms/QRCodeForm";
 
 export default function UpdatePaymentMethodModal({ method, onClose }) {
   const [selectedMethod, setSelectedMethod] = useState(method);
@@ -8,6 +10,8 @@ export default function UpdatePaymentMethodModal({ method, onClose }) {
   const [expiry, setExpiry] = useState("");
   const [ccv, setCCV] = useState("");
 
+  const [accountNumber, setAccountNumber] = useState("");
+  const [routingNumber, setRoutingNumber] = useState("");
   return (
     <div>
       <select
@@ -30,12 +34,15 @@ export default function UpdatePaymentMethodModal({ method, onClose }) {
           setCCV={setCCV}
         />
       )}
-      {/* {selectedMethod === "Bank Transfer" && <BankTransferForm />} */}
-      {/* {selectedMethod === "QR Code" && (
-        <div>
-          <p>Scan this code with your payment app (Cash App, Zelle, etc.)</p>
-        </div>
-      )} */}
+      {selectedMethod === "bank transfer" && (
+        <BankTransferForm
+          accountNumber={accountNumber}
+          setAccountNumber={setAccountNumber}
+          routingNumber={routingNumber}
+          setRoutingNumber={setRoutingNumber}
+        />
+      )}
+      {selectedMethod === "qr code" && <QRCodeForm />}
     </div>
   );
 }
