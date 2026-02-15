@@ -20,7 +20,7 @@ export default function UpdatePaymentMethodModal({ method, onClose }) {
         <option value="qr code">QR Code</option>
       </select>
 
-      {selectedMethod === "Credit Card" && (
+      {selectedMethod === "credit card" && (
         <CreditCardForm
           ccNumber={ccNumber}
           setCCNumber={setCCNumber}
