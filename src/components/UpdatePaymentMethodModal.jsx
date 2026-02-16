@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+
 import CreditCardForm from "./payment-forms/CreditCardForm";
 import BankTransferForm from "./payment-forms/BankTransferForm";
 import QRCodeForm from "./payment-forms/QRCodeForm";
@@ -33,11 +35,11 @@ export default function UpdatePaymentMethodModal({
   const handleSubmit = async () => {
     try {
       await updateMember(memberId, { paymentMethod: selectedMethod });
-      console.log("Payment method update success!");
+      toast.success("Payment method updated successfully!");
       onPaymentMethodUpdate(selectedMethod);
       handleClose();
-    } catch (error) {
-      console.error("Payment method failed:", error);
+    } catch {
+      toast.error("Failed to update payment method. Please try again.");
     }
   };
 
