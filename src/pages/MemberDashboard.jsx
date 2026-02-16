@@ -4,14 +4,15 @@
  */
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
+
 import {
   getMemberById,
   getPaymentsByMember,
   getBookingsByMember,
 } from "../services/db";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
 import {
   formatCurrency,
   formatDate,
@@ -48,6 +49,8 @@ export default function MemberDashboard() {
    * what would happen if removed: We wouldn't be able to re-direct users to a page.
    */
   const navigate = useNavigate();
+  const location = useLocation();
+  const isNewUser = location.state?.isNewUser;
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -132,7 +135,11 @@ export default function MemberDashboard() {
         <header>
           {/* left side */}
           <div>
-            <h1 id="dashboard-heading">Welcome back, {firstName}!</h1>
+            <h1 id="dashboard-heading">
+              {isNewUser
+                ? `Welcome, ${firstName}!`
+                : `Welcome back, ${firstName}!`}
+            </h1>
             <p>{formattedDate}</p>
           </div>
           {/* Right side */}
