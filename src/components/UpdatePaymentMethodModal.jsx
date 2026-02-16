@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreditCardForm from "./payment-forms/CreditCardForm";
 import BankTransferForm from "./payment-forms/BankTransferForm";
 import QRCodeForm from "./payment-forms/QRCodeForm";
@@ -8,7 +8,7 @@ export default function UpdatePaymentMethodModal({
   memberId,
   method,
   onClose,
-  onPaymentMethodUpdate
+  onPaymentMethodUpdate,
 }) {
   const [selectedMethod, setSelectedMethod] = useState(method);
 
@@ -40,6 +40,20 @@ export default function UpdatePaymentMethodModal({
       console.error("Payment method failed:", error);
     }
   };
+
+  useEffect(() => {
+    const handleEscKey = (event) => {
+      if (event.key === "Escape") {
+        handleClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscKey);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscKey);
+    };
+  }, []);
 
   return (
     <div>
