@@ -45,6 +45,10 @@ export default function Payments() {
     fetchData();
   }, [currentUser]);
 
+  const updatePaymentMethodUI = (newMethod) => {
+    setMemberData({ ...memberData, paymentMethod: newMethod });
+  };
+
   if (loading) return <LoadingSpinner message="Loading payment data..." />;
   if (error) return <p>{error}</p>;
 
@@ -106,6 +110,7 @@ export default function Payments() {
             method={memberData.paymentMethod}
             onClose={() => setIsModalOpen(false)}
             memberId={currentUser.uid}
+            onPaymentMethodUpdate={updatePaymentMethodUI}
           />
         )}
       </>
