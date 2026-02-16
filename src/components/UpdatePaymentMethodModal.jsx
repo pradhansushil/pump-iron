@@ -8,6 +8,7 @@ export default function UpdatePaymentMethodModal({
   memberId,
   method,
   onClose,
+  onPaymentMethodUpdate
 }) {
   const [selectedMethod, setSelectedMethod] = useState(method);
 
@@ -33,6 +34,7 @@ export default function UpdatePaymentMethodModal({
     try {
       await updateMember(memberId, { paymentMethod: selectedMethod });
       console.log("Payment method update success!");
+      onPaymentMethodUpdate(selectedMethod);
       handleClose();
     } catch (error) {
       console.error("Payment method failed:", error);
