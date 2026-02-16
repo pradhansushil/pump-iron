@@ -56,39 +56,41 @@ export default function UpdatePaymentMethodModal({
   }, []);
 
   return (
-    <div>
-      <button onClick={handleClose}>X</button>
-      <select
-        value={selectedMethod}
-        onChange={(e) => setSelectedMethod(e.target.value)}
-      >
-        <option value="credit card">Credit Card</option>
-        <option value="cash">Cash</option>
-        <option value="bank transfer">Bank Transfer</option>
-        <option value="qr code">QR Code</option>
-      </select>
+    <div className="backdrop" onClick={handleClose}>
+      <div className="content" onClick={(e) => e.stopPropagation()}>
+        <button onClick={handleClose}>X</button>
+        <select
+          value={selectedMethod}
+          onChange={(e) => setSelectedMethod(e.target.value)}
+        >
+          <option value="credit card">Credit Card</option>
+          <option value="cash">Cash</option>
+          <option value="bank transfer">Bank Transfer</option>
+          <option value="qr code">QR Code</option>
+        </select>
 
-      {selectedMethod === "credit card" && (
-        <CreditCardForm
-          ccNumber={ccNumber}
-          setCCNumber={setCCNumber}
-          expiry={expiry}
-          setExpiry={setExpiry}
-          ccv={ccv}
-          setCCV={setCCV}
-        />
-      )}
-      {selectedMethod === "bank transfer" && (
-        <BankTransferForm
-          accountNumber={accountNumber}
-          setAccountNumber={setAccountNumber}
-          routingNumber={routingNumber}
-          setRoutingNumber={setRoutingNumber}
-        />
-      )}
-      {selectedMethod === "qr code" && <QRCodeForm />}
-      <button onClick={handleClose}>Cancel</button>
-      <button onClick={handleSubmit}>Save</button>
+        {selectedMethod === "credit card" && (
+          <CreditCardForm
+            ccNumber={ccNumber}
+            setCCNumber={setCCNumber}
+            expiry={expiry}
+            setExpiry={setExpiry}
+            ccv={ccv}
+            setCCV={setCCV}
+          />
+        )}
+        {selectedMethod === "bank transfer" && (
+          <BankTransferForm
+            accountNumber={accountNumber}
+            setAccountNumber={setAccountNumber}
+            routingNumber={routingNumber}
+            setRoutingNumber={setRoutingNumber}
+          />
+        )}
+        {selectedMethod === "qr code" && <QRCodeForm />}
+        <button onClick={handleClose}>Cancel</button>
+        <button onClick={handleSubmit}>Save</button>
+      </div>
     </div>
   );
 }
