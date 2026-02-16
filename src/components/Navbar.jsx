@@ -1,9 +1,14 @@
 // src/components/Navbar.jsx
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import toast from "react-hot-toast";
+
 import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
+  // eslint-disable-next-line no-unused-vars
+  const [notificationCount, setNotificationCount] = useState(3);
+
   // Get authentication state and functions
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
@@ -126,6 +131,18 @@ const Navbar = () => {
               >
                 My Bookings
               </Link>
+
+              <button
+                aria-label={
+                  notificationCount > 0
+                    ? `View ${notificationCount} notifications`
+                    : "View notifications"
+                }
+                onClick={() => toast("Notifications coming soon!")}
+              >
+                🔔
+                {notificationCount > 0 && <span>{notificationCount}</span>}
+              </button>
 
               {/* Avatar Dropdown */}
               <div className="avatar-dropdown" ref={dropdownRef}>
