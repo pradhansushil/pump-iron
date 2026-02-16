@@ -17,8 +17,12 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { createMember, createPayment, updateMember } from "../services/db";
 import { Timestamp } from "firebase/firestore";
+
+import { createMember, createPayment, updateMember } from "../services/db";
+import CreditCardForm from "../components/payment-forms/CreditCardForm";
+import BankTransferForm from "../components/payment-forms/BankTransferForm";
+import QRCodeForm from "../components/payment-forms/QRCodeForm";
 
 export default function SignupPage() {
   // Form state
@@ -33,6 +37,13 @@ export default function SignupPage() {
   // UI state
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  //Payment Method Details
+  const [ccNumber, setCCNumber] = useState("");
+  const [expiry, setExpiry] = useState("");
+  const [ccv, setCCV] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
+  const [routingNumber, setRoutingNumber] = useState("");
 
   const { signup } = useAuth();
   const navigate = useNavigate();
@@ -207,12 +218,33 @@ export default function SignupPage() {
             >
               <option value="">Select payment method</option>
               <option value="credit card">Credit Card</option>
-              <option value="debit card">Debit Card</option>
               <option value="bank transfer">Bank Transfer</option>
               <option value="cash">Cash</option>
               <option value="qr code">QR Code</option>
             </select>
           </div>
+
+          {paymentMethod === "credit card" && (
+            <CreditCardForm
+              ccNumber={ccNumber}
+              setCCNumber={setCCNumber}
+              expiry={expiry}
+              setExpiry={setExpiry}
+              ccv={ccv}
+              setCCV={setCCV}
+            />
+          )}
+
+          {paymentMethod === "bank transfer" && (
+            <BankTransferForm
+              accountNumber={accountNumber}
+              setAccountNumber={setAccountNumber}
+              routingNumber={routingNumber}
+              setRoutingNumber={setRoutingNumber}
+            />
+          )}
+
+          {paymentMethod === "qr code" && <QRCodeForm />}
 
           {/* Password */}
           <div>
