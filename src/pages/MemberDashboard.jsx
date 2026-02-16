@@ -229,9 +229,7 @@ export default function MemberDashboard() {
           <div>
             <section aria-labelledby="quick-action-header">
               <h2 id="quick-action-header">Quick Action</h2>
-              <button onClick={() => navigate("/schedule")}>
-                Book a Class
-              </button>
+              <button onClick={() => navigate("/classes")}>Book a Class</button>
             </section>
           </div>
         </div>
@@ -316,10 +314,10 @@ export default function MemberDashboard() {
             <div>
               <p>No classes booked yet</p>
               <p>
-                Ready to get started? Browse our schedule and book your first
-                class!
+                Ready to get started? Browse our classes and book your
+                favorites!
               </p>
-              <button onClick={() => navigate("/schedule")}>
+              <button onClick={() => navigate("/classes")}>
                 Explore Schedule
               </button>
             </div>
