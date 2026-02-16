@@ -36,8 +36,6 @@ export default function MemberDashboard() {
   const [error, setError] = useState(null);
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
   const [selectedClassId, setSelectedClassId] = useState(null);
-  // eslint-disable-next-line no-unused-vars
-  const [notificationCount, setNotificationCount] = useState(3);
 
   /** what this is doing: subscribing to useAuth from AuthContext.
    * why: instead of re-creating the logic, which avoids DRY principle, we have one centralized place where the logic lives and can subscribe to that function.
@@ -143,19 +141,6 @@ export default function MemberDashboard() {
             <p>{formattedDate}</p>
           </div>
           {/* Right side */}
-          <div>
-            <button
-              aria-label={
-                notificationCount > 0
-                  ? `View ${notificationCount} notifications`
-                  : "View notifications"
-              }
-              onClick={() => toast("Notifications coming soon!")}
-            >
-              🔔
-            </button>
-            {notificationCount > 0 && <span>{notificationCount}</span>}
-          </div>
         </header>
 
         {memberData.status === "inactive" && (
