@@ -105,6 +105,7 @@ export default function Payments() {
           <UpdatePaymentMethodModal
             method={memberData.paymentMethod}
             onClose={() => setIsModalOpen(false)}
+            memberId={currentUser.uid}
           />
         )}
       </>
