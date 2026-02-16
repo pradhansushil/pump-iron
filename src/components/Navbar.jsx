@@ -71,6 +71,13 @@ const Navbar = () => {
         {/* Navigation Links */}
         <div className="nav-links">
           <Link
+            to="/"
+            className={isActive("/") ? "nav-link active" : "nav-link"}
+          >
+            Home
+          </Link>
+
+          <Link
             to="/classes"
             className={isActive("/classes") ? "nav-link active" : "nav-link"}
           >
@@ -80,20 +87,6 @@ const Navbar = () => {
             // ========== GUEST NAVIGATION ==========
             <>
               <Link
-                to="/"
-                className={isActive("/") ? "nav-link active" : "nav-link"}
-              >
-                Home
-              </Link>
-              <Link
-                to="/classes"
-                className={
-                  isActive("/classes") ? "nav-link active" : "nav-link"
-                }
-              >
-                Classes
-              </Link>
-              <Link
                 to="/pricing"
                 className={
                   isActive("/pricing") ? "nav-link active" : "nav-link"
@@ -101,12 +94,14 @@ const Navbar = () => {
               >
                 Pricing
               </Link>
+
               <Link
                 to="/about"
                 className={isActive("/about") ? "nav-link active" : "nav-link"}
               >
                 About
               </Link>
+
               <Link to="/login" className="login-button">
                 Login
               </Link>
@@ -122,14 +117,7 @@ const Navbar = () => {
               >
                 Dashboard
               </Link>
-              <Link
-                to="/schedule"
-                className={
-                  isActive("/schedule") ? "nav-link active" : "nav-link"
-                }
-              >
-                Schedule
-              </Link>
+
               <Link
                 to="/bookings"
                 className={
