@@ -125,7 +125,7 @@ export default function SignupPage() {
       }
 
       // Navigate to dashboard
-      navigate("/dashboard");
+      navigate("/dashboard", { state: { isNewUser: true } });
     } catch (err) {
       // Handle errors with user-friendly messages
       let friendlyMessage = err.message;
