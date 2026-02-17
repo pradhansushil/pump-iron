@@ -61,6 +61,17 @@ export const createMember = async (uid, memberData) => {
   }
 };
 
+export const getAllMembers = async () => {
+  const membersRef = collection(db, "members");
+  const snapshot = await getDocs(membersRef);
+  const membersList = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  return membersList;
+};
+
 export const getClassById = async (classId) => {
   try {
     // Create a reference to the class document

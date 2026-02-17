@@ -3,6 +3,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 
 import LoadingSpinner from "../components/LoadingSpinner";
+import { getAllMembers } from "../services/db";
 
 export default function AdminDashboard() {
   const [members, setMembers] = useState([]);
@@ -13,22 +14,17 @@ export default function AdminDashboard() {
     const fetchMembers = async () => {
       try {
         // TODO: refactor to Promise.all() for parallel fetching
-        const membersRef = collection(db, "members");
-        const snapshot = await getDocs(membersRef);
+        const allMembers = await getAllMembers();
+
         const paymentsRef = collection(db, "payments");
         const paymentsSnapShot = await getDocs(paymentsRef);
-
-        const membersList = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
 
         const paymentsList = paymentsSnapShot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
 
-        setMembers(membersList);
+        setMembers(allMembers);
         setPayments(paymentsList);
       } catch (error) {
         console.error("Error:", error);
