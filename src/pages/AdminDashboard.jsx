@@ -7,11 +7,6 @@ import LoadingSpinner from "../components/LoadingSpinner";
 export default function AdminDashboard() {
   const [members, setMembers] = useState([]);
   const [payments, setPayments] = useState([]);
-  const [stats, setStats] = useState({
-    totalMembers: 0,
-    activeMembers: 0,
-    monthlyRevenue: 0,
-  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -46,6 +41,21 @@ export default function AdminDashboard() {
   }, []);
 
   if (loading) return <LoadingSpinner />;
+
+  const totalMembers = members.length;
+  const activeMembers = members.filter((s) => s.status === "active").length;
+
+  const today = new Date();
+  const month = today.getMonth();
+  const year = today.getFullYear();
+
+  const monthlyRevenue = payments
+    .filter(
+      (total) =>
+        total.date.toDate().getMonth() === month &&
+        total.date.toDate().getFullYear() === year,
+    )
+    .reduce((sum, payment) => sum + payment.amount, 0);
 
   return (
     <div>
