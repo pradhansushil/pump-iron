@@ -1,4 +1,17 @@
+import { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
+
 export default function AdminDashboard() {
+  const [members, setMembers] = useState([]);
+  const [payments, setPayments] = useState([]);
+  const [stats, setStats] = useState({
+    totalMembers: 0,
+    activeMembers: 0,
+    monthlyRevenue: 0,
+  });
+  const [loading, setLoading] = useState(true);
+
   return (
     <div>
       <h1>Admin Dashboard</h1>
