@@ -62,6 +62,21 @@ export default function AdminDashboard() {
       <h1>Admin Dashboard</h1>
 
       <div>
+        <p>
+          Total Members: <span>{totalMembers}</span>
+        </p>
+        <p>
+          Active Members: <span>{activeMembers}</span>
+        </p>
+        <p>
+          Monthly Revenue:{" "}
+          <span>
+            {monthlyRevenue.toLocaleString("en-us", {
+              style: "currency",
+              currency: "USD",
+            })}
+          </span>
+        </p>
         <div>
           <h2>Manage Members</h2>
           <p>View and manage gym members</p>
