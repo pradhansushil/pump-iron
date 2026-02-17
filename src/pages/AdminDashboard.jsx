@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 
+import LoadingSpinner from "../components/LoadingSpinner";
+
 export default function AdminDashboard() {
   const [members, setMembers] = useState([]);
   const [payments, setPayments] = useState([]);
@@ -11,6 +13,39 @@ export default function AdminDashboard() {
     monthlyRevenue: 0,
   });
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMembers = async () => {
+      try {
+        // TODO: refactor to Promise.all() for parallel fetching
+        const membersRef = collection(db, "members");
+        const snapshot = await getDocs(membersRef);
+        const paymentsRef = collection(db, "payments");
+        const paymentsSnapShot = await getDocs(paymentsRef);
+
+        const membersList = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        const paymentsList = paymentsSnapShot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        setMembers(membersList);
+        setPayments(paymentsList);
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMembers();
+  }, []);
+
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div>
