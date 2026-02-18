@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+
 import { getAllMembers } from "../services/db";
+import LoadingSpinner from "../components/LoadingSpinner";
+import { formatDate } from "../utils/formatters";
 
 export default function AdminMembers() {
   const [members, setMembers] = useState([]);
-  const [filteredMembers, setFilteredMembers] = useState([]);
   const [filterStatus, setFilterStatus] = useState("");
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -40,5 +42,41 @@ export default function AdminMembers() {
     return matchesSearch && matchesStatus;
   });
 
-  return <div>Admin Members</div>;
+  if (loading) return <LoadingSpinner message="Loading Members" />;
+
+  if (members.length === 0) return <p>No members have signed up yet.</p>;
+
+  if (fetchedMembers.length === 0) return <p>No members match your search</p>;
+
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Plan</th>
+          <th>Join Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {fetchedMembers.map((member) => (
+          <tr key={member.id}>
+            <td>{member.name}</td>
+            <td>{member.email}</td>
+            <td>{member.phone}</td>
+            <td>{member.membershipPlan}</td>
+            <td>{formatDate(member.joinDate)}</td>
+            <td>{member.status}</td>
+            <td>
+              <button>Delete</button>
+              <button>Suspend</button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 }
