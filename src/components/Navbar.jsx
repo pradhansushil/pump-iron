@@ -65,6 +65,8 @@ const Navbar = () => {
     };
   }, [isDropdownOpen]);
 
+  if (location.pathname.startsWith("/admin")) return null;
+
   return (
     <nav>
       <div className="nav-container">
