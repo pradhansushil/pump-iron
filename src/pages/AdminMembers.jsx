@@ -7,24 +7,25 @@ import { formatDate } from "../utils/formatters";
 export default function AdminMembers() {
   const [members, setMembers] = useState([]);
   const [filterStatus, setFilterStatus] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchAllMembers = async () => {
-      try {
-        const allMembers = await getAllMembers();
-        setMembers(allMembers);
-      } catch (error) {
-        console.error("Error: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchAllMembers = async () => {
+    try {
+      const allMembers = await getAllMembers();
+      setMembers(allMembers);
+    } catch (error) {
+      console.error("Error: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchAllMembers();
   }, []);
 
@@ -49,34 +50,45 @@ export default function AdminMembers() {
   if (fetchedMembers.length === 0) return <p>No members match your search</p>;
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone Number</th>
-          <th>Plan</th>
-          <th>Join Date</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {fetchedMembers.map((member) => (
-          <tr key={member.id}>
-            <td>{member.name}</td>
-            <td>{member.email}</td>
-            <td>{member.phone}</td>
-            <td>{member.membershipPlan}</td>
-            <td>{formatDate(member.joinDate)}</td>
-            <td>{member.status}</td>
-            <td>
-              <button>Delete</button>
-              <button>Suspend</button>
-            </td>
+    <div>
+      <button onClick={() => setIsModalOpen(true)}>Create Member</button>
+
+      {isModalOpen && (
+        <CreateMemberModal
+          onClose={() => setIsModalOpen(false)}
+          fetchMembers={fetchAllMembers}
+        />
+      )}
+
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Plan</th>
+            <th>Join Date</th>
+            <th>Status</th>
+            <th>Actions</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {fetchedMembers.map((member) => (
+            <tr key={member.id}>
+              <td>{member.name}</td>
+              <td>{member.email}</td>
+              <td>{member.phone}</td>
+              <td>{member.membershipPlan}</td>
+              <td>{formatDate(member.joinDate)}</td>
+              <td>{member.status}</td>
+              <td>
+                <button>Delete</button>
+                <button>Suspend</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
