@@ -52,7 +52,9 @@ export default function AdminMembers() {
 
   return (
     <div>
-      <button onClick={() => setIsModalOpen(true)}>Create Member</button>
+      {!isModalOpen && (
+        <button onClick={() => setIsModalOpen(true)}>Create Member</button>
+      )}
 
       {isModalOpen && (
         <CreateMemberModal
