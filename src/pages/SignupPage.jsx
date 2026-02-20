@@ -44,7 +44,15 @@ export default function SignupPage() {
       return setError({ phone: "Please enter a valid phone number" });
     }
 
-    if (password !== confirmPassword) {
+    if (password === "") {
+      return setError({ password: "Please enter a valid password" });
+    } else if (password.length < 6) {
+      return setError({ password: "Password must be at least 6 characters" });
+    }
+
+    if (confirmPassword === "") {
+      return setError({ confirmPassword: "Please confirm your password" })
+    } else if(password !== confirmPassword) {
       return setError({ confirmPassword: "Passwords do not match" });
     }
 
