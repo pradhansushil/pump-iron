@@ -117,6 +117,7 @@ export default function SignupPage() {
 
         <form onSubmit={handleSubmit} noValidate>
           <div>
+            {error.name && <p>{error.name}</p>}
             <label htmlFor="name">Full Name *</label>
             <input
               type="text"
@@ -126,10 +127,10 @@ export default function SignupPage() {
               onChange={(e) => setName(e.target.value)}
               placeholder="John Doe"
             />
-            {error.name && <p>{error.name}</p>}
           </div>
 
           <div>
+            {error.email && <p>{error.email}</p>}
             <label htmlFor="email">Email *</label>
             <input
               type="email"
@@ -139,10 +140,10 @@ export default function SignupPage() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="john@example.com"
             />
-            {error.email && <p>{error.email}</p>}
           </div>
 
           <div>
+            {error.phone && <p>{error.phone}</p>}
             <label htmlFor="phone">Phone Number *</label>
             <input
               type="tel"
@@ -152,7 +153,6 @@ export default function SignupPage() {
               onChange={(e) => setPhone(e.target.value)}
               placeholder="1234567890"
             />
-            {error.phone && <p>{error.phone}</p>}
           </div>
 
           <div>
@@ -170,6 +170,7 @@ export default function SignupPage() {
           </div>
 
           <div>
+            {error.paymentMethod && <p>{error.paymentMethod}</p>}
             <label htmlFor="paymentMethod">Payment Method</label>
             <select
               id="paymentMethod"
@@ -183,7 +184,6 @@ export default function SignupPage() {
               <option value="cash">Cash</option>
               <option value="qr code">QR Code</option>
             </select>
-            {error.paymentMethod && <p>{error.paymentMethod}</p>}
           </div>
 
           {paymentMethod === "credit card" && (
@@ -209,6 +209,7 @@ export default function SignupPage() {
           {paymentMethod === "qr code" && <QRCodeForm />}
 
           <div>
+            {error.password && <p>{error.password}</p>}
             <label htmlFor="password">Password *</label>
             <input
               type="password"
@@ -218,10 +219,10 @@ export default function SignupPage() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="At least 6 characters"
             />
-            {error.password && <p>{error.password}</p>}
           </div>
 
           <div>
+            {error.confirmPassword && <p>{error.confirmPassword}</p>}
             <label htmlFor="confirmPassword">Confirm Password *</label>
             <input
               type="password"
@@ -231,7 +232,6 @@ export default function SignupPage() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Re-enter your password"
             />
-            {error.confirmPassword && <p>{error.confirmPassword}</p>}
           </div>
 
           <button type="submit" disabled={loading}>
