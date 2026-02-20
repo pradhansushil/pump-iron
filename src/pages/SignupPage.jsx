@@ -58,6 +58,9 @@ export default function SignupPage() {
     };
 
     const planPrice = amount[membershipPlan];
+    if (name === "") {
+      return setError("Please provide the name of the member");
+    }
 
     // Validate passwords match
     if (password !== confirmPassword) {
