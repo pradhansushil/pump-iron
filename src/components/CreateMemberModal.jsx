@@ -29,7 +29,9 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
       return setError({ phone: "Please enter a valid phone number" });
     }
 
-    if (password.length < 6) {
+    if (password === "") {
+      return setError({ password: "Please enter a valid password" });
+    } else if (password.length < 6) {
       return setError({ password: "Password must be at least 6 characters" });
     }
 
