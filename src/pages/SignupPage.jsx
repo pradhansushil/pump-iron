@@ -62,6 +62,12 @@ export default function SignupPage() {
       return setError("Please provide the name of the member");
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError({ email: "Please enter a valid email address" });
+      return;
+    }
+
     // Validate passwords match
     if (password !== confirmPassword) {
       return setError("Passwords do not match");
