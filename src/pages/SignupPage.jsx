@@ -1,19 +1,3 @@
-/**
- * SignupPage Component
- *
- * Purpose: Registers new users and creates member profile in Firestore
- * - Collects all required member information (name, phone, membership plan)
- * - Creates Firebase Auth account and Firestore member document
- * - All new users → /dashboard (default member role)
- * - Validates password confirmation before submission
- *
- * Interview Notes:
- * - Multi-step form with comprehensive validation
- * - Integrates Firebase Auth with Firestore database
- * - Shows proper error handling for both auth and database operations
- * - Demonstrates controlled form inputs for various field types
- */
-
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -25,7 +9,6 @@ import BankTransferForm from "../components/payment-forms/BankTransferForm";
 import QRCodeForm from "../components/payment-forms/QRCodeForm";
 
 export default function SignupPage() {
-  // Form state
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -33,12 +16,9 @@ export default function SignupPage() {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  // UI state
-  const [error, setError] = useState("");
+  const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
 
-  //Payment Method Details
   const [ccNumber, setCCNumber] = useState("");
   const [expiry, setExpiry] = useState("");
   const [ccv, setCCV] = useState("");
@@ -51,53 +31,38 @@ export default function SignupPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const amount = {
-      basic: 29,
-      standard: 49,
-      premium: 79,
-    };
-
-    const planPrice = amount[membershipPlan];
     if (name === "") {
-      return setError("Please provide the name of the member");
+      return setError({ name: "Please provide your name" });
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setError({ email: "Please enter a valid email address" });
-      return;
+      return setError({ email: "Please enter a valid email address" });
     }
 
-    // Validate passwords match
-    if (password !== confirmPassword) {
-      return setError("Passwords do not match");
-    }
-
-    // Validate phone number (basic check)
     if (phone.length < 10) {
-      return setError("Please enter a valid phone number");
+      return setError({ phone: "Please enter a valid phone number" });
+    }
+
+    if (password !== confirmPassword) {
+      return setError({ confirmPassword: "Passwords do not match" });
     }
 
     if (!paymentMethod) {
-      return setError("Please select a payment method");
+      return setError({ paymentMethod: "Please select a payment method" });
     }
 
+    const amount = { basic: 29, standard: 49, premium: 79 };
+    const planPrice = amount[membershipPlan];
+
     try {
-      setError("");
+      setError({});
       setLoading(true);
 
-      // Step 1: Create Firebase Auth account
       const userCredential = await signup(email, password, "member");
       const uid = userCredential.user.uid;
 
-      // Step 2: Create member document in Firestore
-      const memberData = {
-        name,
-        email,
-        phone,
-        membershipPlan,
-        paymentMethod: paymentMethod,
-      };
+      const memberData = { name, email, phone, membershipPlan, paymentMethod };
 
       const result = await createMember(uid, memberData);
 
@@ -105,7 +70,6 @@ export default function SignupPage() {
         throw new Error(result.error || "Failed to create member profile");
       }
 
-      // Member created successfully, now try payment with retries
       let paymentResult;
       let attempts = 0;
 
@@ -121,34 +85,24 @@ export default function SignupPage() {
           email: email,
         });
 
-        if (paymentResult.success) {
-          break;
-        }
-
+        if (paymentResult.success) break;
         attempts++;
       }
 
-      // If payment failed after retries, mark member as inactive
       if (!paymentResult.success) {
         await updateMember(uid, { status: "inactive" });
       }
 
-      // Navigate to dashboard
       navigate("/dashboard", { state: { isNewUser: true } });
     } catch (err) {
-      // Handle errors with user-friendly messages
-      let friendlyMessage = err.message;
-
       if (err.code === "auth/email-already-in-use") {
-        friendlyMessage =
-          "This email is already registered. Please log in or use a different email.";
-      } else if (err.code === "auth/weak-password") {
-        friendlyMessage = "Password should be at least 6 characters long.";
-      } else if (err.code === "auth/invalid-email") {
-        friendlyMessage = "Please enter a valid email address.";
+        setError({
+          general:
+            "This email is already registered. Please log in or use a different email.",
+        });
+      } else {
+        setError({ general: err.message });
       }
-
-      setError(friendlyMessage);
     } finally {
       setLoading(false);
     }
@@ -159,10 +113,9 @@ export default function SignupPage() {
       <div>
         <h2>Join Our Gym</h2>
 
-        {error && <div>{error}</div>}
+        {error.general && <div>{error.general}</div>}
 
         <form onSubmit={handleSubmit} noValidate>
-          {/* Full Name */}
           <div>
             <label htmlFor="name">Full Name *</label>
             <input
@@ -173,9 +126,9 @@ export default function SignupPage() {
               onChange={(e) => setName(e.target.value)}
               placeholder="John Doe"
             />
+            {error.name && <p>{error.name}</p>}
           </div>
 
-          {/* Email */}
           <div>
             <label htmlFor="email">Email *</label>
             <input
@@ -186,9 +139,9 @@ export default function SignupPage() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="john@example.com"
             />
+            {error.email && <p>{error.email}</p>}
           </div>
 
-          {/* Phone */}
           <div>
             <label htmlFor="phone">Phone Number *</label>
             <input
@@ -199,9 +152,9 @@ export default function SignupPage() {
               onChange={(e) => setPhone(e.target.value)}
               placeholder="1234567890"
             />
+            {error.phone && <p>{error.phone}</p>}
           </div>
 
-          {/* Membership Plan */}
           <div>
             <label htmlFor="membershipPlan">Membership Plan *</label>
             <select
@@ -216,7 +169,6 @@ export default function SignupPage() {
             </select>
           </div>
 
-          {/* Payment Method */}
           <div>
             <label htmlFor="paymentMethod">Payment Method</label>
             <select
@@ -231,6 +183,7 @@ export default function SignupPage() {
               <option value="cash">Cash</option>
               <option value="qr code">QR Code</option>
             </select>
+            {error.paymentMethod && <p>{error.paymentMethod}</p>}
           </div>
 
           {paymentMethod === "credit card" && (
@@ -255,7 +208,6 @@ export default function SignupPage() {
 
           {paymentMethod === "qr code" && <QRCodeForm />}
 
-          {/* Password */}
           <div>
             <label htmlFor="password">Password *</label>
             <input
@@ -266,9 +218,9 @@ export default function SignupPage() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="At least 6 characters"
             />
+            {error.password && <p>{error.password}</p>}
           </div>
 
-          {/* Confirm Password */}
           <div>
             <label htmlFor="confirmPassword">Confirm Password *</label>
             <input
@@ -279,9 +231,9 @@ export default function SignupPage() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Re-enter your password"
             />
+            {error.confirmPassword && <p>{error.confirmPassword}</p>}
           </div>
 
-          {/* Submit Button */}
           <button type="submit" disabled={loading}>
             {loading ? "Creating Account..." : "Sign Up"}
           </button>
