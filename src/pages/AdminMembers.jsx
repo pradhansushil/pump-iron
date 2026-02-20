@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { getAllMembers } from "../services/db";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { formatDate } from "../utils/formatters";
+import CreateMemberModal from "../components/CreateMemberModal";
 
 export default function AdminMembers() {
   const [members, setMembers] = useState([]);
