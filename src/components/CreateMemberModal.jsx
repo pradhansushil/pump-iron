@@ -90,7 +90,10 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
             id="name"
             required
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+              setError((prev) => ({ ...prev, name: undefined }));
+            }}
             placeholder="John Doe"
           />
         </div>
@@ -103,7 +106,10 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
             id="email"
             required
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setError((prev) => ({ ...prev, email: undefined }));
+            }}
             placeholder="john@example.com"
           />
         </div>
@@ -116,7 +122,10 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
             id="phone"
             required
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => {
+              setPhone(e.target.value);
+              setError((prev) => ({ ...prev, phone: undefined }));
+            }}
             placeholder="1234567890"
           />
         </div>
@@ -143,7 +152,10 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
             id="password"
             required
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setError((prev) => ({ ...prev, password: undefined }));
+            }}
             placeholder="At least 6 characters"
           />
         </div>
