@@ -65,20 +65,6 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
 
   return (
     <div>
-      <div
-        style={{
-          position: "fixed",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          background: "white",
-          padding: "2rem",
-          border: "1px solid #ccc",
-          zIndex: 1000,
-          width: "400px",
-        }}
-      ></div>
-
       <form onSubmit={handleSubmit} noValidate>
         {error.general && <p>{error.general}</p>}
 
