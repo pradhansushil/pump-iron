@@ -13,7 +13,10 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 // Initialize and export services
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+// Secondary app instance for admin user creation
+const secondaryApp = initializeApp(firebaseConfig, "Secondary");
+export const secondaryAuth = getAuth(secondaryApp);
