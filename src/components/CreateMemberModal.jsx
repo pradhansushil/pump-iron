@@ -11,7 +11,7 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const { signup } = useAuth();
+  const { adminCreateUser } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +39,7 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
       setError({});
       setLoading(true);
 
-      const userCredential = await signup(email, password, "member");
+      const userCredential = await adminCreateUser(email, password, "member");
       const uid = userCredential.user.uid;
 
       const memberData = { name, email, phone, membershipPlan };
