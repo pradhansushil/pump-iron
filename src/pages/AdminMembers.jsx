@@ -83,6 +83,9 @@ export default function AdminMembers() {
               <td>{formatDate(member.joinDate)}</td>
               <td>{member.status}</td>
               <td>
+                <button onClick={() => setSelectedMember(member)}>
+                  Record Payment
+                </button>
                 <button>Delete</button>
                 <button>Suspend</button>
               </td>
@@ -90,6 +93,7 @@ export default function AdminMembers() {
           ))}
         </tbody>
       </table>
+      {selectedMember && <RecordPaymentModal />}
     </div>
   );
 }
