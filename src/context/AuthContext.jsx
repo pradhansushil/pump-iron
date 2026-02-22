@@ -6,7 +6,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { auth, db } from "../firebase";
+import { auth, db, secondaryAuth } from "../firebase";
 
 const AuthContext = createContext();
 
@@ -71,6 +71,22 @@ export function AuthProvider({ children }) {
     return userCredential;
   }
 
+  const adminCreateUser = async (email, password) => {
+    const userCredential = await createUserWithEmailAndPassword(
+      secondaryAuth,
+      email,
+      password,
+    );
+
+    await setDoc(doc(db, "users", userCredential.user.uid), {
+      email: email,
+      role: "member",
+      createdAt: new Date().toISOString(),
+    });
+    await signOut(secondaryAuth);
+    return userCredential;
+  };
+
   // Login function - signs in existing user
   async function login(email, password) {
     // 1. Authenticate the user
@@ -104,6 +120,7 @@ export function AuthProvider({ children }) {
     signup,
     login,
     logout,
+    adminCreateUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
