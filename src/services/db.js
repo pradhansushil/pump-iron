@@ -166,7 +166,7 @@ export const createPayment = async (paymentData) => {
     return { success: true, paymentId: newPaymentRef.id };
   } catch (error) {
     console.error("Error creating payment:", error);
-    return { success: false, error: error.message };
+    throw error;
   }
 };
 
