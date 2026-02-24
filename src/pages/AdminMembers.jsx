@@ -57,6 +57,18 @@ export default function AdminMembers() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+
+        <label htmlFor="filters">Filters: </label>
+        <select
+          id="filters"
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value)}
+        >
+          <option value="">All</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+          <option value="suspended">Suspended</option>
+        </select>
       </div>
 
       {!isModalOpen && (
