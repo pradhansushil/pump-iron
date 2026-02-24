@@ -51,6 +51,14 @@ export default function AdminMembers() {
 
   return (
     <div>
+      <div>
+        <input
+          type="search"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
       {!isModalOpen && (
         <button onClick={() => setIsModalOpen(true)}>Create Member</button>
       )}
