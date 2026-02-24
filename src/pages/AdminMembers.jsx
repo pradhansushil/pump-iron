@@ -4,6 +4,7 @@ import { getAllMembers } from "../services/db";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { formatDate } from "../utils/formatters";
 import CreateMemberModal from "../components/CreateMemberModal";
+import RecordPaymentModal from "../components/RecordPaymentModal";
 
 export default function AdminMembers() {
   const [members, setMembers] = useState([]);
@@ -93,7 +94,13 @@ export default function AdminMembers() {
           ))}
         </tbody>
       </table>
-      {selectedMember && <RecordPaymentModal />}
+      {selectedMember && (
+        <RecordPaymentModal
+          member={selectedMember}
+          fetchMembers={fetchAllMembers}
+          onClose={() => setSelectedMember(null)}
+        />
+      )}
     </div>
   );
 }
