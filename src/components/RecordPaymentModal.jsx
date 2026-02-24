@@ -1,12 +1,23 @@
 import { useState } from "react";
-import { createPayment, updateMember } from "../services/db";
 import { Timestamp } from "firebase/firestore";
 
+import { createPayment, updateMember } from "../services/db";
+
 export default function RecordPaymentModal({ member, onClose, fetchMembers }) {
+  const addMonths = (months) => {
+    const d = new Date();
+    d.setMonth(d.getMonth() + months);
+    return d;
+  };
+  const oneMonth = addMonths(1);
+  const twoMonths = addMonths(2);
+  const threeMonths = addMonths(3);
+  const sixMonths = addMonths(6);
+
   const [amount, setAmount] = useState(29);
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
-  const [dueDate, setDueDate] = useState("");
+  const [dueDate, setDueDate] = useState(oneMonth.toISOString());
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -17,12 +28,10 @@ export default function RecordPaymentModal({ member, onClose, fetchMembers }) {
 
     try {
       await createPayment({
-        userId: member.uid,
+        memberId: member.uid,
         amount: amount,
-        date: date ? Timestamp.fromDate(new Date(date)) : Timestamp.now(),
-        dueDate: dueDate
-          ? Timestamp.fromDate(new Date(dueDate))
-          : Timestamp.now(),
+        date: Timestamp.fromDate(new Date(date)),
+        dueDate: Timestamp.fromDate(new Date(dueDate)),
         method: "cash",
         status: "completed",
         description: description,
@@ -41,20 +50,10 @@ export default function RecordPaymentModal({ member, onClose, fetchMembers }) {
     }
   };
 
-  const addMonths = (months) => {
-    const d = new Date();
-    d.setMonth(d.getMonth() + months);
-    return d;
-  };
-  const oneMonth = addMonths(1);
-  const twoMonths = addMonths(2);
-  const threeMonths = addMonths(3);
-  const sixMonths = addMonths(6);
-
   return (
     <div>
       <form onSubmit={handleSubmit} noValidate>
-        <p>{error}</p>
+        {error && <p>{error}</p>}
 
         <div>
           <label htmlFor="amount">Amount </label>
@@ -81,7 +80,7 @@ export default function RecordPaymentModal({ member, onClose, fetchMembers }) {
         </div>
 
         <div>
-          <label htmlFor="dueDate">Date </label>
+          <label htmlFor="dueDate">Due Date </label>
           <select
             id="dueDate"
             value={dueDate}
@@ -101,6 +100,21 @@ export default function RecordPaymentModal({ member, onClose, fetchMembers }) {
             </option>
           </select>
         </div>
+
+        <div>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Enter an optional description"
+          />
+        </div>
+
+        <button onClick={() => onClose()} disabled={loading}>
+          Cancel
+        </button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Processing Payment" : "Make Payment"}
+        </button>
       </form>
     </div>
   );
