@@ -47,8 +47,6 @@ export default function AdminMembers() {
 
   if (members.length === 0) return <p>No members have signed up yet.</p>;
 
-  if (fetchedMembers.length === 0) return <p>No members match your search</p>;
-
   return (
     <div>
       <div>
@@ -82,38 +80,42 @@ export default function AdminMembers() {
         />
       )}
 
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone Number</th>
-            <th>Plan</th>
-            <th>Join Date</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {fetchedMembers.map((member) => (
-            <tr key={member.id}>
-              <td>{member.name}</td>
-              <td>{member.email}</td>
-              <td>{member.phone}</td>
-              <td>{member.membershipPlan}</td>
-              <td>{formatDate(member.joinDate)}</td>
-              <td>{member.status}</td>
-              <td>
-                <button onClick={() => setSelectedMember(member)}>
-                  Record Payment
-                </button>
-                <button>Delete</button>
-                <button>Suspend</button>
-              </td>
+      {fetchedMembers.length !== 0 ? (
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>Plan</th>
+              <th>Join Date</th>
+              <th>Status</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {fetchedMembers.map((member) => (
+              <tr key={member.id}>
+                <td>{member.name}</td>
+                <td>{member.email}</td>
+                <td>{member.phone}</td>
+                <td>{member.membershipPlan}</td>
+                <td>{formatDate(member.joinDate)}</td>
+                <td>{member.status}</td>
+                <td>
+                  <button onClick={() => setSelectedMember(member)}>
+                    Record Payment
+                  </button>
+                  <button>Delete</button>
+                  <button>Suspend</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>No members match your search</p>
+      )}
       {selectedMember && (
         <RecordPaymentModal
           member={selectedMember}
