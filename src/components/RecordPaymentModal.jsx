@@ -18,11 +18,13 @@ export default function RecordPaymentModal({ member, onClose, fetchMembers }) {
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState(oneMonth.toISOString());
-  const [error, setError] = useState("");
+  const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (date === "") return setError({ date: "Please fill in the date field" });
 
     setLoading(true);
 
@@ -44,7 +46,7 @@ export default function RecordPaymentModal({ member, onClose, fetchMembers }) {
       fetchMembers();
       onClose();
     } catch {
-      setError("Something went wrong");
+      setError({ general: "Something went wrong. Please try again." });
     } finally {
       setLoading(false);
     }
@@ -53,7 +55,8 @@ export default function RecordPaymentModal({ member, onClose, fetchMembers }) {
   return (
     <div>
       <form onSubmit={handleSubmit} noValidate>
-        {error && <p>{error}</p>}
+        {error.general && <p>{error.general}</p>}
+        {error.date && <p>{error.date}</p>}
 
         <div>
           <label htmlFor="amount">Amount </label>
@@ -73,7 +76,6 @@ export default function RecordPaymentModal({ member, onClose, fetchMembers }) {
           <input
             type="date"
             id="date"
-            required
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
