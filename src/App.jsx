@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
@@ -9,7 +11,7 @@ import MemberRoute from "./components/MemberRoute";
 import AdminRoute from "./components/AdminRoute";
 import Navbar from "./components/Navbar"; // Import the Navbar component
 import Classes from "./pages/Classes";
-import { Toaster } from "react-hot-toast";
+import AdminMembers from "./pages/AdminMembers";
 
 export default function App() {
   return (
@@ -45,6 +47,14 @@ export default function App() {
           element={
             <AdminRoute>
               <AdminDashboard />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/members"
+          element={
+            <AdminRoute>
+              <AdminMembers />
             </AdminRoute>
           }
         />
