@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { getAllMembers, deleteMember } from "../services/db";
+import { getAllMembers, deleteMember, updateMember } from "../services/db";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { formatDate } from "../utils/formatters";
 import CreateMemberModal from "../components/CreateMemberModal";
@@ -44,14 +44,28 @@ export default function AdminMembers() {
     return matchesSearch && matchesStatus;
   });
 
-  const handleDelete = async (selectedMember) => {
+  const handleDelete = async (member) => {
     try {
-      await deleteMember(selectedMember.id);
+      await deleteMember(member.id);
       await fetchAllMembers();
-      toast.success(`Successfully deleted ${selectedMember.name}`);
+      toast.success(`Successfully deleted ${member.name}`);
     } catch (error) {
       toast.error(`Couldn't delete member: ${error.message}`);
     }
+  };
+
+  const handleSuspend = async (member) => {
+    if (member.status === "suspended") {
+      await updateMember(member.id, { status: "active" });
+    } else {
+      await updateMember(member.id, { status: "suspended" });
+    }
+    await fetchAllMembers();
+    toast.success(
+      member.status === "suspended"
+        ? "Member successfully unsuspended"
+        : "Member successfully suspended",
+    );
   };
 
   if (loading) return <LoadingSpinner message="Loading Members" />;
@@ -118,7 +132,9 @@ export default function AdminMembers() {
                     Record Payment
                   </button>
                   <button onClick={() => handleDelete(member)}>Delete</button>
-                  <button>Suspend</button>
+                  <button onClick={() => handleSuspend(member)}>
+                    {member.status === "suspended" ? "Unsuspend" : "Suspend"}
+                  </button>
                 </td>
               </tr>
             ))}
