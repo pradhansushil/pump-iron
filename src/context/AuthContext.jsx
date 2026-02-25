@@ -8,6 +8,8 @@ import {
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db, secondaryAuth } from "../firebase";
 
+import {getMemberById} from "../services/db"
+
 const AuthContext = createContext();
 
 export function useAuth() {
@@ -38,11 +40,23 @@ export function AuthProvider({ children }) {
         // Fetch user role from Firestore
         const userDoc = await getDoc(doc(db, "users", user.uid));
         if (userDoc.exists()) {
-          setUserRole(userDoc.data().role);
+          const role =userDoc.data().role;
+          setUserRole(role);
+
+          if (role === "member") {
+            const memberData = await getMemberById(user.uid);
+
+            if (memberData?.status === "suspended") {
+              sessionStorage.setItem("suspendedMessage", "Your account has beeen suspended. Please contact support");
+              await signOut(auth);
+              return
+            }
+          }
         }
       } else {
         setUserRole(null);
       }
+
       // loading becomes false when Firebase has finished verifying if there's an existing session or not.
       setLoading(false);
     });
