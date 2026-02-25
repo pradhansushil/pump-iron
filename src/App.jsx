@@ -12,6 +12,7 @@ import AdminRoute from "./components/AdminRoute";
 import Navbar from "./components/Navbar"; // Import the Navbar component
 import Classes from "./pages/Classes";
 import AdminMembers from "./pages/AdminMembers";
+import AdminLayout from "./components/AdminLayout";
 
 export default function App() {
   return (
@@ -46,7 +47,9 @@ export default function App() {
           path="/admin"
           element={
             <AdminRoute>
-              <AdminDashboard />
+              <AdminLayout>
+                <AdminDashboard />
+              </AdminLayout>
             </AdminRoute>
           }
         />
@@ -54,7 +57,9 @@ export default function App() {
           path="/admin/members"
           element={
             <AdminRoute>
-              <AdminMembers />
+              <AdminLayout>
+                <AdminMembers />
+              </AdminLayout>
             </AdminRoute>
           }
         />
