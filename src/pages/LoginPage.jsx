@@ -13,7 +13,7 @@
  * - Implements proper error handling for async operations
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -25,6 +25,14 @@ export default function LoginPage() {
 
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const message = sessionStorage.getItem("suspendedMessage");
+    if (message) {
+      setError(message);
+      sessionStorage.removeItem("suspendedMessage");
+    }
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
