@@ -7,7 +7,7 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [membershipPlan, setMembershipPlan] = useState("");
+  const [membershipPlan, setMembershipPlan] = useState("basic");
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
 
