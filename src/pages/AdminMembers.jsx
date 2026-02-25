@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 
-import { getAllMembers } from "../services/db";
+import { getAllMembers, deleteMember } from "../services/db";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { formatDate } from "../utils/formatters";
 import CreateMemberModal from "../components/CreateMemberModal";
 import RecordPaymentModal from "../components/RecordPaymentModal";
+import toast from "react-hot-toast";
 
 export default function AdminMembers() {
   const [members, setMembers] = useState([]);
@@ -42,6 +43,16 @@ export default function AdminMembers() {
 
     return matchesSearch && matchesStatus;
   });
+
+  const handleDelete = async (selectedMember) => {
+    try {
+      await deleteMember(selectedMember.id);
+      await fetchAllMembers();
+      toast.success(`Successfully deleted ${selectedMember.name}`);
+    } catch (error) {
+      toast.error(`Couldn't delete member: ${error.message}`);
+    }
+  };
 
   if (loading) return <LoadingSpinner message="Loading Members" />;
 
@@ -106,7 +117,7 @@ export default function AdminMembers() {
                   <button onClick={() => setSelectedMember(member)}>
                     Record Payment
                   </button>
-                  <button>Delete</button>
+                  <button onClick={() => handleDelete(member)}>Delete</button>
                   <button>Suspend</button>
                 </td>
               </tr>
