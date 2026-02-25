@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import toast from "react-hot-toast";
+
 import { createMember } from "../services/db";
 
 export default function CreateMemberModal({ onClose, fetchMembers }) {
@@ -45,6 +47,8 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
       const memberData = { name, email, phone, membershipPlan };
 
       const result = await createMember(uid, memberData);
+
+      toast.success("Member created successfully");
 
       if (!result.success) {
         throw new Error(result.error || "Failed to create member profile");
