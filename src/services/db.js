@@ -9,6 +9,7 @@ import {
   getDocs,
   setDoc,
   updateDoc,
+  deleteDoc,
   query,
   where,
   orderBy,
@@ -57,6 +58,21 @@ export const createMember = async (uid, memberData) => {
     return { success: true, memberId: uid };
   } catch (error) {
     console.error("Error creating member:", error);
+    return { success: false, error: error.message };
+  }
+};
+
+export const deleteMember = async (uid) => {
+  try {
+    // Create a reference to the member document
+    const memberRef = doc(db, MEMBERS, uid);
+
+    await deleteDoc(memberRef);
+
+    console.log("Member deleted successfully:", uid);
+    return { success: true, memberId: uid };
+  } catch (error) {
+    console.error("Error deleting member:", error);
     return { success: false, error: error.message };
   }
 };
