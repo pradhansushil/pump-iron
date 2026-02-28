@@ -14,6 +14,7 @@ import Navbar from "./components/Navbar"; // Import the Navbar component
 import Classes from "./pages/Classes";
 import AdminMembers from "./pages/AdminMembers";
 import AdminLayout from "./components/AdminLayout";
+import PublicRoute from "./components/PublicRoute";
 
 export default function App() {
   return (
@@ -24,7 +25,14 @@ export default function App() {
 
       {/* Routes define which component renders for each URL path */}
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/"
+          element={
+            <PublicRoute>
+              <HomePage />
+            </PublicRoute>
+          }
+        />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/classes" element={<Classes />} />
