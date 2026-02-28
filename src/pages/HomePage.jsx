@@ -1,8 +1,15 @@
+import Hero from "../components/home/Hero";
+import Features from "../components/home/features/Features";
+import MembershipPlans from "../components/home/MembershipPlans/MembershipPlans";
+import Testimonials from "../components/home/testimonials/Testimonials";
+
 export default function Home() {
   return (
-    <div>
-      <h1>Home Page</h1>
-      <p>Welcome to the Gym App!</p>
-    </div>
+    <main>
+      <Hero />
+      <Features />
+      <MembershipPlans />
+      <Testimonials />
+    </main>
   );
 }
