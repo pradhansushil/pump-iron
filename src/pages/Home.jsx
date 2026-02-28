@@ -1,6 +1,7 @@
 import Hero from "../components/home/Hero";
 import Features from "../components/home/features/Features";
 import MembershipPlans from "../components/home/MembershipPlans/MembershipPlans";
+import Testimonials from "../components/home/testimonials/Testimonials";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Hero />
       <Features />
       <MembershipPlans />
+      <Testimonials />
     </main>
   );
 }
