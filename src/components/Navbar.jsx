@@ -9,23 +9,17 @@ const Navbar = () => {
   // eslint-disable-next-line no-unused-vars
   const [notificationCount, setNotificationCount] = useState(3);
 
-  // Get authentication state and functions
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  // State for dropdown visibility
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  // Reference to dropdown element for outside click detection
   const dropdownRef = useRef(null);
 
-  // Toggle dropdown open/closed
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
   };
 
-  // Handle user logout
   const handleLogout = async () => {
     try {
       await logout();
@@ -35,12 +29,10 @@ const Navbar = () => {
     }
   };
 
-  // Check if current route matches the given path
   const isActive = (path) => {
     return location.pathname === path;
   };
 
-  // Close dropdown when clicking outside or pressing Escape
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -70,47 +62,48 @@ const Navbar = () => {
   return (
     <nav>
       <div className="nav-container">
-        {/* Logo */}
         <Link to="/" className="logo">
           GymApp
         </Link>
 
-        {/* Navigation Links */}
         <div className="nav-links">
-          <Link
-            to="/"
-            className={isActive("/") ? "nav-link active" : "nav-link"}
-          >
-            Home
-          </Link>
-
           <Link
             to="/classes"
             className={isActive("/classes") ? "nav-link active" : "nav-link"}
           >
             Classes
           </Link>
+
           {!currentUser ? (
             // ========== GUEST NAVIGATION ==========
             <>
               <Link
-                to="/pricing"
-                className={
-                  isActive("/pricing") ? "nav-link active" : "nav-link"
-                }
+                to="/"
+                className={isActive("/") ? "nav-link active" : "nav-link"}
               >
-                Pricing
-              </Link>
-
-              <Link
-                to="/about"
-                className={isActive("/about") ? "nav-link active" : "nav-link"}
-              >
-                About
+                Home
               </Link>
 
               <Link to="/login" className="login-button">
                 Login
+              </Link>
+
+              <Link
+                to="/employees"
+                className={
+                  isActive("/employees") ? "nav-link active" : "nav-link"
+                }
+              >
+                Employees
+              </Link>
+
+              <Link
+                to="/gallery"
+                className={
+                  isActive("/gallery") ? "nav-link active" : "nav-link"
+                }
+              >
+                Gallery
               </Link>
             </>
           ) : (
@@ -146,7 +139,6 @@ const Navbar = () => {
                 {notificationCount > 0 && <span>{notificationCount}</span>}
               </button>
 
-              {/* Avatar Dropdown */}
               <div className="avatar-dropdown" ref={dropdownRef}>
                 <button
                   onClick={toggleDropdown}
@@ -159,7 +151,6 @@ const Navbar = () => {
                     : currentUser.email.charAt(0).toUpperCase()}
                 </button>
 
-                {/* Dropdown Menu */}
                 {isDropdownOpen && (
                   <div className="dropdown-menu">
                     <Link
