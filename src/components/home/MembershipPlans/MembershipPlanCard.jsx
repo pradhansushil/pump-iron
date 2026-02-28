@@ -8,7 +8,7 @@ export default function MembershipPlanCard({
 }) {
   return (
     <li>
-      <Link to="/signup">
+      <Link to="/signup" state={{ plan: name }}>
         <h3>{name}</h3>
         <p>{description}</p>
         {recommended && <span>Recommended</span>}

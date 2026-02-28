@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Timestamp } from "firebase/firestore";
 
@@ -9,10 +9,14 @@ import BankTransferForm from "../components/payment-forms/BankTransferForm";
 import QRCodeForm from "../components/payment-forms/QRCodeForm";
 
 export default function SignupPage() {
+  const location = useLocation();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [membershipPlan, setMembershipPlan] = useState("basic");
+  const [membershipPlan, setMembershipPlan] = useState(
+    (location.state?.plan || "basic").toLowerCase(),
+  );
   const [paymentMethod, setPaymentMethod] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -51,8 +55,8 @@ export default function SignupPage() {
     }
 
     if (confirmPassword === "") {
-      return setError({ confirmPassword: "Please confirm your password" })
-    } else if(password !== confirmPassword) {
+      return setError({ confirmPassword: "Please confirm your password" });
+    } else if (password !== confirmPassword) {
       return setError({ confirmPassword: "Passwords do not match" });
     }
 
