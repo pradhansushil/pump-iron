@@ -54,19 +54,19 @@ export default function AdminDashboard() {
     .reduce((sum, payment) => sum + payment.amount, 0);
 
   return (
-    <div>
-      <h1>Admin Dashboard</h1>
+    <div className="dashboard">
+      <h1 className="dashboard-title">Admin Dashboard</h1>
 
-      <div>
-        <p>
-          Total Members: <span>{totalMembers}</span>
+      <div className="stats-container">
+        <p className="stat">
+          Total Members: <span className="stat-value">{totalMembers}</span>
         </p>
-        <p>
-          Active Members: <span>{activeMembers}</span>
+        <p className="stat">
+          Active Members: <span className="stat-value">{activeMembers}</span>
         </p>
-        <p>
+        <p className="stat">
           Monthly Revenue:{" "}
-          <span>
+          <span className="stat-value">
             {monthlyRevenue.toLocaleString("en-us", {
               style: "currency",
               currency: "USD",

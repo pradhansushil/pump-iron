@@ -53,71 +53,80 @@ export default function RecordPaymentModal({ member, onClose, fetchMembers }) {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} noValidate>
-        {error.general && <p>{error.general}</p>}
-        {error.date && <p>{error.date}</p>}
+    <div className="modal-overlay">
+      <div className="modal-box">
+        <form onSubmit={handleSubmit} noValidate>
+          {error.general && <p className="form-error">{error.general}</p>}
+          {error.date && <p className="field-error">{error.date}</p>}
 
-        <div>
-          <label htmlFor="amount">Amount </label>
-          <select
-            id="amount"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-          >
-            <option value={29}>$29</option>
-            <option value={49}>$49</option>
-            <option value={79}>$79</option>
-          </select>
-        </div>
+          <div className="form-field">
+            <label htmlFor="amount">Amount </label>
+            <select
+              id="amount"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+            >
+              <option value={29}>$29</option>
+              <option value={49}>$49</option>
+              <option value={79}>$79</option>
+            </select>
+          </div>
 
-        <div>
-          <label htmlFor="date">Date </label>
-          <input
-            type="date"
-            id="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-        </div>
+          <div className="form-field">
+            <label htmlFor="date">Date </label>
+            <input
+              type="date"
+              id="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
 
-        <div>
-          <label htmlFor="dueDate">Due Date </label>
-          <select
-            id="dueDate"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-          >
-            <option value={oneMonth.toISOString()}>
-              {oneMonth.toLocaleDateString()}
-            </option>
-            <option value={twoMonths.toISOString()}>
-              {twoMonths.toLocaleDateString()}
-            </option>
-            <option value={threeMonths.toISOString()}>
-              {threeMonths.toLocaleDateString()}
-            </option>
-            <option value={sixMonths.toISOString()}>
-              {sixMonths.toLocaleDateString()}
-            </option>
-          </select>
-        </div>
+          <div className="form-field">
+            <label htmlFor="dueDate">Due Date </label>
+            <select
+              id="dueDate"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+            >
+              <option value={oneMonth.toISOString()}>
+                {oneMonth.toLocaleDateString()}
+              </option>
+              <option value={twoMonths.toISOString()}>
+                {twoMonths.toLocaleDateString()}
+              </option>
+              <option value={threeMonths.toISOString()}>
+                {threeMonths.toLocaleDateString()}
+              </option>
+              <option value={sixMonths.toISOString()}>
+                {sixMonths.toLocaleDateString()}
+              </option>
+            </select>
+          </div>
 
-        <div>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Enter an optional description"
-          />
-        </div>
+          <div className="form-field">
+            <textarea
+              className="form-textarea"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Enter an optional description"
+            />
+          </div>
 
-        <button onClick={() => onClose()} disabled={loading}>
-          Cancel
-        </button>
-        <button type="submit" disabled={loading}>
-          {loading ? "Processing Payment" : "Make Payment"}
-        </button>
-      </form>
+          <div className="form-buttons">
+            <button
+              className="cancel-btn"
+              onClick={() => onClose()}
+              disabled={loading}
+            >
+              Cancel
+            </button>
+            <button className="submit-btn" type="submit" disabled={loading}>
+              {loading ? "Processing Payment" : "Make Payment"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

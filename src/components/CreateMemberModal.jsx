@@ -68,12 +68,12 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
   };
 
   return (
-    <div>
+    <div className="member-form-container">
       <form onSubmit={handleSubmit} noValidate>
-        {error.general && <p>{error.general}</p>}
+        {error.general && <p className="form-error">{error.general}</p>}
 
-        <div>
-          {error.name && <p>{error.name}</p>}
+        <div className="form-field">
+          {error.name && <p className="field-error">{error.name}</p>}
           <label htmlFor="name">Full Name *</label>
           <input
             type="text"
@@ -88,8 +88,8 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
           />
         </div>
 
-        <div>
-          {error.email && <p>{error.email}</p>}
+        <div className="form-field">
+          {error.email && <p className="field-error">{error.email}</p>}
           <label htmlFor="email">Email *</label>
           <input
             type="email"
@@ -104,8 +104,8 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
           />
         </div>
 
-        <div>
-          {error.phone && <p>{error.phone}</p>}
+        <div className="form-field">
+          {error.phone && <p className="field-error">{error.phone}</p>}
           <label htmlFor="phone">Phone Number *</label>
           <input
             type="tel"
@@ -120,7 +120,7 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
           />
         </div>
 
-        <div>
+        <div className="form-field">
           <label htmlFor="membershipPlan">Membership Plan *</label>
           <select
             id="membershipPlan"
@@ -134,8 +134,8 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
           </select>
         </div>
 
-        <div>
-          {error.password && <p>{error.password}</p>}
+        <div className="form-field">
+          {error.password && <p className="field-error">{error.password}</p>}
           <label htmlFor="password">Password *</label>
           <input
             type="password"
@@ -150,12 +150,18 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
           />
         </div>
 
-        <button onClick={() => onClose()} disabled={loading}>
-          Cancel
-        </button>
-        <button type="submit" disabled={loading}>
-          {loading ? "Creating Member..." : "Save Member"}
-        </button>
+        <div className="form-buttons">
+          <button
+            className="cancel-btn"
+            onClick={() => onClose()}
+            disabled={loading}
+          >
+            Cancel
+          </button>
+          <button className="submit-btn" type="submit" disabled={loading}>
+            {loading ? "Creating Member..." : "Save Member"}
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -121,15 +121,15 @@ export default function SignupPage() {
   };
 
   return (
-    <div>
-      <div>
+    <div className="auth-page">
+      <div className="member-form-container">
         <h2>Join Our Gym</h2>
 
-        {error.general && <div>{error.general}</div>}
+        {error.general && <p className="form-error">{error.general}</p>}
 
         <form onSubmit={handleSubmit} noValidate>
-          <div>
-            {error.name && <p>{error.name}</p>}
+          <div className="form-field">
+            {error.name && <p className="field-error">{error.name}</p>}
             <label htmlFor="name">Full Name *</label>
             <input
               type="text"
@@ -141,8 +141,8 @@ export default function SignupPage() {
             />
           </div>
 
-          <div>
-            {error.email && <p>{error.email}</p>}
+          <div className="form-field">
+            {error.email && <p className="field-error">{error.email}</p>}
             <label htmlFor="email">Email *</label>
             <input
               type="email"
@@ -154,8 +154,8 @@ export default function SignupPage() {
             />
           </div>
 
-          <div>
-            {error.phone && <p>{error.phone}</p>}
+          <div className="form-field">
+            {error.phone && <p className="field-error">{error.phone}</p>}
             <label htmlFor="phone">Phone Number *</label>
             <input
               type="tel"
@@ -167,7 +167,7 @@ export default function SignupPage() {
             />
           </div>
 
-          <div>
+          <div className="form-field">
             <label htmlFor="membershipPlan">Membership Plan *</label>
             <select
               id="membershipPlan"
@@ -181,8 +181,10 @@ export default function SignupPage() {
             </select>
           </div>
 
-          <div>
-            {error.paymentMethod && <p>{error.paymentMethod}</p>}
+          <div className="form-field">
+            {error.paymentMethod && (
+              <p className="field-error">{error.paymentMethod}</p>
+            )}
             <label htmlFor="paymentMethod">Payment Method</label>
             <select
               id="paymentMethod"
@@ -220,8 +222,8 @@ export default function SignupPage() {
 
           {paymentMethod === "qr code" && <QRCodeForm />}
 
-          <div>
-            {error.password && <p>{error.password}</p>}
+          <div className="form-field">
+            {error.password && <p className="field-error">{error.password}</p>}
             <label htmlFor="password">Password *</label>
             <input
               type="password"
@@ -233,8 +235,10 @@ export default function SignupPage() {
             />
           </div>
 
-          <div>
-            {error.confirmPassword && <p>{error.confirmPassword}</p>}
+          <div className="form-field">
+            {error.confirmPassword && (
+              <p className="field-error">{error.confirmPassword}</p>
+            )}
             <label htmlFor="confirmPassword">Confirm Password *</label>
             <input
               type="password"
@@ -246,14 +250,16 @@ export default function SignupPage() {
             />
           </div>
 
-          <button type="submit" disabled={loading}>
-            {loading ? "Creating Account..." : "Sign Up"}
-          </button>
+          <div className="form-buttons">
+            <button className="submit-btn" type="submit" disabled={loading}>
+              {loading ? "Creating Account..." : "Sign Up"}
+            </button>
+          </div>
         </form>
 
-        <p>
+        <div className="auth-redirect">
           Already have an account? <Link to="/login">Log In</Link>
-        </p>
+        </div>
       </div>
     </div>
   );

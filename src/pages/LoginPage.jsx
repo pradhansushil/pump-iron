@@ -1,18 +1,3 @@
-/**
- * LoginPage Component
- *
- * Purpose: Authenticates existing users and routes them based on role.
- * - Admins → /admin
- * - Members → /dashboard
- * - Handles validation, error messages, and loading states
- *
- * Interview Notes:
- * - Demonstrates controlled form inputs and form validation
- * - Shows role-based routing/access control
- * - Uses AuthContext for centralized auth state management
- * - Implements proper error handling for async operations
- */
-
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -48,13 +33,10 @@ export default function LoginPage() {
       const user = await login(email, password);
 
       if (user.role === "admin") {
-        console.log("Navigating to /admin");
         navigate("/admin");
       } else if (user.role === "member") {
-        console.log("Navigating to /dashboard");
         navigate("/dashboard");
       } else {
-        console.log("Navigating to / (fallback)");
         navigate("/");
       }
     } catch (err) {
@@ -76,14 +58,14 @@ export default function LoginPage() {
   }
 
   return (
-    <div>
-      <div>
+    <div className="auth-page">
+      <div className="member-form-container">
         <h2>Sign In</h2>
 
-        {error && <div>{error}</div>}
+        {error && <p className="form-error">{error}</p>}
 
         <form onSubmit={handleSubmit}>
-          <div>
+          <div className="form-field">
             <label>Email</label>
             <input
               type="email"
@@ -93,7 +75,7 @@ export default function LoginPage() {
             />
           </div>
 
-          <div>
+          <div className="form-field">
             <label>Password</label>
             <input
               type="password"
@@ -103,13 +85,14 @@ export default function LoginPage() {
             />
           </div>
 
-          <button type="submit" disabled={loading}>
-            {loading ? "Logging in..." : "Log In"}
-          </button>
+          <div className="form-buttons">
+            <button className="submit-btn" type="submit" disabled={loading}>
+              {loading ? "Logging in..." : "Log In"}
+            </button>
+          </div>
         </form>
 
-        <div>
-          {/* Link prevents full page reload and preserves app state*/}
+        <div className="auth-redirect">
           Don't have an account? <Link to="/signup">Sign up</Link>
         </div>
       </div>

@@ -1,8 +1,8 @@
 export default function LoadingSpinner({ message = "Loading your data..." }) {
   return (
-    <div>
-      <div></div>
-      <p>{message}</p>
+    <div className="spinner-container">
+      <div className="spinner"></div>
+      <p className="spinner-message">{message}</p>
     </div>
   );
 }

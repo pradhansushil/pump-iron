@@ -5,7 +5,7 @@ export default function BankTransferForm({
   setRoutingNumber,
 }) {
   return (
-    <div>
+    <div className="bank-transfer-form">
       <label htmlFor="accountNumber">Account Number</label>
       <input
         id="accountNumber"

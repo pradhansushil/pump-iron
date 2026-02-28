@@ -73,9 +73,10 @@ export default function AdminMembers() {
   if (members.length === 0) return <p>No members have signed up yet.</p>;
 
   return (
-    <div>
-      <div>
+    <div className="members-page">
+      <div className="members-toolbar">
         <input
+          className="members-search"
           type="search"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -95,7 +96,12 @@ export default function AdminMembers() {
       </div>
 
       {!isModalOpen && (
-        <button onClick={() => setIsModalOpen(true)}>Create Member</button>
+        <button
+          className="create-member-btn"
+          onClick={() => setIsModalOpen(true)}
+        >
+          Create Member
+        </button>
       )}
 
       {isModalOpen && (
@@ -106,7 +112,7 @@ export default function AdminMembers() {
       )}
 
       {fetchedMembers.length !== 0 ? (
-        <table>
+        <table className="members-table">
           <thead>
             <tr>
               <th>Name</th>
@@ -127,12 +133,23 @@ export default function AdminMembers() {
                 <td>{member.membershipPlan}</td>
                 <td>{formatDate(member.joinDate)}</td>
                 <td>{member.status}</td>
-                <td>
-                  <button onClick={() => setSelectedMember(member)}>
+                <td className="member-actions">
+                  <button
+                    className="record-payment-btn"
+                    onClick={() => setSelectedMember(member)}
+                  >
                     Record Payment
                   </button>
-                  <button onClick={() => handleDelete(member)}>Delete</button>
-                  <button onClick={() => handleSuspend(member)}>
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleDelete(member)}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    className="suspend-btn"
+                    onClick={() => handleSuspend(member)}
+                  >
                     {member.status === "suspended" ? "Unsuspend" : "Suspend"}
                   </button>
                 </td>
@@ -141,8 +158,9 @@ export default function AdminMembers() {
           </tbody>
         </table>
       ) : (
-        <p>No members match your search</p>
+        <p className="no-results">No members match your search</p>
       )}
+
       {selectedMember && (
         <RecordPaymentModal
           member={selectedMember}

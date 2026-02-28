@@ -86,17 +86,18 @@ export default function Classes() {
 
   return (
     <>
-      {error && <div>{error}</div>}
-      <ul>
+      {error && <div className="booking-error">{error}</div>}
+      <ul className="classes-list">
         {classes.map((c) => (
-          <li key={c.id}>
-            <h3>{c.name}</h3>
+          <li className="class-card" key={c.id}>
+            <h3 className="class-name">{c.name}</h3>
             <p>Instructor: {c.instructor}</p>
             <p>Day: {c.day}</p>
             <p>Time: {c.time}</p>
             <p>Available spots: {c.capacity - c.currentBookings}</p>
             <p>{c.description}</p>
             <button
+              className="book-btn"
               disabled={c.id === bookingLoading}
               onClick={() => {
                 if (!currentUser) {

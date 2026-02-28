@@ -2,7 +2,7 @@ import AdminNavbar from "./AdminNavbar";
 
 export default function AdminLayout({ children }) {
   return (
-    <div>
+    <div className="admin-layout">
       <AdminNavbar />
       {children}
     </div>

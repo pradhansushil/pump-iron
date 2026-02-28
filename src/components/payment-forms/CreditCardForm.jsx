@@ -7,7 +7,7 @@ export default function CreditCardForm({
   setCCV,
 }) {
   return (
-    <div>
+    <div className="credit-card-form">
       <label htmlFor="cardNumber">Card Number:</label>
       <input
         id="cardNumber"

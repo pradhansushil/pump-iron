@@ -20,9 +20,9 @@ export default function AdminNavbar() {
   };
 
   return (
-    <div>
+    <div className="admin-navbar">
       <button onClick={handleLogout}>Log Out</button>
-      <div>
+      <div className="admin-nav-links">
         <Link
           to="/admin"
           className={isActive("/admin") ? "nav-link-active" : "nav-link"}

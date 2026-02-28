@@ -58,10 +58,13 @@ export default function UpdatePaymentMethodModal({
   }, []);
 
   return (
-    <div className="backdrop" onClick={handleClose}>
-      <div className="content" onClick={(e) => e.stopPropagation()}>
-        <button onClick={handleClose}>X</button>
+    <div className="modal-overlay" onClick={handleClose}>
+      <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close-btn" onClick={handleClose}>
+          X
+        </button>
         <select
+          className="form-field"
           value={selectedMethod}
           onChange={(e) => setSelectedMethod(e.target.value)}
         >
@@ -90,8 +93,15 @@ export default function UpdatePaymentMethodModal({
           />
         )}
         {selectedMethod === "qr code" && <QRCodeForm />}
-        <button onClick={handleClose}>Cancel</button>
-        <button onClick={handleSubmit}>Save</button>
+
+        <div className="form-buttons">
+          <button className="cancel-btn" onClick={handleClose}>
+            Cancel
+          </button>
+          <button className="submit-btn" onClick={handleSubmit}>
+            Save
+          </button>
+        </div>
       </div>
     </div>
   );

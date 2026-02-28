@@ -1,7 +1,3 @@
-/** what lines 2-10 are doing: importing components and hooks
- * why: we are preparing to use tools to accomplish what this component needs to do.
- * what would happen if removed: when the tools(components or hooks) are used in the logic, it would give an error, saying that it couldn't find it. In order to use it, you have to import it
- */
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -17,17 +13,12 @@ import {
   formatCurrency,
   formatDate,
   formatPaymentMethod,
-  getStatusColor,
 } from "../utils/formatters";
 import LoadingSpinner from "../components/LoadingSpinner";
 import CancelModal from "../components/CancelModal";
 import { cancelBooking } from "../services/bookingServices";
 
 export default function MemberDashboard() {
-  /** what lines 20-28 are doing: declaring state variables and setter functions.
-   * why: so React can track what the current value is and re-render when the value changes.
-   * what would happen if removed: React wouldn't be able to re-render the page, which means you have to do it manually, which prevents clean code (when using local variables). they work in memory, but won't re-render, hence why useState is used.
-   */
   const [memberData, setMemberData] = useState(null);
   const [payments, setPayments] = useState([]);
   const [bookings, setBookings] = useState([]);
@@ -37,15 +28,7 @@ export default function MemberDashboard() {
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
   const [selectedClassId, setSelectedClassId] = useState(null);
 
-  /** what this is doing: subscribing to useAuth from AuthContext.
-   * why: instead of re-creating the logic, which avoids DRY principle, we have one centralized place where the logic lives and can subscribe to that function.
-   * what would happen if removed: We wouldn't be able to tell who the currentUser is and create a more personal UI.
-   */
   const { currentUser } = useAuth();
-  /** what this is doing: Declaring a constant variable named navigate and storing the useNavigation() within the variable
-   * why: Hooks can only be called at the top level, not inside an async functions or conditionals.
-   * what would happen if removed: We wouldn't be able to re-direct users to a page.
-   */
   const navigate = useNavigate();
   const location = useLocation();
   const isNewUser = location.state?.isNewUser;
@@ -103,7 +86,6 @@ export default function MemberDashboard() {
   const handleCancelBooking = async () => {
     try {
       const result = await cancelBooking(selectedClassId, currentUser.uid);
-      console.log(result);
       toast.success(result.message);
     } catch (error) {
       toast.error(error.message);
@@ -115,9 +97,9 @@ export default function MemberDashboard() {
 
   return (
     <main aria-labelledby="dashboard-heading">
-      <div>
+      <div className="dashboard">
         {error && (
-          <div>
+          <div className="dashboard-error">
             <p>Unable to load dashboard data</p>
             <button
               onClick={() => {
@@ -130,8 +112,7 @@ export default function MemberDashboard() {
           </div>
         )}
 
-        <header>
-          {/* left side */}
+        <header className="dashboard-header">
           <div>
             <h1 id="dashboard-heading">
               {isNewUser
@@ -140,23 +121,12 @@ export default function MemberDashboard() {
             </h1>
             <p>{formattedDate}</p>
           </div>
-          {/* Right side */}
         </header>
 
         {memberData.status === "inactive" && (
-          <div
-            style={{
-              backgroundColor: "#fef2f2",
-              border: "1px solid #ef4444",
-              padding: "16px",
-              borderRadius: "8px",
-              marginBottom: "24px",
-            }}
-          >
-            <h3 style={{ color: "#dc2626", marginBottom: "8px" }}>
-              Payment Processing Failed
-            </h3>
-            <p style={{ marginBottom: "12px" }}>
+          <div className="inactive-banner">
+            <h3>Payment Processing Failed</h3>
+            <p>
               Your account is inactive because we couldn't process your initial
               payment. Please update your payment method to activate your
               membership.
@@ -167,27 +137,16 @@ export default function MemberDashboard() {
           </div>
         )}
 
-        <div>
-          <div>
+        <div className="dashboard-cards">
+          <div className="dashboard-card">
             <section aria-labelledby="membership-header">
               <h2 id="membership-header">Membership Status</h2>
               <p>{memberData.membershipPlan}</p>
-              <span
-                style={{
-                  backgroundColor:
-                    memberData.status === "active" ? "green" : "red",
-                  color: "white",
-                  padding: "4px 8px",
-                  borderRadius: "4px",
-                }}
-              >
-                {memberData.status}
-              </span>
+              <span className="status-badge">{memberData.status}</span>
             </section>
           </div>
 
-          {/* Card 2: Next Class */}
-          <div>
+          <div className="dashboard-card">
             <section aria-labelledby="next-class-heading">
               <h2 id="next-class-heading">Next Class</h2>
               {nextClass ? (
@@ -210,8 +169,7 @@ export default function MemberDashboard() {
             </section>
           </div>
 
-          {/* Card 3: Quick Action */}
-          <div>
+          <div className="dashboard-card">
             <section aria-labelledby="quick-action-header">
               <h2 id="quick-action-header">Quick Action</h2>
               <button onClick={() => navigate("/classes")}>Book a Class</button>
@@ -219,14 +177,13 @@ export default function MemberDashboard() {
           </div>
         </div>
 
-        <div>
+        <div className="recent-payments">
           <h2>Recent Payments</h2>
-
           {payments.length === 0 ? (
             <p>No payment history yet</p>
           ) : (
             <>
-              <table>
+              <table className="members-table">
                 <thead>
                   <tr>
                     <th scope="col">Date</th>
@@ -235,7 +192,6 @@ export default function MemberDashboard() {
                     <th scope="col">Status</th>
                   </tr>
                 </thead>
-
                 <tbody>
                   {payments.map((payment) => (
                     <tr key={payment.id}>
@@ -243,32 +199,23 @@ export default function MemberDashboard() {
                       <td>{formatCurrency(payment.amount)}</td>
                       <td>{formatPaymentMethod(payment.method)}</td>
                       <td>
-                        <span
-                          style={{
-                            backgroundColor: getStatusColor(payment.status),
-                            color: "white",
-                            padding: "4px 8px",
-                            borderRadius: "4px",
-                          }}
-                        >
-                          {payment.status}
-                        </span>
+                        <span className="status-badge">{payment.status}</span>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <Link to={"/payments"}> View Full Payment History </Link>
+              <Link to={"/payments"}>View Full Payment History</Link>
             </>
           )}
         </div>
 
-        <div>
+        <div className="upcoming-classes">
           <h2>Upcoming Classes</h2>
           {bookings.length >= 1 ? (
-            <div>
+            <div className="bookings-list">
               {bookings.map((booking) => (
-                <div key={booking.id}>
+                <div className="booking-card" key={booking.id}>
                   <div>
                     <h3>{booking.className}</h3>
                   </div>
@@ -277,7 +224,7 @@ export default function MemberDashboard() {
                       {booking.instructor} | {formatDate(booking.dateTime)}
                     </p>
                   </div>
-                  <div>
+                  <div className="booking-actions">
                     <button
                       onClick={() => navigate(`/classes/${booking.classId}`)}
                     >
@@ -296,7 +243,7 @@ export default function MemberDashboard() {
               ))}
             </div>
           ) : (
-            <div>
+            <div className="no-bookings">
               <p>No classes booked yet</p>
               <p>
                 Ready to get started? Browse our classes and book your

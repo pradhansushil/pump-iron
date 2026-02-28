@@ -52,28 +52,26 @@ export default function Payments() {
   if (loading) return <LoadingSpinner message="Loading payment data..." />;
   if (error) return <p>{error}</p>;
 
-  console.log("Payments data:", payments);
-  console.log("First payment:", payments[0]);
-  console.log("First payment date:", payments[0]?.date);
-
   return (
     memberData && (
       <>
-        <p>
-          Current Payment Method:{" "}
-          <span>
-            {memberData.paymentMethod
-              ? formatPaymentMethod(memberData.paymentMethod)
-              : "No payment method on file"}
-          </span>
-        </p>
-        <button onClick={() => setIsModalOpen(true)}>
-          Update Payment Method
-        </button>
+        <div className="payment-method">
+          <p>
+            Current Payment Method:{" "}
+            <span>
+              {memberData.paymentMethod
+                ? formatPaymentMethod(memberData.paymentMethod)
+                : "No payment method on file"}
+            </span>
+          </p>
+          <button className="submit-btn" onClick={() => setIsModalOpen(true)}>
+            Update Payment Method
+          </button>
+        </div>
 
         {payments.length > 0 ? (
-          <div>
-            <table>
+          <div className="payments-history">
+            <table className="members-table">
               <thead>
                 <tr>
                   <th>Date</th>
@@ -87,13 +85,14 @@ export default function Payments() {
                 {[...payments]
                   .sort((a, b) => b.date.toDate() - a.date.toDate())
                   .map((payment) => {
-                    console.log("payment in map:", payment.date);
                     return (
                       <tr key={payment.id}>
                         <td>{formatDate(payment.date)}</td>
                         <td>{formatCurrency(payment.amount)}</td>
                         <td>{formatPaymentMethod(payment.method)}</td>
-                        <td>{payment.status}</td>
+                        <td>
+                          <span className="status-badge">{payment.status}</span>
+                        </td>
                         <td>{payment.description}</td>
                       </tr>
                     );
@@ -102,7 +101,7 @@ export default function Payments() {
             </table>
           </div>
         ) : (
-          "No payment records found"
+          <p className="no-results">No payment records found</p>
         )}
 
         {isModalOpen && (
