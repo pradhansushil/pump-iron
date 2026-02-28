@@ -6,9 +6,9 @@ export default function Features() {
     <section aria-labelledby="features">
       <h2 id="features">Why Join Us?</h2>
       <ul>
-        {featuresData.map((feature, index) => (
+        {featuresData.map((feature) => (
           <FeatureCard
-            key={index}
+            key={feature.title}
             icon={feature.icon}
             title={feature.title}
             description={feature.description}
