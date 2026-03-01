@@ -15,6 +15,7 @@ import Classes from "./pages/Classes";
 import AdminMembers from "./pages/AdminMembers";
 import AdminLayout from "./components/AdminLayout";
 import PublicRoute from "./components/PublicRoute";
+import Employees from "./pages/Employees";
 
 export default function App() {
   return (
@@ -36,6 +37,7 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/classes" element={<Classes />} />
+        <Route path="/employees" element={<Employees />} />
         <Route
           path="/dashboard"
           element={
