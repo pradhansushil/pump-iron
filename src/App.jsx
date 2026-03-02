@@ -16,6 +16,7 @@ import AdminMembers from "./pages/AdminMembers";
 import AdminLayout from "./components/AdminLayout";
 import PublicRoute from "./components/PublicRoute";
 import Employees from "./pages/Employees";
+import Gallery from "./pages/Gallery";
 
 export default function App() {
   return (
@@ -38,6 +39,7 @@ export default function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/classes" element={<Classes />} />
         <Route path="/employees" element={<Employees />} />
+        <Route path="/gallery" element={<Gallery />} />
         <Route
           path="/dashboard"
           element={
