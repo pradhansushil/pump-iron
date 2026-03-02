@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { images } from "../services/galleryService";
+import Lightbox from "../components/Lightbox";
 
 export default function Gallery() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -10,16 +11,24 @@ export default function Gallery() {
     setLightboxOpen(true);
   };
   return (
-    <div className="image-container">
-      {images.map((image) => (
-        <button
-          onClick={() => handleImageClick(image)}
-          key={image.src}
-          aria-label={image.alt}
-        >
-          <img src={image.src} alt={image.alt} />
-        </button>
-      ))}
+    <div>
+      <div className="image-container">
+        {images.map((image) => (
+          <button
+            onClick={() => handleImageClick(image)}
+            key={image.src}
+            aria-label={image.alt}
+          >
+            <img src={image.src} alt={image.alt} />
+          </button>
+        ))}
+      </div>
+
+      <Lightbox
+        img={selectedImage}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
     </div>
   );
 }
