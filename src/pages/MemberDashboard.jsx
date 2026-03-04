@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
 
 import {
   getMemberById,
@@ -10,11 +9,7 @@ import {
   getBookingsByMember,
   getClassById,
 } from "../services/db";
-import {
-  formatCurrency,
-  formatDate,
-  formatPaymentMethod,
-} from "../utils/formatters";
+import { formatDate } from "../utils/formatters";
 import LoadingSpinner from "../components/LoadingSpinner";
 import CancelModal from "../components/CancelModal";
 import { cancelBooking } from "../services/bookingServices";
@@ -23,6 +18,7 @@ import DashboardHeader from "../components/members/DashboardHeader";
 import MembershipCard from "../components/members/MembershipCard";
 import NextClassCard from "../components/members/NextClassCard";
 import QuickActionCard from "../components/members/QuickActionCard";
+import RecentPaymentsCard from "../components/members/RecentPaymentsCard";
 
 export default function MemberDashboard() {
   const [memberData, setMemberData] = useState(null);
@@ -157,38 +153,7 @@ export default function MemberDashboard() {
           <QuickActionCard onBookClass={() => navigate("/classes")} />
         </div>
 
-        <div className="recent-payments">
-          <h2>Recent Payments</h2>
-          {payments.length === 0 ? (
-            <p>No payment history yet</p>
-          ) : (
-            <>
-              <table className="members-table">
-                <thead>
-                  <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Payment Method</th>
-                    <th scope="col">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {payments.map((payment) => (
-                    <tr key={payment.id}>
-                      <td>{formatDate(payment.date)}</td>
-                      <td>{formatCurrency(payment.amount)}</td>
-                      <td>{formatPaymentMethod(payment.method)}</td>
-                      <td>
-                        <span className="status-badge">{payment.status}</span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <Link to={"/payments"}>View Full Payment History</Link>
-            </>
-          )}
-        </div>
+        <RecentPaymentsCard payments={payments} />
 
         <div className="upcoming-classes">
           <h2>Upcoming Classes</h2>
