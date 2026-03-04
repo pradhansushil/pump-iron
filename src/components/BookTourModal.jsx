@@ -19,10 +19,8 @@ export default function BookTourModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   const validate = () => {
-    if (formData.name === "") {
+    if (formData.name.trim() === "") {
       return { name: "Please provide the member's name" };
-    } else if (formData.name.length < 4) {
-      return { name: "Name has to be more than three characters" };
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
