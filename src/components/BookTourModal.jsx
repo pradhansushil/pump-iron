@@ -38,6 +38,7 @@ export default function BookTourModal({ isOpen, onClose }) {
   };
 
   const handleSubmit = async (e) => {
+    e.persist();
     e.preventDefault();
     const result = validate();
     setErrors(result);
