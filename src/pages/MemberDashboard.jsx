@@ -20,6 +20,7 @@ import CancelModal from "../components/CancelModal";
 import { cancelBooking } from "../services/bookingServices";
 import ClassDetails from "../components/ClassDetails";
 import DashboardHeader from "../components/members/DashboardHeader";
+import MembershipCard from "../components/members/MembershipCard";
 
 export default function MemberDashboard() {
   const [memberData, setMemberData] = useState(null);
@@ -144,13 +145,10 @@ export default function MemberDashboard() {
         )}
 
         <div className="dashboard-cards">
-          <div className="dashboard-card">
-            <section aria-labelledby="membership-header">
-              <h2 id="membership-header">Membership Status</h2>
-              <p>{memberData.membershipPlan}</p>
-              <span className="status-badge">{memberData.status}</span>
-            </section>
-          </div>
+          <MembershipCard
+            membershipPlan={memberData.membershipPlan}
+            status={memberData.status}
+          />
 
           <div className="dashboard-card">
             <section aria-labelledby="next-class-heading">
