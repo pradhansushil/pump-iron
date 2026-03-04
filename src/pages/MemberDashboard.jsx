@@ -22,6 +22,7 @@ import ClassDetails from "../components/ClassDetails";
 import DashboardHeader from "../components/members/DashboardHeader";
 import MembershipCard from "../components/members/MembershipCard";
 import NextClassCard from "../components/members/NextClassCard";
+import QuickActionCard from "../components/members/QuickActionCard";
 
 export default function MemberDashboard() {
   const [memberData, setMemberData] = useState(null);
@@ -153,12 +154,7 @@ export default function MemberDashboard() {
 
           <NextClassCard nextClass={nextClass} />
 
-          <div className="dashboard-card">
-            <section aria-labelledby="quick-action-header">
-              <h2 id="quick-action-header">Quick Action</h2>
-              <button onClick={() => navigate("/classes")}>Book a Class</button>
-            </section>
-          </div>
+          <QuickActionCard onBookClass={() => navigate("/classes")} />
         </div>
 
         <div className="recent-payments">
