@@ -42,6 +42,7 @@ export default function BookTourModal({ isOpen, onClose }) {
     if (Object.keys(result).length === 0) {
       toast.success(
         "Successfully sent! We will contact you within one to two business days.",
+        { duration: 6000 },
       );
       onClose();
       setFormData({ name: "", email: "", phone: "" });
