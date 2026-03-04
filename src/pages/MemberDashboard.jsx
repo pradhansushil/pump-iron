@@ -9,7 +9,6 @@ import {
   getBookingsByMember,
   getClassById,
 } from "../services/db";
-import { formatDate } from "../utils/formatters";
 import LoadingSpinner from "../components/LoadingSpinner";
 import CancelModal from "../components/CancelModal";
 import { cancelBooking } from "../services/bookingServices";
@@ -19,6 +18,7 @@ import MembershipCard from "../components/members/MembershipCard";
 import NextClassCard from "../components/members/NextClassCard";
 import QuickActionCard from "../components/members/QuickActionCard";
 import RecentPaymentsCard from "../components/members/RecentPaymentsCard";
+import UpcomingClasses from "../components/members/UpcomingClasses";
 
 export default function MemberDashboard() {
   const [memberData, setMemberData] = useState(null);
@@ -155,49 +155,15 @@ export default function MemberDashboard() {
 
         <RecentPaymentsCard payments={payments} />
 
-        <div className="upcoming-classes">
-          <h2>Upcoming Classes</h2>
-          {bookings.length >= 1 ? (
-            <div className="bookings-list">
-              {bookings.map((booking) => (
-                <div className="booking-card" key={booking.id}>
-                  <div>
-                    <h3>{booking.className}</h3>
-                  </div>
-                  <div>
-                    <p>
-                      {booking.instructor} | {formatDate(booking.dateTime)}
-                    </p>
-                  </div>
-                  <div className="booking-actions">
-                    <button onClick={() => handleViewDetails(booking.classId)}>
-                      View Details
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSelectedClassId(booking.id);
-                        setCancelModalOpen(true);
-                      }}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="no-bookings">
-              <p>No classes booked yet</p>
-              <p>
-                Ready to get started? Browse our classes and book your
-                favorites!
-              </p>
-              <button onClick={() => navigate("/classes")}>
-                Explore Schedule
-              </button>
-            </div>
-          )}
-        </div>
+        <UpcomingClasses
+          onClasses={() => navigate("/classes")}
+          bookings={bookings}
+          handleViewDetails={handleViewDetails}
+          onCancel={(bookingId) => {
+            setSelectedClassId(bookingId);
+            setCancelModalOpen(true);
+          }}
+        />
 
         <ClassDetails
           isOpen={viewDetailsModalOpen}
