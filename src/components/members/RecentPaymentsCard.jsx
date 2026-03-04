@@ -4,7 +4,7 @@ import {
   formatCurrency,
   formatDate,
   formatPaymentMethod,
-} from "../utils/formatters";
+} from "../../utils/formatters";
 
 export default function RecentPaymentsCard({ payments }) {
   return (
