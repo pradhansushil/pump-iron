@@ -19,22 +19,26 @@ export default function BookTourModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   const validate = () => {
-    if (formData.name === "" || formData.name.length < 3) {
-      return { name: "Please provide your full name" };
+    if (formData.name === "") {
+      return { name: "Please provide the member's name" };
+    } else if (formData.name.length < 4) {
+      return { name: "Name has to be more than three characters" };
     }
 
-    if (!formData.email.includes("@") || !formData.email.includes(".")) {
-      return { email: "Please provide a proper e-mail address" };
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      return { email: "Please enter a valid email address" };
     }
 
     if (formData.phone.length < 10) {
-      return { phone: "Please provide your correct phone number" };
+      return { phone: "Please enter a valid phone number" };
     }
 
     return {};
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const result = validate();
     setErrors(result);
     if (Object.keys(result).length === 0) {
