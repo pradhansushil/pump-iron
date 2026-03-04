@@ -21,6 +21,7 @@ import { cancelBooking } from "../services/bookingServices";
 import ClassDetails from "../components/ClassDetails";
 import DashboardHeader from "../components/members/DashboardHeader";
 import MembershipCard from "../components/members/MembershipCard";
+import NextClassCard from "../components/members/NextClassCard";
 
 export default function MemberDashboard() {
   const [memberData, setMemberData] = useState(null);
@@ -150,28 +151,7 @@ export default function MemberDashboard() {
             status={memberData.status}
           />
 
-          <div className="dashboard-card">
-            <section aria-labelledby="next-class-heading">
-              <h2 id="next-class-heading">Next Class</h2>
-              {nextClass ? (
-                <div>
-                  <p>{nextClass.className}</p>
-                  <p>
-                    {nextClass.dateTime.toDate().toLocaleString("en-US", {
-                      weekday: "long",
-                      month: "long",
-                      day: "numeric",
-                      hour: "numeric",
-                      minute: "2-digit",
-                    })}
-                  </p>
-                  <p>Instructor: {nextClass.instructor}</p>
-                </div>
-              ) : (
-                <p>No upcoming classes scheduled</p>
-              )}
-            </section>
-          </div>
+          <NextClassCard nextClass={nextClass} />
 
           <div className="dashboard-card">
             <section aria-labelledby="quick-action-header">
