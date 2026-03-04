@@ -19,6 +19,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import CancelModal from "../components/CancelModal";
 import { cancelBooking } from "../services/bookingServices";
 import ClassDetails from "../components/ClassDetails";
+import DashboardHeader from "../components/members/DashboardHeader";
 
 export default function MemberDashboard() {
   const [memberData, setMemberData] = useState(null);
@@ -122,16 +123,11 @@ export default function MemberDashboard() {
           </div>
         )}
 
-        <header className="dashboard-header">
-          <div>
-            <h1 id="dashboard-heading">
-              {isNewUser
-                ? `Welcome, ${firstName}!`
-                : `Welcome back, ${firstName}!`}
-            </h1>
-            <p>{formattedDate}</p>
-          </div>
-        </header>
+        <DashboardHeader
+          isNewUser={isNewUser}
+          firstName={firstName}
+          formattedDate={formattedDate}
+        />
 
         {memberData.status === "inactive" && (
           <div className="inactive-banner">
@@ -269,7 +265,7 @@ export default function MemberDashboard() {
           onClose={() => setViewDetailsModalOpen(false)}
           classDetails={selectedClassDetails}
         />
-        
+
         <CancelModal
           isOpen={cancelModalOpen}
           onClose={() => setCancelModalOpen(false)}
