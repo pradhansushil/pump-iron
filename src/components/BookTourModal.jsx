@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
+import { submitTourRequest } from "../services/bookTourService";
+
 export default function BookTourModal({ isOpen, onClose }) {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   const [errors, setErrors] = useState({});
@@ -35,17 +37,26 @@ export default function BookTourModal({ isOpen, onClose }) {
     return {};
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const result = validate();
     setErrors(result);
+
     if (Object.keys(result).length === 0) {
-      toast.success(
-        "Successfully sent! We will contact you within one to two business days.",
-        { duration: 6000 },
-      );
-      onClose();
-      setFormData({ name: "", email: "", phone: "" });
+      try {
+        await submitTourRequest(formData);
+        toast.success(
+          "Successfully sent! We will contact you within one to two business days.",
+          { duration: 6000 },
+        );
+
+        onClose();
+        setFormData({ name: "", email: "", phone: "" });
+      } catch {
+        toast.error(
+          "Something went wrong. Please try again or contact us directly",
+        );
+      }
     }
   };
 
