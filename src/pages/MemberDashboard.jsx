@@ -8,6 +8,7 @@ import {
   getMemberById,
   getPaymentsByMember,
   getBookingsByMember,
+  getClassById,
 } from "../services/db";
 import {
   formatCurrency,
@@ -17,6 +18,7 @@ import {
 import LoadingSpinner from "../components/LoadingSpinner";
 import CancelModal from "../components/CancelModal";
 import { cancelBooking } from "../services/bookingServices";
+import ClassDetails from "../components/ClassDetails";
 
 export default function MemberDashboard() {
   const [memberData, setMemberData] = useState(null);
@@ -27,6 +29,8 @@ export default function MemberDashboard() {
   const [error, setError] = useState(null);
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
   const [selectedClassId, setSelectedClassId] = useState(null);
+  const [viewDetailsModalOpen, setViewDetailsModalOpen] = useState(false);
+  const [selectedClassDetails, setSelectedClassDetails] = useState(null);
 
   const { currentUser } = useAuth();
   const navigate = useNavigate();
@@ -82,6 +86,12 @@ export default function MemberDashboard() {
     day: "numeric",
     year: "numeric",
   });
+
+  const handleViewDetails = async (classId) => {
+    const result = await getClassById(classId);
+    setSelectedClassDetails(result);
+    setViewDetailsModalOpen(true);
+  };
 
   const handleCancelBooking = async () => {
     try {
@@ -225,9 +235,7 @@ export default function MemberDashboard() {
                     </p>
                   </div>
                   <div className="booking-actions">
-                    <button
-                      onClick={() => navigate(`/classes/${booking.classId}`)}
-                    >
+                    <button onClick={() => handleViewDetails(booking.classId)}>
                       View Details
                     </button>
                     <button
@@ -256,6 +264,12 @@ export default function MemberDashboard() {
           )}
         </div>
 
+        <ClassDetails
+          isOpen={viewDetailsModalOpen}
+          onClose={() => setViewDetailsModalOpen(false)}
+          classDetails={selectedClassDetails}
+        />
+        
         <CancelModal
           isOpen={cancelModalOpen}
           onClose={() => setCancelModalOpen(false)}
