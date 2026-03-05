@@ -33,8 +33,8 @@ export default function MakePaymentModal({ isOpen, onClose, currentUser }) {
           email: memberData.email,
           description: "Monthly membership - " + memberData.membershipPlan,
         });
-      } catch (err) {
-        console.error(err);
+      } catch {
+        toast.error("Failed to load payment details. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -53,7 +53,6 @@ export default function MakePaymentModal({ isOpen, onClose, currentUser }) {
   }, [onClose]);
 
   const handleSubmit = async () => {
-    console.log(currentUser);
     try {
       const dueDate = new Date();
       dueDate.setMonth(dueDate.getMonth() + 1);
@@ -68,7 +67,6 @@ export default function MakePaymentModal({ isOpen, onClose, currentUser }) {
         createdAt: Timestamp.now(),
         dueDate: Timestamp.fromDate(dueDate),
       };
-      console.log(paymentData);
 
       await createPayment(paymentData);
 
@@ -111,9 +109,7 @@ export default function MakePaymentModal({ isOpen, onClose, currentUser }) {
           <p id="price">{paymentDetails.plan}</p>
 
           <button onClick={onClose}>Cancel</button>
-          <button onClick={handleSubmit} disabled={loading}>
-            {loading ? "Making Payment..." : "Make a Payment"}
-          </button>
+          <button onClick={handleSubmit}>Make a Payment</button>
         </div>
       </div>
     )
