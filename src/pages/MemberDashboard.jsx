@@ -150,7 +150,10 @@ export default function MemberDashboard() {
 
           <NextClassCard nextClass={nextClass} />
 
-          <QuickActionCard onBookClass={() => navigate("/classes")} />
+          <QuickActionCard
+            onBookClass={() => navigate("/classes")}
+            currentUser={currentUser}
+          />
         </div>
 
         <RecentPaymentsCard payments={payments} />
