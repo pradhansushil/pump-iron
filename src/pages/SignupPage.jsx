@@ -3,6 +3,7 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Timestamp } from "firebase/firestore";
 
+import { plans } from "../data/plansData";
 import { createMember, createPayment, updateMember } from "../services/db";
 import CreditCardForm from "../components/payment-forms/CreditCardForm";
 import BankTransferForm from "../components/payment-forms/BankTransferForm";
@@ -64,8 +65,10 @@ export default function SignupPage() {
       return setError({ paymentMethod: "Please select a payment method" });
     }
 
-    const amount = { basic: 29, standard: 49, premium: 79 };
-    const planPrice = amount[membershipPlan];
+    const selectedPlan = plans.find(
+      (p) => p.name.toLowerCase() === membershipPlan,
+    );
+    const planPrice = parseInt(selectedPlan.price.replace("$", ""), 10);
 
     try {
       setError({});
@@ -93,7 +96,7 @@ export default function SignupPage() {
           dueDate: Timestamp.now(),
           method: paymentMethod,
           status: "completed",
-          description: "First month's payment",
+          description: `Monthly membership - ${membershipPlan}`,
           email: email,
         });
 
@@ -175,9 +178,11 @@ export default function SignupPage() {
               value={membershipPlan}
               onChange={(e) => setMembershipPlan(e.target.value)}
             >
-              <option value="basic">Basic - $29/month</option>
-              <option value="standard">Standard - $49/month</option>
-              <option value="premium">Premium - $79/month</option>
+              {plans.map((plan) => (
+                <option key={plan.name} value={plan.name.toLowerCase()}>
+                  {plan.name} - {plan.price}/month
+                </option>
+              ))}
             </select>
           </div>
 

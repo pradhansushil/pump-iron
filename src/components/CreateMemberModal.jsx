@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 
+import { plans } from "../data/plansData";
 import { createMember } from "../services/db";
 
 export default function CreateMemberModal({ onClose, fetchMembers }) {
@@ -128,9 +129,11 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
             value={membershipPlan}
             onChange={(e) => setMembershipPlan(e.target.value)}
           >
-            <option value="basic">Basic - $29/month</option>
-            <option value="standard">Standard - $49/month</option>
-            <option value="premium">Premium - $79/month</option>
+            {plans.map((plan) => (
+              <option key={plan.name} value={plan.name.toLowerCase()}>
+                {plan.name} - {plan.price}/month
+              </option>
+            ))}
           </select>
         </div>
 
