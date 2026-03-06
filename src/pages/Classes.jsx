@@ -54,7 +54,7 @@ export default function Classes() {
         return;
       }
 
-      if (memberData.status != "active") {
+      if (memberData.status !== "active") {
         setError(
           "You need to have a membership to book. go to plans to be a gym member.",
         );
@@ -77,8 +77,8 @@ export default function Classes() {
 
       toast.success("Class booked successfully.");
       setError(null);
-    } catch (error) {
-      toast.error(`Booking failed: ${error}`);
+    } catch {
+      toast.error("Booking failed. Please try again.");
     } finally {
       setBookingLoading(null);
     }
