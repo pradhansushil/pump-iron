@@ -1,8 +1,15 @@
 import { useState } from "react";
-import MakePaymentModal from "../MakePaymentModal";
 
-export default function QuickActionCard({ onBookClass, currentUser }) {
+import MakePaymentModal from "../MakePaymentModal";
+import UpdatePaymentMethodModal from "../UpdatePaymentMethodModal";
+
+export default function QuickActionCard({
+  onBookClass,
+  currentUser,
+  paymentMethod,
+}) {
   const [makePaymentModal, setMakePaymentModal] = useState(false);
+  const [updatePaymentModal, setUpdatePaymentModal] = useState(false);
 
   return (
     <div className="dashboard-card">
@@ -12,11 +19,22 @@ export default function QuickActionCard({ onBookClass, currentUser }) {
         <button onClick={() => setMakePaymentModal(true)}>
           Make a Payment
         </button>
+        <button onClick={() => setUpdatePaymentModal(true)}>
+          Update Payment Method
+        </button>
 
         <MakePaymentModal
           isOpen={makePaymentModal}
           onClose={() => setMakePaymentModal(false)}
           currentUser={currentUser}
+        />
+
+        <UpdatePaymentMethodModal
+          isOpen={updatePaymentModal}
+          memberId={currentUser.uid}
+          method={paymentMethod}
+          onClose={() => setUpdatePaymentModal(false)}
+          onPaymentMethodUpdate={() => {}}
         />
       </section>
     </div>
