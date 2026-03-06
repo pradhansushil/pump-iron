@@ -48,12 +48,10 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
       const memberData = { name, email, phone, membershipPlan };
 
       const result = await createMember(uid, memberData);
-
-      toast.success("Member created successfully");
-
       if (!result.success) {
         throw new Error(result.error || "Failed to create member profile");
       }
+      toast.success("Member created successfully");
 
       fetchMembers();
       onClose();
