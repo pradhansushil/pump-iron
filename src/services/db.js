@@ -27,6 +27,16 @@ export const TOUR_REQUESTS = "tourRequests";
 // Export the database instance for direct use if needed
 export { db };
 
+const dayOrder = {
+  Monday: 0,
+  Tuesday: 1,
+  Wednesday: 2,
+  Thursday: 3,
+  Friday: 4,
+  Saturday: 5,
+  Sunday: 6,
+};
+
 // 10.5: Create a new member
 export const createMember = async (uid, memberData) => {
   try {
@@ -238,6 +248,8 @@ export const getAllClasses = async () => {
     });
 
     console.log(`Found ${classes.length} classes`);
+
+    classes.sort((a, b) => dayOrder[a.day] - dayOrder[b.day]);
     return classes;
   } catch (error) {
     console.error("Error getting all classes:", error);
