@@ -120,15 +120,6 @@ const Navbar = () => {
                 Dashboard
               </Link>
 
-              <Link
-                to="/bookings"
-                className={
-                  isActive("/bookings") ? "nav-link active" : "nav-link"
-                }
-              >
-                My Bookings
-              </Link>
-
               <button
                 aria-label={
                   notificationCount > 0
