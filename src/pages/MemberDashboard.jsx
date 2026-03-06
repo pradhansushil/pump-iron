@@ -149,6 +149,7 @@ export default function MemberDashboard() {
           <QuickActionCard
             onBookClass={() => navigate("/classes")}
             currentUser={currentUser}
+            paymentMethod={memberData.paymentMethod}
           />
         </div>
 
