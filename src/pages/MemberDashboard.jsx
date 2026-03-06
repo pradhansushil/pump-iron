@@ -62,10 +62,6 @@ export default function MemberDashboard() {
         setNextClass(upcomingBookings[0] || null);
         setBookings(upcomingBookings);
       } catch (error) {
-        console.error(error);
-        toast.error(
-          "Unable to load your dashboard data. Please check your connection and try again.",
-        );
         setError(error.message);
       } finally {
         setLoading(false);
