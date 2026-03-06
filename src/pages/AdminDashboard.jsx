@@ -4,6 +4,7 @@ import { db } from "../firebase";
 
 import LoadingSpinner from "../components/LoadingSpinner";
 import { getAllMembers } from "../services/db";
+import toast from "react-hot-toast";
 
 export default function AdminDashboard() {
   const [members, setMembers] = useState([]);
@@ -26,8 +27,8 @@ export default function AdminDashboard() {
 
         setMembers(allMembers);
         setPayments(paymentsList);
-      } catch (error) {
-        console.error("Error:", error);
+      } catch {
+        toast.error("Failed to load dashboard data.");
       } finally {
         setLoading(false);
       }
