@@ -28,14 +28,14 @@ export const TOUR_REQUESTS = "tourRequests";
 export { db };
 
 const dayOrder = {
-  Monday: 0,
-  Tuesday: 1,
-  Wednesday: 2,
-  Thursday: 3,
-  Friday: 4,
-  Saturday: 5,
-  Sunday: 6,
-};
+      Monday: 0,
+      Tuesday: 1,
+      Wednesday: 2,
+      Thursday: 3,
+      Friday: 4,
+      Saturday: 5,
+      Sunday: 6,
+    };
 
 // 10.5: Create a new member
 export const createMember = async (uid, memberData) => {
