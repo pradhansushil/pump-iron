@@ -60,9 +60,6 @@ export default function UpdatePaymentMethodModal({
   return (
     <div className="modal-overlay" onClick={handleClose}>
       <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close-btn" onClick={handleClose}>
-          X
-        </button>
         <select
           className="form-field"
           value={selectedMethod}
