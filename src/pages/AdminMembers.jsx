@@ -16,18 +16,18 @@ export default function AdminMembers() {
   const [loading, setLoading] = useState(true);
 
   const fetchAllMembers = async () => {
-    try {
-      const allMembers = await getAllMembers();
-      setMembers(allMembers);
-    } catch (error) {
-      console.error("Error: ", error);
-    } finally {
-      setLoading(false);
-    }
+    const allMembers = await getAllMembers();
+    setMembers(allMembers);
+    setLoading(false);
   };
 
   useEffect(() => {
-    fetchAllMembers();
+    const loadMembers = async () => {
+      const allMembers = await getAllMembers();
+      setMembers(allMembers);
+      setLoading(false);
+    };
+    loadMembers();
   }, []);
 
   const fetchedMembers = members.filter((member) => {
@@ -55,16 +55,19 @@ export default function AdminMembers() {
   };
 
   const handleSuspend = async (member) => {
-    if (member.status === "suspended") {
-      await updateMember(member.id, { status: "active" });
-    } else {
-      await updateMember(member.id, { status: "suspended" });
+    const newStatus = member.status === "suspended" ? "active" : "suspended";
+    const result = await updateMember(member.id, { status: newStatus });
+
+    if (!result.success) {
+      toast.error("Couldn't update member status.");
+      return;
     }
+
     await fetchAllMembers();
     toast.success(
-      member.status === "suspended"
-        ? "Member successfully unsuspended"
-        : "Member successfully suspended",
+      newStatus === "suspended"
+        ? "Member successfully suspended."
+        : "Member successfully unsuspended.",
     );
   };
 
