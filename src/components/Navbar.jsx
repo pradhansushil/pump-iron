@@ -147,7 +147,7 @@ const Navbar = () => {
                 {isDropdownOpen && (
                   <div className="dropdown-menu">
                     <Link
-                      to="/profile"
+                      to="dashboard/profile"
                       className="dropdown-item"
                       onClick={() => setIsDropdownOpen(false)}
                     >

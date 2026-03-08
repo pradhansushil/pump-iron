@@ -17,6 +17,7 @@ import AdminLayout from "./components/AdminLayout";
 import PublicRoute from "./components/PublicRoute";
 import Employees from "./pages/Employees";
 import Gallery from "./pages/Gallery";
+import Profile from "./pages/Profile";
 
 export default function App() {
   return (
@@ -45,6 +46,14 @@ export default function App() {
           element={
             <MemberRoute>
               <MemberDashboard />
+            </MemberRoute>
+          }
+        />
+        <Route
+          path="/dashboard/profile"
+          element={
+            <MemberRoute>
+              <Profile />
             </MemberRoute>
           }
         />
