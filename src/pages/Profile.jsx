@@ -3,7 +3,8 @@ import { useAuth } from "../context/AuthContext";
 
 import { getMemberById, updateMember } from "../services/db";
 import LoadingSpinner from "../components/LoadingSpinner";
-import BasicInfo from "../components/members/BasicInfo";
+import BasicInfo from "../components/members/profile/BasicInfo";
+import EditPassword from "../components/members/EditPassword";
 
 export default function Profile() {
   const [member, setMember] = useState(null);
@@ -32,12 +33,15 @@ export default function Profile() {
       <div className="">
         <h2 id="profile-heading">Profile</h2>
         {member !== null && (
-          <BasicInfo
-            member={member}
-            updateMember={updateMember}
-            uid={currentUser.uid}
-            setMember={setMember}
-          />
+          <>
+            <BasicInfo
+              member={member}
+              updateMember={updateMember}
+              uid={currentUser.uid}
+              setMember={setMember}
+            />
+            <EditPassword currentUser={currentUser} />
+          </>
         )}
       </div>
     </main>
