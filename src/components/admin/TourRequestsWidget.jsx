@@ -8,7 +8,10 @@ export default function TourRequestsWidget({ tourRequests }) {
   return (
     <div className="">
       <h2>Tour Requests</h2>
-      {totalPendingRequests.length}
+      <p>
+        <span>Pending Total: </span>
+        {totalPendingRequests.length}
+      </p>
       {tourRequests.slice(0, 3).map((request) => (
         <div className="" key={request.id}>
           <p>
