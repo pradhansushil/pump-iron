@@ -24,7 +24,7 @@ export default function TourRequestsWidget({ tourRequests }) {
             {request.phone}
           </p>
           <p>
-            <span>Status</span>
+            <span>Status: </span>
             {request.status}
           </p>
         </div>
