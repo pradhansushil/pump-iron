@@ -174,6 +174,20 @@ export const getPaymentsByMember = async (memberId) => {
   }
 };
 
+export const getAllPayments = async () => {
+  try {
+    const paymentsRef = collection(db, "payments");
+    const paymentsSnapshot = await getDocs(paymentsRef);
+
+    return paymentsSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch {
+    return [];
+  }
+};
+
 // 10.10: Get all classes
 export const getAllClasses = async () => {
   try {
