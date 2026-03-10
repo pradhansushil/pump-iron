@@ -18,6 +18,7 @@ import PublicRoute from "./components/PublicRoute";
 import Employees from "./pages/Employees";
 import Gallery from "./pages/Gallery";
 import Profile from "./pages/Profile";
+import TourRequests from "./pages/admin/TourRequests";
 
 export default function App() {
   const location = useLocation();
@@ -84,6 +85,16 @@ export default function App() {
             <AdminRoute>
               <AdminLayout>
                 <AdminMembers />
+              </AdminLayout>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/tourRequests"
+          element={
+            <AdminRoute>
+              <AdminLayout>
+                <TourRequests />
               </AdminLayout>
             </AdminRoute>
           }
