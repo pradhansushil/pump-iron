@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import HomePage from "./pages/HomePage";
@@ -20,6 +20,9 @@ import Gallery from "./pages/Gallery";
 import Profile from "./pages/Profile";
 
 export default function App() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
   return (
     <div className="app">
       {/* Navbar component handles all navigation logic */}
@@ -86,7 +89,7 @@ export default function App() {
           }
         />
       </Routes>
-      <Footer />
+      {!isAdminRoute && <Footer />}
     </div>
   );
 }
