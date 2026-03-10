@@ -1,32 +1,29 @@
 import { useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase";
+import toast from "react-hot-toast";
 
 import LoadingSpinner from "../components/LoadingSpinner";
-import { getAllMembers } from "../services/db";
-import toast from "react-hot-toast";
+import { getAllMembers, getAllPayments } from "../services/db";
+import { getAllTourRequests } from "../services/bookTourService";
+import TourRequestsWidget from "../components/admin/TourRequestsWidget";
 
 export default function AdminDashboard() {
   const [members, setMembers] = useState([]);
   const [payments, setPayments] = useState([]);
+  const [tourRequests, setTourRequests] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        // TODO: refactor to Promise.all() for parallel fetching
-        const allMembers = await getAllMembers();
-
-        const paymentsRef = collection(db, "payments");
-        const paymentsSnapShot = await getDocs(paymentsRef);
-
-        const paymentsList = paymentsSnapShot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        const [allMembers, allPayments, allTourRequests] = await Promise.all([
+          getAllMembers(),
+          getAllPayments(),
+          getAllTourRequests(),
+        ]);
 
         setMembers(allMembers);
-        setPayments(paymentsList);
+        setPayments(allPayments);
+        setTourRequests(allTourRequests);
       } catch {
         toast.error("Failed to load dashboard data.");
       } finally {
@@ -75,6 +72,7 @@ export default function AdminDashboard() {
           </span>
         </p>
       </div>
+      <TourRequestsWidget tourRequests={tourRequests} />
     </div>
   );
 }
