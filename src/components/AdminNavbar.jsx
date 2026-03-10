@@ -45,6 +45,14 @@ export default function AdminNavbar() {
         >
           Tour Requests
         </Link>
+        <Link
+          to="/admin/gallery"
+          className={
+            isActive("/admin/tourRequests") ? "nav-link-active" : "nav-link"
+          }
+        >
+          Gallery
+        </Link>
       </div>
     </div>
   );

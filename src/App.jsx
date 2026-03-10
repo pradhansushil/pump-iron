@@ -19,6 +19,7 @@ import Employees from "./pages/Employees";
 import Gallery from "./pages/Gallery";
 import Profile from "./pages/Profile";
 import TourRequests from "./pages/admin/TourRequests";
+import GalleryUpload from "./pages/admin/GalleryUpload";
 
 export default function App() {
   const location = useLocation();
@@ -95,6 +96,16 @@ export default function App() {
             <AdminRoute>
               <AdminLayout>
                 <TourRequests />
+              </AdminLayout>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/gallery"
+          element={
+            <AdminRoute>
+              <AdminLayout>
+                <GalleryUpload />
               </AdminLayout>
             </AdminRoute>
           }
