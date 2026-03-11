@@ -91,6 +91,7 @@ export default function Signup() {
       while (attempts < 3) {
         paymentResult = await createPayment({
           memberId: uid,
+          memberName: name,
           amount: planPrice,
           date: Timestamp.now(),
           dueDate: Timestamp.now(),

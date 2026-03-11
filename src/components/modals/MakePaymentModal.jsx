@@ -59,6 +59,7 @@ export default function MakePaymentModal({ isOpen, onClose, currentUser }) {
 
       const paymentData = {
         memberId: currentUser.uid,
+        memberName: paymentDetails.name,
         amount: parseInt(paymentDetails.plan.replace("$", "")),
         method: paymentDetails.paymentMethod,
         email: paymentDetails.email,

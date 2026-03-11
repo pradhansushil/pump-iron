@@ -31,6 +31,7 @@ export default function RecordPaymentModal({ member, onClose, fetchMembers }) {
     try {
       await createPayment({
         memberId: member.uid,
+        memberName: member.name,
         amount: amount,
         date: Timestamp.fromDate(new Date(date)),
         dueDate: Timestamp.fromDate(new Date(dueDate)),
