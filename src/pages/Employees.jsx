@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 
 import EmployeeCard from "../components/EmployeeCard";
 import { fetchEmployees } from "../services/employeesData";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Employees() {
   const [employees, setEmployees] = useState([]);
