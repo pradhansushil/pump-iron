@@ -6,12 +6,14 @@ import { formatDate } from "../../utils/formatters";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import CreateMemberModal from "../../components/modals/CreateMemberModal";
 import RecordPaymentModal from "../../components/modals/RecordPaymentModal";
+import ConfirmModal from "../../components/modals/ConfirmModal";
 
 export default function AdminMembers() {
   const [members, setMembers] = useState([]);
   const [filterStatus, setFilterStatus] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
+  const [memberToDelete, setMemberToDelete] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -48,13 +50,15 @@ export default function AdminMembers() {
     return matchesSearch && matchesStatus;
   });
 
-  const handleDelete = async (member) => {
+  const handleDelete = async () => {
     try {
-      await deleteMember(member.id);
+      await deleteMember(memberToDelete.id);
       await fetchAllMembers();
-      toast.success(`Successfully deleted ${member.name}`);
+      toast.success(`Successfully deleted ${memberToDelete.name}`);
     } catch (error) {
       toast.error(`Couldn't delete member: ${error.message}`);
+    } finally {
+      setMemberToDelete(null);
     }
   };
 
@@ -149,7 +153,7 @@ export default function AdminMembers() {
                   </button>
                   <button
                     className="delete-btn"
-                    onClick={() => handleDelete(member)}
+                    onClick={() => setMemberToDelete(member)}
                   >
                     Delete
                   </button>
@@ -175,6 +179,13 @@ export default function AdminMembers() {
           onClose={() => setSelectedMember(null)}
         />
       )}
+
+      <ConfirmModal
+        isOpen={!!memberToDelete}
+        onClose={() => setMemberToDelete(null)}
+        onConfirm={handleDelete}
+        message="Are you sure you want to delete this member? This action cannot be undone."
+      />
     </div>
   );
 }
