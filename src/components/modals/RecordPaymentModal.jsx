@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
+import toast from "react-hot-toast";
 
 import { createPayment, updateMember } from "../../services/db";
 
@@ -14,7 +15,10 @@ export default function RecordPaymentModal({ member, onClose, fetchMembers }) {
   const threeMonths = addMonths(3);
   const sixMonths = addMonths(6);
 
-  const [amount, setAmount] = useState(29);
+  const planPrices = { basic: 29, standard: 49, premium: 79 };
+  const [amount, setAmount] = useState(
+    planPrices[member.membershipPlan?.toLowerCase()] || 29,
+  );
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState(oneMonth.toISOString());
@@ -44,6 +48,7 @@ export default function RecordPaymentModal({ member, onClose, fetchMembers }) {
 
       await updateMember(member.uid, { status: "active" });
       await updateMember(member.uid, { nextBillingDate: dueDate });
+      toast.success("Payment recorded successfully!");
       fetchMembers();
       onClose();
     } catch {
