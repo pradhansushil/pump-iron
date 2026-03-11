@@ -10,7 +10,7 @@ import {
   getClassById,
 } from "../services/db";
 import LoadingSpinner from "../components/LoadingSpinner";
-import CancelModal from "../components/modals/CancelModal";
+import ConfirmModal from "../components/modals/ConfirmModal";
 import { cancelBooking } from "../services/booking/services";
 import ClassDetails from "../components/ClassDetails";
 import DashboardHeader from "../components/members/DashboardHeader";
@@ -171,10 +171,11 @@ export default function MemberDashboard() {
           classDetails={selectedClassDetails}
         />
 
-        <CancelModal
+        <ConfirmModal
           isOpen={cancelModalOpen}
           onClose={() => setCancelModalOpen(false)}
           onConfirm={async () => await handleCancelBooking()}
+          message={"Are you sure you want to cancel this class?"}
         />
       </div>
     </main>
