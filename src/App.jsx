@@ -21,6 +21,7 @@ import Profile from "./pages/Profile";
 import TourRequests from "./pages/admin/TourRequests";
 import GalleryUpload from "./pages/admin/GalleryUpload";
 import EmployeesTable from "./pages/admin/Employees";
+import PaymentsTable from "./pages/admin/Payments";
 
 export default function App() {
   const location = useLocation();
@@ -117,6 +118,16 @@ export default function App() {
             <AdminRoute>
               <AdminLayout>
                 <EmployeesTable />
+              </AdminLayout>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/payments"
+          element={
+            <AdminRoute>
+              <AdminLayout>
+                <PaymentsTable />
               </AdminLayout>
             </AdminRoute>
           }

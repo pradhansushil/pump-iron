@@ -61,6 +61,14 @@ export default function AdminNavbar() {
         >
           Employees
         </Link>
+        <Link
+          to="/admin/payments"
+          className={
+            isActive("/admin/tourRequests") ? "nav-link-active" : "nav-link"
+          }
+        >
+          Payments
+        </Link>
       </div>
     </div>
   );
