@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { Timestamp } from "firebase/firestore";
 
-import { plans } from "../data/plansData";
-import { createMember, createPayment, updateMember } from "../services/db";
-import CreditCardForm from "../components/payment-forms/CreditCardForm";
-import BankTransferForm from "../components/payment-forms/BankTransferForm";
-import QRCodeForm from "../components/payment-forms/QRCodeForm";
+import { plans } from "../../data/plansData";
+import { createMember, createPayment, updateMember } from "../../services/db";
+import CreditCardForm from "../../components/payment-forms/CreditCardForm";
+import BankTransferForm from "../../components/payment-forms/BankTransferForm";
+import QRCodeForm from "../../components/payment-forms/QRCodeForm";
 
-export default function SignupPage() {
+export default function Signup() {
   const location = useLocation();
 
   const [name, setName] = useState("");

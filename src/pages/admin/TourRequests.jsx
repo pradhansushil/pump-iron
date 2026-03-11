@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import {
   getAllTourRequests,
   updateTourStatus,
-} from "../../services/bookTourService";
+} from "../../services/booking/tourService";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { TOUR_STATUS } from "../../data/constants";
 

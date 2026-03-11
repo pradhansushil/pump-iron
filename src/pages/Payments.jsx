@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { getMemberById, getPaymentsByMember } from "../services/db";
-import UpdatePaymentMethodModal from "../components/UpdatePaymentMethodModal";
+import UpdatePaymentMethodModal from "../components/modals/UpdatePaymentMethodModal";
 import {
   formatCurrency,
   formatDate,

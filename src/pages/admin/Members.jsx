@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-
-import { getAllMembers, deleteMember, updateMember } from "../services/db";
-import LoadingSpinner from "../components/LoadingSpinner";
-import { formatDate } from "../utils/formatters";
-import CreateMemberModal from "../components/CreateMemberModal";
-import RecordPaymentModal from "../components/RecordPaymentModal";
 import toast from "react-hot-toast";
+
+import { getAllMembers, deleteMember, updateMember } from "../../services/db";
+import { formatDate } from "../../utils/formatters";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import CreateMemberModal from "../../components/modals/CreateMemberModal";
+import RecordPaymentModal from "../../components/modals/RecordPaymentModal";
 
 export default function AdminMembers() {
   const [members, setMembers] = useState([]);

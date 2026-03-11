@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { fetchGallery } from "../services/galleryService";
-import Lightbox from "../components/Lightbox";
+import { fetchGallery } from "../../services/galleryService";
+import Lightbox from "../../components/modals/Lightbox";
 
 export default function Gallery() {
   const [lightboxOpen, setLightboxOpen] = useState(false);

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
-import LoadingSpinner from "../components/LoadingSpinner";
-import { getAllMembers, getAllPayments } from "../services/db";
-import { getAllTourRequests } from "../services/bookTourService";
-import TourRequestsWidget from "../components/admin/TourRequestsWidget";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import { getAllMembers, getAllPayments } from "../../services/db";
+import { getAllTourRequests } from "../../services/booking/tourService";
+import TourRequestsWidget from "../../components/admin/TourRequestsWidget";
 
 export default function AdminDashboard() {
   const [members, setMembers] = useState([]);

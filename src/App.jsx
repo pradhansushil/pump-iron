@@ -1,23 +1,30 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
-import HomePage from "./pages/HomePage";
+// Public-facing pages
+import Home from "./pages/public/Home";
 import Footer from "./components/footer/Footer";
 import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
+import Signup from "./pages/public/Signup";
+import Navbar from "./components/Navbar";
+import Employees from "./pages/public/Employees";
+import Gallery from "./pages/public/Gallery";
+
+// Routes
+import MemberRoute from "./components/routes/Member";
+import AdminRoute from "./components/admin/Route";
+import PublicRoute from "./components/routes/Public";
+
+// Member pages
 import Payments from "./pages/Payments";
 import MemberDashboard from "./pages/MemberDashboard";
-import AdminDashboard from "./pages/AdminDashboard";
-import MemberRoute from "./components/MemberRoute";
-import AdminRoute from "./components/AdminRoute";
-import Navbar from "./components/Navbar"; // Import the Navbar component
 import Classes from "./pages/Classes";
-import AdminMembers from "./pages/AdminMembers";
-import AdminLayout from "./components/AdminLayout";
-import PublicRoute from "./components/PublicRoute";
-import Employees from "./pages/Employees";
-import Gallery from "./pages/Gallery";
 import Profile from "./pages/Profile";
+
+// Admin pages
+import AdminDashboard from "./pages/admin/Dashboard";
+import AdminMembers from "./pages/admin/Members";
+import AdminLayout from "./components/admin/Layout";
 import TourRequests from "./pages/admin/TourRequests";
 import GalleryUpload from "./pages/admin/GalleryUpload";
 import EmployeesTable from "./pages/admin/Employees";
@@ -39,15 +46,16 @@ export default function App() {
           path="/"
           element={
             <PublicRoute>
-              <HomePage />
+              <Home />
             </PublicRoute>
           }
         />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/classes" element={<Classes />} />
         <Route path="/employees" element={<Employees />} />
         <Route path="/gallery" element={<Gallery />} />
+
         <Route
           path="/dashboard"
           element={

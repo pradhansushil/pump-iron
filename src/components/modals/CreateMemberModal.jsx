@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import toast from "react-hot-toast";
 
-import { plans } from "../data/plansData";
-import { createMember } from "../services/db";
+import { plans } from "../../data/plansData";
+import { createMember } from "../../services/db";
 
 export default function CreateMemberModal({ onClose, fetchMembers }) {
   const [name, setName] = useState("");

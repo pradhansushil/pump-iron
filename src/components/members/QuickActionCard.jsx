@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import MakePaymentModal from "../MakePaymentModal";
-import UpdatePaymentMethodModal from "../UpdatePaymentMethodModal";
+import MakePaymentModal from "../modals/MakePaymentModal";
+import UpdatePaymentMethodModal from "../modals/UpdatePaymentMethodModal";
 
 export default function QuickActionCard({
   onBookClass,

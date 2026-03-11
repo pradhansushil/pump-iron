@@ -10,8 +10,8 @@ import {
   getClassById,
 } from "../services/db";
 import LoadingSpinner from "../components/LoadingSpinner";
-import CancelModal from "../components/CancelModal";
-import { cancelBooking } from "../services/bookingServices";
+import CancelModal from "../components/modals/CancelModal";
+import { cancelBooking } from "../services/booking/services";
 import ClassDetails from "../components/ClassDetails";
 import DashboardHeader from "../components/members/DashboardHeader";
 import MembershipCard from "../components/members/MembershipCard";

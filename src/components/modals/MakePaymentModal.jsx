@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Timestamp } from "firebase/firestore";
 
-import { createPayment, getMemberById } from "../services/db";
-import { plans } from "../data/plansData";
-import LoadingSpinner from "./LoadingSpinner";
+import { createPayment, getMemberById } from "../../services/db";
+import { plans } from "../../data/plansData";
+import LoadingSpinner from "../LoadingSpinner";
 import toast from "react-hot-toast";
 
 export default function MakePaymentModal({ isOpen, onClose, currentUser }) {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
-import { submitTourRequest } from "../services/bookTourService";
+import { submitTourRequest } from "../../services/booking/tourService";
 
 export default function BookTourModal({ isOpen, onClose }) {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });

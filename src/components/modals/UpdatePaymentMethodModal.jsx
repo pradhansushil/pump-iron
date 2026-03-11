@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-import CreditCardForm from "./payment-forms/CreditCardForm";
-import BankTransferForm from "./payment-forms/BankTransferForm";
-import QRCodeForm from "./payment-forms/QRCodeForm";
-import { updateMember } from "../services/db";
+import CreditCardForm from "../payment-forms/CreditCardForm";
+import BankTransferForm from "../payment-forms/BankTransferForm";
+import QRCodeForm from "../payment-forms/QRCodeForm";
+import { updateMember } from "../../services/db";
 
 export default function UpdatePaymentMethodModal({
   memberId,
