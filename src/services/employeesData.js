@@ -18,6 +18,6 @@ export const deleteEmployee = async (id) => {
     await deleteDoc(employeeRef);
     return { success: true, employeeId: id };
   } catch (error) {
-    console.error("Something went wrong when trying to delete: ", error);
+    return { success: false, error: error.message };
   }
 };
