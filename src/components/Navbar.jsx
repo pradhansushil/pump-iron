@@ -9,7 +9,7 @@ const Navbar = () => {
   // eslint-disable-next-line no-unused-vars
   const [notificationCount, setNotificationCount] = useState(3);
 
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout, loading, userRole } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -58,6 +58,8 @@ const Navbar = () => {
   }, [isDropdownOpen]);
 
   if (location.pathname.startsWith("/admin")) return null;
+  if (loading) return null;
+  if (userRole) return null;
 
   return (
     <nav>
