@@ -106,6 +106,7 @@ export default function Payments() {
 
         {isModalOpen && (
           <UpdatePaymentMethodModal
+            isOpen={isModalOpen}
             method={memberData.paymentMethod}
             onClose={() => setIsModalOpen(false)}
             memberId={currentUser.uid}
