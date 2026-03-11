@@ -16,17 +16,21 @@ export default function AdminMembers() {
   const [loading, setLoading] = useState(true);
 
   const fetchAllMembers = async () => {
-    const allMembers = await getAllMembers();
-    setMembers(allMembers);
-    setLoading(false);
+    try {
+      const allMembers = await getAllMembers();
+      setMembers(allMembers);
+    } catch {
+      toast.error("Failed to load members");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     const loadMembers = async () => {
-      const allMembers = await getAllMembers();
-      setMembers(allMembers);
-      setLoading(false);
+      await fetchAllMembers();
     };
+
     loadMembers();
   }, []);
 
