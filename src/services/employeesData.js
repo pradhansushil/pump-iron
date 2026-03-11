@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
 export const fetchEmployees = async () => {
@@ -10,4 +10,14 @@ export const fetchEmployees = async () => {
     ...doc.data(),
   }));
   return employees;
+};
+
+export const deleteEmployee = async (id) => {
+  try {
+    const employeeRef = doc(db, "employees", id);
+    await deleteDoc(employeeRef);
+    return { success: true, employeeId: id };
+  } catch (error) {
+    console.error("Something went wrong when trying to delete: ", error);
+  }
 };
