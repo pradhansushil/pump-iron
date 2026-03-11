@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { deleteEmployee, fetchEmployees } from "../../services/employeesData";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
-export default function Employees() {
+export default function EmployeesTable() {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
 

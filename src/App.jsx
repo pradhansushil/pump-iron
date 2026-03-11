@@ -20,6 +20,7 @@ import Gallery from "./pages/Gallery";
 import Profile from "./pages/Profile";
 import TourRequests from "./pages/admin/TourRequests";
 import GalleryUpload from "./pages/admin/GalleryUpload";
+import EmployeesTable from "./pages/admin/Employees";
 
 export default function App() {
   const location = useLocation();
@@ -106,6 +107,16 @@ export default function App() {
             <AdminRoute>
               <AdminLayout>
                 <GalleryUpload />
+              </AdminLayout>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/employees"
+          element={
+            <AdminRoute>
+              <AdminLayout>
+                <EmployeesTable />
               </AdminLayout>
             </AdminRoute>
           }
