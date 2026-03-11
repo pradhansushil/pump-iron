@@ -144,6 +144,7 @@ export const createPayment = async (paymentData) => {
       description: paymentData.description,
       email: paymentData.email,
       createdAt: Timestamp.now(),
+      memberName: paymentData.memberName,
     });
 
     return { success: true, paymentId: newPaymentRef.id };
