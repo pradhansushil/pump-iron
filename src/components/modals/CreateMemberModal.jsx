@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import toast from "react-hot-toast";
+import { Timestamp } from "firebase/firestore";
 
 import { plans } from "../../data/plansData";
-import { createMember } from "../../services/db";
+import { createMember, createPayment } from "../../services/db";
 
 export default function CreateMemberModal({ onClose, fetchMembers }) {
   const [name, setName] = useState("");
@@ -11,6 +12,7 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [membershipPlan, setMembershipPlan] = useState("basic");
+  const [paymentMethod, setPaymentMethod] = useState("credit card");
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -45,14 +47,33 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
       const userCredential = await adminCreateUser(email, password, "member");
       const uid = userCredential.user.uid;
 
-      const memberData = { name, email, phone, membershipPlan };
+      const planPrices = { basic: 29, standard: 49, premium: 79 };
+      const today = new Date();
+      const nextBilling = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
 
+      const memberData = { name, email, phone, membershipPlan, paymentMethod };
       const result = await createMember(uid, memberData);
       if (!result.success) {
         throw new Error(result.error || "Failed to create member profile");
       }
-      toast.success("Member created successfully");
 
+      const paymentResult = await createPayment({
+        memberId: uid,
+        amount: planPrices[membershipPlan.toLowerCase()] || 0,
+        date: Timestamp.now(),
+        dueDate: Timestamp.fromDate(nextBilling),
+        method: paymentMethod,
+        status: "completed",
+        description: `Monthly membership - ${membershipPlan}`,
+        email,
+        memberName: name,
+      });
+
+      if (!paymentResult.success) {
+        throw new Error(paymentResult.error || "Failed to record payment");
+      }
+
+      toast.success("Member created successfully");
       fetchMembers();
       onClose();
     } catch (err) {
@@ -132,6 +153,21 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
                 {plan.name} - {plan.price}/month
               </option>
             ))}
+          </select>
+        </div>
+
+        <div className="form-field">
+          <label htmlFor="paymentMethod">Payment Method *</label>
+          <select
+            id="paymentMethod"
+            required
+            value={paymentMethod}
+            onChange={(e) => setPaymentMethod(e.target.value)}
+          >
+            <option value="credit card">Credit Card</option>
+            <option value="cash">Cash</option>
+            <option value="bank transfer">Bank Transfer</option>
+            <option value="qr code">QR Code</option>
           </select>
         </div>
 
