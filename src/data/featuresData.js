@@ -1,17 +1,23 @@
+import {
+  faDumbbell,
+  faWeightHanging,
+  faUserTie,
+} from "@fortawesome/free-solid-svg-icons";
+
 export const featuresData = [
   {
-    icon: "classes-icon",
+    icon: faDumbbell,
     title: "Classes",
     description:
       "From HIIT to yoga, we offer a wide range of classes for all fitness levels.",
   },
   {
-    icon: "gym-equipment-icon",
+    icon: faWeightHanging,
     title: "Equipment",
     description: "State of the art equipment maintained and updated regularly.",
   },
   {
-    icon: "gym-trainer-icon",
+    icon: faUserTie,
     title: "Trainers",
     description:
       "Certified trainers dedicated to helping you reach your fitness goals.",

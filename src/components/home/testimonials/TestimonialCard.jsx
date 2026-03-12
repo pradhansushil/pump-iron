@@ -1,10 +1,10 @@
-export default function TestimonialCard({ image, name, testimonial, rating }) {
+export default function TestimonialCard({ name, testimonial, rating }) {
   return (
     <li>
-      <p>{image}</p>
+      <div className="avatar">{name.charAt(0).toUpperCase()}</div>
       <h3>{name}</h3>
       <p>{testimonial}</p>
-      <p>{rating}</p>
+      <p>{"⭐".repeat(rating)}</p>
     </li>
   );
 }
