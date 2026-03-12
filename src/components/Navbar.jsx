@@ -1,4 +1,3 @@
-// src/components/Navbar.jsx
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -15,6 +14,7 @@ const Navbar = () => {
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const avatarButtonRef = useRef(null);
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
@@ -43,6 +43,7 @@ const Navbar = () => {
     const handleEscapeKey = (event) => {
       if (event.key === "Escape") {
         setIsDropdownOpen(false);
+        avatarButtonRef.current?.focus();
       }
     };
 
@@ -62,7 +63,7 @@ const Navbar = () => {
   if (userRole === "admin") return null;
 
   return (
-    <nav>
+    <nav aria-label="main-navigation">
       <div className="nav-container">
         <Link to="/" className="logo">
           GymApp
@@ -136,10 +137,13 @@ const Navbar = () => {
 
               <div className="avatar-dropdown" ref={dropdownRef}>
                 <button
+                  ref={avatarButtonRef}
                   onClick={toggleDropdown}
                   className="avatar-button"
                   aria-expanded={isDropdownOpen}
-                  aria-label="User menu"
+                  aria-haspopup="true"
+                  aria-controls="user-dropdown-menu"
+                  aria-label="user menu"
                 >
                   {currentUser.displayName
                     ? currentUser.displayName.charAt(0).toUpperCase()
@@ -147,8 +151,13 @@ const Navbar = () => {
                 </button>
 
                 {isDropdownOpen && (
-                  <div className="dropdown-menu">
+                  <div
+                    className="dropdown-menu"
+                    id="user-dropdown-menu"
+                    role="menu"
+                  >
                     <Link
+                      role="menuitem"
                       to="dashboard/profile"
                       className="dropdown-item"
                       onClick={() => setIsDropdownOpen(false)}
@@ -156,6 +165,7 @@ const Navbar = () => {
                       Profile
                     </Link>
                     <Link
+                      role="menuitem"
                       to="/settings"
                       className="dropdown-item"
                       onClick={() => setIsDropdownOpen(false)}
@@ -163,6 +173,7 @@ const Navbar = () => {
                       Settings
                     </Link>
                     <button
+                      role="menuitem"
                       onClick={handleLogout}
                       className="dropdown-item logout-button"
                     >
