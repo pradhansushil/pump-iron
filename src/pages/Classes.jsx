@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { increment } from "firebase/firestore";
+
 import {
   getAllClasses,
   updateClassBookings,
@@ -56,7 +57,7 @@ export default function Classes() {
 
       if (memberData.status !== "active") {
         setError(
-          "You need to have a membership to book. go to plans to be a gym member.",
+          "You need to have a membership to book. Go to plans to be a gym member.",
         );
         window.scrollTo({ top: 0, behavior: "smooth" });
         return;
@@ -85,9 +86,19 @@ export default function Classes() {
   };
 
   return (
-    <>
-      {error && <div className="booking-error">{error}</div>}
-      <ul className="classes-list">
+    <main aria-labelledby="classes-heading">
+      {error && (
+        <div className="booking-error" role="alert">
+          {error}
+        </div>
+      )}
+      <section aria-labelledby="classes-heading">
+        <h1 id="classes-heading">Classes</h1>
+        <p>
+          Browse and book from our range of classes. All fitness levels welcome.
+        </p>
+      </section>
+      <ul className="classes-list" aria-label="Available classes">
         {classes.map((c) => (
           <li className="class-card" key={c.id}>
             <h3 className="class-name">{c.name}</h3>
@@ -99,6 +110,7 @@ export default function Classes() {
             <button
               className="book-btn"
               disabled={c.id === bookingLoading}
+              aria-label={`Book ${c.name}`}
               onClick={() => {
                 if (!currentUser) {
                   navigate("/login");
@@ -116,6 +128,6 @@ export default function Classes() {
           </li>
         ))}
       </ul>
-    </>
+    </main>
   );
 }
