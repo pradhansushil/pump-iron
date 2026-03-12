@@ -62,13 +62,18 @@ export default function LoginPage() {
       <div className="member-form-container">
         <h1 id="login-heading">Sign In</h1>
 
-        {error && <p className="form-error">{error}</p>}
+        {error && (
+          <p className="form-error" role="alert">
+            {error}
+          </p>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className="form-field">
-            <label>Email</label>
+            <label htmlFor="email">Email</label>
             <input
               type="email"
+              id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={loading}
@@ -76,9 +81,10 @@ export default function LoginPage() {
           </div>
 
           <div className="form-field">
-            <label>Password</label>
+            <label htmlFor="password">Password</label>
             <input
               type="password"
+              id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               disabled={loading}
