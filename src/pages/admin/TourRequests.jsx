@@ -53,7 +53,7 @@ export default function TourRequests() {
 
   return (
     <main aria-labelledby="tour-requests-heading">
-      <h2 id="tour-requests-heading">Tour Requests</h2>
+      <h1 id="tour-requests-heading">Tour Requests</h1>
       <div className="">
         {FILTER_OPTIONS.map((f) => (
           <button key={f} onClick={() => setSelectedFilter(f)}>
