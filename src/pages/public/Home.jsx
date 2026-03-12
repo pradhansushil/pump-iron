@@ -9,7 +9,7 @@ import BookTourModal from "../../components/modals/BookTour";
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <main>
+    <main aria-labelledby="hero-title">
       <Hero onBookTour={() => setIsModalOpen(true)} />
       <Features />
       <MembershipPlans />

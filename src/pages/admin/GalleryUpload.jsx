@@ -29,7 +29,8 @@ export default function GalleryUpload() {
   };
 
   return (
-    <div className="">
+    <main aria-labelledby="gallery-upload-heading">
+      <h1 id="gallery-upload-heading">Gallery Upload</h1>
       <p>{errors}</p>
       <input
         type="file"
@@ -58,6 +59,6 @@ export default function GalleryUpload() {
       ></textarea>
 
       <button onClick={handleSubmit}>Upload</button>
-    </div>
+    </main>
   );
 }

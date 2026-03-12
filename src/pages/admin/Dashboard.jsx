@@ -52,8 +52,10 @@ export default function AdminDashboard() {
     .reduce((sum, payment) => sum + payment.amount, 0);
 
   return (
-    <div className="dashboard">
-      <h1 className="dashboard-title">Admin Dashboard</h1>
+    <main aria-labelledby="admin-dashboard-heading" className="dashboard">
+      <h1 id="admin-dashboard-heading" className="dashboard-title">
+        Admin Dashboard
+      </h1>
 
       <div className="stats-container">
         <p className="stat">
@@ -73,6 +75,6 @@ export default function AdminDashboard() {
         </p>
       </div>
       <TourRequestsWidget tourRequests={tourRequests} />
-    </div>
+    </main>
   );
 }

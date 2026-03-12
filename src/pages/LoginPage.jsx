@@ -58,9 +58,9 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="auth-page">
+    <main aria-labelledby="login-heading" className="auth-page">
       <div className="member-form-container">
-        <h2>Sign In</h2>
+        <h1 id="login-heading">Sign In</h1>
 
         {error && <p className="form-error">{error}</p>}
 
@@ -96,6 +96,6 @@ export default function LoginPage() {
           Don't have an account? <Link to="/signup">Sign up</Link>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

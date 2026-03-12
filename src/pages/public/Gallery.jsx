@@ -21,7 +21,8 @@ export default function Gallery() {
     setLightboxOpen(true);
   };
   return (
-    <div>
+    <main aria-labelledby="gallery-heading">
+      <h1 id="gallery-heading">Gallery</h1>
       <div className="image-container">
         {images.map((image) => (
           <button
@@ -39,6 +40,6 @@ export default function Gallery() {
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
       />
-    </div>
+    </main>
   );
 }

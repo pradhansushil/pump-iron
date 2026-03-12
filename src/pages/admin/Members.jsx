@@ -84,7 +84,8 @@ export default function AdminMembers() {
   if (members.length === 0) return <p>No members have signed up yet.</p>;
 
   return (
-    <div className="members-page">
+    <main aria-labelledby="admin-members-heading" className="members-page">
+      <h1 id="admin-members-heading">Members</h1>
       <div className="members-toolbar">
         <label htmlFor="member-search">Search members: </label>
         <input
@@ -189,6 +190,6 @@ export default function AdminMembers() {
         onConfirm={handleDelete}
         message="Are you sure you want to delete this member? This action cannot be undone."
       />
-    </div>
+    </main>
   );
 }

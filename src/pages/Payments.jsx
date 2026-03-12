@@ -54,7 +54,8 @@ export default function Payments() {
 
   return (
     memberData && (
-      <>
+      <main aria-labelledby="payments-heading">
+        <h1 id="payments-heading">Payments</h1>
         <div className="payment-method">
           <p>
             Current Payment Method:{" "}
@@ -113,7 +114,7 @@ export default function Payments() {
             onPaymentMethodUpdate={updatePaymentMethodUI}
           />
         )}
-      </>
+      </main>
     )
   );
 }

@@ -125,9 +125,9 @@ export default function Signup() {
   };
 
   return (
-    <div className="auth-page">
+    <main aria-labelledby="signup-heading" className="auth-page">
       <div className="member-form-container">
-        <h2>Join Our Gym</h2>
+        <h1 id="signup-heading">Join Our Gym</h1>
 
         {error.general && <p className="form-error">{error.general}</p>}
 
@@ -267,6 +267,6 @@ export default function Signup() {
           Already have an account? <Link to="/login">Log In</Link>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
