@@ -45,7 +45,7 @@ export default function BasicInfo({ member, updateMember, uid, setMember }) {
 
   return (
     <div className="">
-      <h3>Basic Info</h3>
+      <h2>Basic Info</h2>
       {!isEditing ? (
         <section>
           <p>
