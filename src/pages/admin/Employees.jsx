@@ -41,7 +41,7 @@ export default function EmployeesTable() {
 
   return (
     <main aria-labelledby="employees-heading">
-      <h2 id="employees-heading">Employees</h2>
+      <h1 id="employees-heading">Employees</h1>
       <div className="">
         <table>
           <thead>
