@@ -65,7 +65,7 @@ export default function PaymentsTable() {
 
   return (
     <main aria-labelledby="payments-heading">
-      <h2 id="payments-heading">Payments</h2>
+      <h1 id="payments-heading">Payments</h1>
       <div className="">
         <input
           type="text"
