@@ -20,8 +20,7 @@ export default function AdminNavbar() {
   };
 
   return (
-    <div className="admin-navbar">
-      <button onClick={handleLogout}>Log Out</button>
+    <nav aria-label="admin-navigation" className="admin-navbar">
       <div className="admin-nav-links">
         <Link
           to="/admin"
@@ -48,7 +47,7 @@ export default function AdminNavbar() {
         <Link
           to="/admin/gallery"
           className={
-            isActive("/admin/tourRequests") ? "nav-link-active" : "nav-link"
+            isActive("/admin/gallery") ? "nav-link-active" : "nav-link"
           }
         >
           Gallery
@@ -56,7 +55,7 @@ export default function AdminNavbar() {
         <Link
           to="/admin/employees"
           className={
-            isActive("/admin/tourRequests") ? "nav-link-active" : "nav-link"
+            isActive("/admin/employees") ? "nav-link-active" : "nav-link"
           }
         >
           Employees
@@ -64,12 +63,13 @@ export default function AdminNavbar() {
         <Link
           to="/admin/payments"
           className={
-            isActive("/admin/tourRequests") ? "nav-link-active" : "nav-link"
+            isActive("/admin/payments") ? "nav-link-active" : "nav-link"
           }
         >
           Payments
         </Link>
       </div>
-    </div>
+      <button onClick={handleLogout}>Log Out</button>
+    </nav>
   );
 }
