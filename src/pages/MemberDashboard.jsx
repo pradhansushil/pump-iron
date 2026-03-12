@@ -105,7 +105,7 @@ export default function MemberDashboard() {
     <main aria-labelledby="dashboard-heading">
       <div className="dashboard">
         {error && (
-          <div className="dashboard-error">
+          <div className="dashboard-error" role="alert">
             <p>Unable to load dashboard data</p>
             <button
               onClick={() => {
@@ -125,7 +125,7 @@ export default function MemberDashboard() {
         />
 
         {memberData.status === "inactive" && (
-          <div className="inactive-banner">
+          <div className="inactive-banner" role="alert">
             <h3>Payment Processing Failed</h3>
             <p>
               Your account is inactive because we couldn't process your initial
