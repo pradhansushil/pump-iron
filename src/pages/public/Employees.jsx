@@ -27,8 +27,8 @@ export default function Employees() {
   if (loading) return <LoadingSpinner />;
 
   return (
-    <main aria-labelledby="employees">
-      <h2 id="employees">Our Family</h2>
+    <main aria-labelledby="employees-heading">
+      <h1 id="employees-heading">Our Family</h1>
       <ul>
         {employees.map((e) => (
           <EmployeeCard
