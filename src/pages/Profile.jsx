@@ -5,11 +5,11 @@ import { getMemberById, updateMember } from "../services/db";
 import LoadingSpinner from "../components/LoadingSpinner";
 import BasicInfo from "../components/members/profile/BasicInfo";
 import EditPassword from "../components/members/EditPassword";
-import toast from "react-hot-toast";
 
 export default function Profile() {
   const [member, setMember] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const { currentUser } = useAuth();
 
@@ -19,7 +19,7 @@ export default function Profile() {
         setLoading(true);
         setMember(await getMemberById(currentUser.uid));
       } catch {
-        toast.error("Failed to load profile. Please try again.");
+        setError("Failed to load profile. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -29,6 +29,8 @@ export default function Profile() {
   }, [currentUser.uid]);
 
   if (loading) return <LoadingSpinner />;
+  if (error) return <p role="alert">{error}</p>;
+
   return (
     <main aria-labelledby="profile-heading">
       <div className="">
