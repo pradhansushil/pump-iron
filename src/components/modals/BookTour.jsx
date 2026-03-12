@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 
 import { submitTourRequest } from "../../services/booking/tourService";
@@ -17,6 +17,14 @@ export default function BookTourModal({ isOpen, onClose }) {
     document.addEventListener("keydown", handleEscKey);
     return () => document.removeEventListener("keydown", handleEscKey);
   }, [onClose]);
+
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      modalRef.current?.focus();
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -73,16 +81,30 @@ export default function BookTourModal({ isOpen, onClose }) {
 
   return (
     <div className="modal-overlay" onClick={handleClose}>
-      <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="modal-box"
+        ref={modalRef}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2 id="modal-title">Book a Tour</h2>
         <form onSubmit={handleSubmit} noValidate>
           <div className="form-field">
-            {errors.name && <p className="field-error">{errors.name}</p>}
+            {errors.name && (
+              <p className="field-error" id="name-error">
+                {errors.name}
+              </p>
+            )}
             <label htmlFor="name">Full Name *</label>
             <input
               type="text"
               id="name"
               name="name"
               required
+              aria-describedby={errors.name ? "name-error" : undefined}
               value={formData.name}
               onChange={handleChange}
               placeholder="John Doe"
@@ -90,13 +112,18 @@ export default function BookTourModal({ isOpen, onClose }) {
           </div>
 
           <div className="form-field">
-            {errors.email && <p className="field-error">{errors.email}</p>}
+            {errors.email && (
+              <p className="field-error" id="email-error">
+                {errors.email}
+              </p>
+            )}
             <label htmlFor="email">Email *</label>
             <input
               type="email"
               id="email"
               name="email"
               required
+              aria-describedby={errors.email ? "email-error" : undefined}
               value={formData.email}
               onChange={handleChange}
               placeholder="johndoe@example.com"
@@ -104,13 +131,18 @@ export default function BookTourModal({ isOpen, onClose }) {
           </div>
 
           <div className="form-field">
-            {errors.phone && <p className="field-error">{errors.phone}</p>}
+            {errors.phone && (
+              <p className="field-error" id="phone-error">
+                {errors.phone}
+              </p>
+            )}
             <label htmlFor="phone">Phone # *</label>
             <input
               type="text"
               id="phone"
               name="phone"
               required
+              aria-describedby={errors.phone ? "phone-error" : undefined}
               value={formData.phone}
               onChange={handleChange}
               placeholder="1023456789"
