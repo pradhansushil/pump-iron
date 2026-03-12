@@ -5,6 +5,7 @@ import { getMemberById, updateMember } from "../services/db";
 import LoadingSpinner from "../components/LoadingSpinner";
 import BasicInfo from "../components/members/profile/BasicInfo";
 import EditPassword from "../components/members/EditPassword";
+import toast from "react-hot-toast";
 
 export default function Profile() {
   const [member, setMember] = useState(null);
@@ -17,8 +18,8 @@ export default function Profile() {
       try {
         setLoading(true);
         setMember(await getMemberById(currentUser.uid));
-      } catch (error) {
-        console.error("Error: ", error);
+      } catch {
+        toast.error("Failed to load profile. Please try again.");
       } finally {
         setLoading(false);
       }
