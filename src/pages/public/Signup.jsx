@@ -129,16 +129,25 @@ export default function Signup() {
       <div className="member-form-container">
         <h1 id="signup-heading">Join Our Gym</h1>
 
-        {error.general && <p className="form-error">{error.general}</p>}
+        {error.general && (
+          <p className="form-error" role="alert">
+            {error.general}
+          </p>
+        )}
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="form-field">
-            {error.name && <p className="field-error">{error.name}</p>}
+            {error.name && (
+              <p className="field-error" id="name-error">
+                {error.name}
+              </p>
+            )}
             <label htmlFor="name">Full Name *</label>
             <input
               type="text"
               id="name"
               required
+              aria-describedby={error.name ? "name-error" : undefined}
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="John Doe"
@@ -146,12 +155,17 @@ export default function Signup() {
           </div>
 
           <div className="form-field">
-            {error.email && <p className="field-error">{error.email}</p>}
+            {error.email && (
+              <p className="field-error" id="email-error">
+                {error.email}
+              </p>
+            )}
             <label htmlFor="email">Email *</label>
             <input
               type="email"
               id="email"
               required
+              aria-describedby={error.email ? "email-error" : undefined}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="john@example.com"
@@ -159,12 +173,17 @@ export default function Signup() {
           </div>
 
           <div className="form-field">
-            {error.phone && <p className="field-error">{error.phone}</p>}
+            {error.phone && (
+              <p className="field-error" id="phone-error">
+                {error.phone}
+              </p>
+            )}
             <label htmlFor="phone">Phone Number *</label>
             <input
               type="tel"
               id="phone"
               required
+              aria-describedby={error.phone ? "phone-error" : undefined}
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="1234567890"
@@ -189,12 +208,17 @@ export default function Signup() {
 
           <div className="form-field">
             {error.paymentMethod && (
-              <p className="field-error">{error.paymentMethod}</p>
+              <p className="field-error" id="payment-method-error">
+                {error.paymentMethod}
+              </p>
             )}
             <label htmlFor="paymentMethod">Payment Method</label>
             <select
               id="paymentMethod"
               required
+              aria-describedby={
+                error.paymentMethod ? "payment-method-error" : undefined
+              }
               value={paymentMethod}
               onChange={(e) => setPaymentMethod(e.target.value)}
             >
@@ -229,12 +253,17 @@ export default function Signup() {
           {paymentMethod === "qr code" && <QRCodeForm />}
 
           <div className="form-field">
-            {error.password && <p className="field-error">{error.password}</p>}
+            {error.password && (
+              <p className="field-error" id="password-error">
+                {error.password}
+              </p>
+            )}
             <label htmlFor="password">Password *</label>
             <input
               type="password"
               id="password"
               required
+              aria-describedby={error.password ? "password-error" : undefined}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="At least 6 characters"
@@ -243,13 +272,18 @@ export default function Signup() {
 
           <div className="form-field">
             {error.confirmPassword && (
-              <p className="field-error">{error.confirmPassword}</p>
+              <p className="field-error" id="confirm-password-error">
+                {error.confirmPassword}
+              </p>
             )}
             <label htmlFor="confirmPassword">Confirm Password *</label>
             <input
               type="password"
               id="confirmPassword"
               required
+              aria-describedby={
+                error.confirmPassword ? "confirm-password-error" : undefined
+              }
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Re-enter your password"
