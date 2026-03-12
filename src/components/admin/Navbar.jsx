@@ -20,7 +20,7 @@ export default function AdminNavbar() {
   };
 
   return (
-    <nav aria-label="admin-navigation" className="admin-navbar">
+    <nav aria-label="admin navigation" className="admin-navbar">
       <div className="admin-nav-links">
         <Link
           to="/admin"

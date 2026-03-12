@@ -3,7 +3,7 @@ import SocialMediaLinks from "./SocialMediaLinks";
 
 export default function Footer() {
   return (
-    <footer>
+    <footer aria-label="site footer">
       <a href="mailto:info@pumpandiron.com">info@pumpandiron.com</a>
       <PageLinks />
       <SocialMediaLinks />

@@ -63,7 +63,7 @@ const Navbar = () => {
   if (userRole === "admin") return null;
 
   return (
-    <nav aria-label="main-navigation">
+    <nav aria-label="main navigation">
       <div className="nav-container">
         <Link to="/" className="logo">
           GymApp
