@@ -12,7 +12,7 @@ import Gallery from "./pages/public/Gallery";
 
 // Routes
 import MemberRoute from "./components/routes/Member";
-import AdminRoute from "./components/routes/Route";
+import AdminRoute from "./components/routes/Admin";
 import PublicRoute from "./components/routes/Public";
 
 // Member pages
