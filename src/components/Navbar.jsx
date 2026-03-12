@@ -59,7 +59,7 @@ const Navbar = () => {
 
   if (location.pathname.startsWith("/admin")) return null;
   if (loading) return null;
-  if (userRole) return null;
+  if (userRole === "admin") return null;
 
   return (
     <nav>
