@@ -86,9 +86,12 @@ export default function AdminMembers() {
   return (
     <div className="members-page">
       <div className="members-toolbar">
+        <label htmlFor="member-search">Search members: </label>
         <input
+          id="member-search"
           className="members-search"
           type="search"
+          placeholder="Search by name or email"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
