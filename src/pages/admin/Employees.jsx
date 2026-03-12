@@ -60,7 +60,10 @@ export default function EmployeesTable() {
                 <td>{emp.bio}</td>
                 <td>{emp.specialization}</td>
                 <td>
-                  <button onClick={() => handleDelete(emp.id, emp.name)}>
+                  <button
+                    onClick={() => handleDelete(emp.id, emp.name)}
+                    aria-label={`delete ${emp.name}`}
+                  >
                     Delete
                   </button>
                 </td>
