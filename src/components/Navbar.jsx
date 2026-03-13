@@ -65,7 +65,7 @@ const Navbar = () => {
   return (
     <nav aria-label="main navigation">
       <div className="nav-container">
-        <Link to="/" className="logo">
+        <Link to="/" aria-hidden="true" tabIndex={-1} className="logo">
           GymApp
         </Link>
 
