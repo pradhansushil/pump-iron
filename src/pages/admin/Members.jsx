@@ -16,13 +16,14 @@ export default function AdminMembers() {
   const [memberToDelete, setMemberToDelete] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const fetchAllMembers = async () => {
     try {
       const allMembers = await getAllMembers();
       setMembers(allMembers);
     } catch {
-      toast.error("Failed to load members");
+      setError("Failed to load members");
     } finally {
       setLoading(false);
     }
@@ -80,7 +81,7 @@ export default function AdminMembers() {
   };
 
   if (loading) return <LoadingSpinner message="Loading Members" />;
-
+  if (error) return <p role="alert">{error}</p>;
   if (members.length === 0) return <p>No members have signed up yet.</p>;
 
   return (
@@ -150,18 +151,21 @@ export default function AdminMembers() {
                 <td>{member.status}</td>
                 <td className="member-actions">
                   <button
+                    aria-label={`record payment for ${member.name}`}
                     className="record-payment-btn"
                     onClick={() => setSelectedMember(member)}
                   >
                     Record Payment
                   </button>
                   <button
+                    aria-label={`delete ${member.name}`}
                     className="delete-btn"
                     onClick={() => setMemberToDelete(member)}
                   >
                     Delete
                   </button>
                   <button
+                    aria-label={`${member.status === "suspended" ? "Unsuspend" : "Suspend"} ${member.name}`}
                     className="suspend-btn"
                     onClick={() => handleSuspend(member)}
                   >
