@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import toast from "react-hot-toast";
 
 import { getAllPayments } from "../../services/db";
 import LoadingSpinner from "../../components/LoadingSpinner";
@@ -12,6 +11,7 @@ export default function PaymentsTable() {
   const [month, setMonth] = useState("");
   const [status, setStatus] = useState("all");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPayments = async () => {
@@ -19,7 +19,7 @@ export default function PaymentsTable() {
         const result = await getAllPayments();
         setPayments(result);
       } catch {
-        toast.error("Failed to load payments");
+        setError("Failed to load payments. Please try again");
       } finally {
         setLoading(false);
       }
@@ -62,13 +62,16 @@ export default function PaymentsTable() {
     });
 
   if (loading) return <LoadingSpinner />;
+  if (error) return <p role="alert">{error}</p>;
 
   return (
     <main aria-labelledby="payments-heading">
       <h1 id="payments-heading">Payments</h1>
       <div className="">
+        <label htmlFor="name-search">Name</label>
         <input
           type="text"
+          id="name-search"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter a name"
