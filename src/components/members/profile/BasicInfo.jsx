@@ -20,6 +20,8 @@ export default function BasicInfo({ member, updateMember, uid, setMember }) {
   };
 
   const handleSubmit = async () => {
+    setErrors({});
+
     if (editedMember.name === "") {
       return setErrors({ name: "Please provide your name" });
     }
@@ -39,7 +41,7 @@ export default function BasicInfo({ member, updateMember, uid, setMember }) {
       setMember(editedMember);
       toast.success("Update successful!");
     } catch {
-      toast.error("Failed to update profile. Please try again");
+      setErrors({ general: "Failed to update profile. Please try again" });
     }
   };
 
@@ -60,11 +62,25 @@ export default function BasicInfo({ member, updateMember, uid, setMember }) {
             <span>Phone Number: </span>
             {member.phone}
           </p>
-          <button onClick={() => setIsEditing(true)}>Edit</button>
+          <button
+            onClick={() => setIsEditing(true)}
+            aria-label="edit basic info"
+          >
+            Edit
+          </button>
         </section>
       ) : (
         <section>
-          {errors.name && <p>{errors.name}</p>}
+          {errors.general && (
+            <p id="general-error" role="alert">
+              {errors.general}
+            </p>
+          )}
+          {errors.name && (
+            <p id="name-error" role="alert">
+              {errors.name}
+            </p>
+          )}
           <label htmlFor="name">Name: </label>
           <input
             type="text"
@@ -73,8 +89,13 @@ export default function BasicInfo({ member, updateMember, uid, setMember }) {
             onChange={(e) =>
               setEditedMember({ ...editedMember, name: e.target.value })
             }
+            aria-describedby={errors.name ? "name-error" : undefined}
           />
-          {errors.email && <p>{errors.email}</p>}
+          {errors.email && (
+            <p id="email-error" role="alert">
+              {errors.email}
+            </p>
+          )}
           <label htmlFor="email">Email: </label>
           <input
             type="email"
@@ -83,8 +104,13 @@ export default function BasicInfo({ member, updateMember, uid, setMember }) {
             onChange={(e) =>
               setEditedMember({ ...editedMember, email: e.target.value })
             }
+            aria-describedby={errors.email ? "email-error" : undefined}
           />
-          {errors.phone && <p>{errors.phone}</p>}
+          {errors.phone && (
+            <p id="phone-error" role="alert">
+              {errors.phone}
+            </p>
+          )}
           <label htmlFor="phone">Phone Number: </label>
           <input
             type="text"
@@ -93,6 +119,7 @@ export default function BasicInfo({ member, updateMember, uid, setMember }) {
             onChange={(e) =>
               setEditedMember({ ...editedMember, phone: e.target.value })
             }
+            aria-describedby={errors.phone ? "phone-error" : undefined}
           />
 
           <button onClick={handleCancel}>Cancel</button>
