@@ -14,6 +14,7 @@ export default function TourRequests() {
   const [tourRequests, setTourRequests] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchTourRequests = async () => {
@@ -21,7 +22,7 @@ export default function TourRequests() {
         const requests = await getAllTourRequests();
         setTourRequests(requests);
       } catch {
-        toast.error("Failed to load tour requests. Please try again");
+        setError("Failed to load tour requests. Please try again");
       } finally {
         setLoading(false);
       }
@@ -50,13 +51,18 @@ export default function TourRequests() {
   };
 
   if (loading) return <LoadingSpinner />;
+  if (error) return <p role="alert">{error}</p>;
 
   return (
     <main aria-labelledby="tour-requests-heading">
       <h1 id="tour-requests-heading">Tour Requests</h1>
       <div className="">
         {FILTER_OPTIONS.map((f) => (
-          <button key={f} onClick={() => setSelectedFilter(f)}>
+          <button
+            key={f}
+            onClick={() => setSelectedFilter(f)}
+            aria-pressed={selectedFilter === f}
+          >
             {f}
           </button>
         ))}
