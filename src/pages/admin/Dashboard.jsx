@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import toast from "react-hot-toast";
 
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { getAllMembers, getAllPayments } from "../../services/db";
@@ -11,6 +10,7 @@ export default function AdminDashboard() {
   const [payments, setPayments] = useState([]);
   const [tourRequests, setTourRequests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchMembers = async () => {
@@ -25,7 +25,7 @@ export default function AdminDashboard() {
         setPayments(allPayments);
         setTourRequests(allTourRequests);
       } catch {
-        toast.error("Failed to load dashboard data.");
+        setError("Failed to load dashboard data.");
       } finally {
         setLoading(false);
       }
@@ -35,6 +35,7 @@ export default function AdminDashboard() {
   }, []);
 
   if (loading) return <LoadingSpinner />;
+  if (error) return <p role="alert">{error}</p>;
 
   const totalMembers = members.length;
   const activeMembers = members.filter((s) => s.status === "active").length;
