@@ -3,11 +3,14 @@ import toast from "react-hot-toast";
 
 import { deleteEmployee, fetchEmployees } from "../../services/employeesData";
 import AddEmployeeModal from "../../components/modals/AddEmployee";
+import ConfirmModal from "../../components/modals/ConfirmModal";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
 export default function EmployeesTable() {
   const [employees, setEmployees] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [employeeToDelete, setEmployeeToDelete] = useState(null);
+  const [confirmModal, setConfirmModal] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const fetchAllEmployees = async () => {
@@ -29,10 +32,16 @@ export default function EmployeesTable() {
     loadEmployees();
   }, []);
 
+  const handleDeleteClick = (id, name) => {
+    setEmployeeToDelete({ id, name });
+    setConfirmModal(true);
+  };
+
   const handleDelete = async (id, name) => {
     try {
       await deleteEmployee(id);
       await fetchAllEmployees();
+      setConfirmModal(false);
       toast.success(`${name} deleted successfully`);
     } catch {
       toast.error(`Failed to delete ${name}`);
@@ -64,7 +73,7 @@ export default function EmployeesTable() {
                 <td>{emp.specialization}</td>
                 <td>
                   <button
-                    onClick={() => handleDelete(emp.id, emp.name)}
+                    onClick={() => handleDeleteClick(emp.id, emp.name)}
                     aria-label={`delete ${emp.name}`}
                   >
                     Delete
@@ -78,6 +87,15 @@ export default function EmployeesTable() {
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onSuccess={fetchAllEmployees}
+        />
+
+        <ConfirmModal
+          isOpen={confirmModal}
+          onClose={() => setConfirmModal(false)}
+          onConfirm={() =>
+            employeeToDelete && handleDelete(employeeToDelete.id, employeeToDelete.name)
+          }
+          message={`Are you sure you want to delete ${employeeToDelete?.name}?`}
         />
       </div>
     </main>
