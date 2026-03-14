@@ -164,14 +164,6 @@ const Navbar = () => {
                     >
                       Profile
                     </Link>
-                    <Link
-                      role="menuitem"
-                      to="/settings"
-                      className="dropdown-item"
-                      onClick={() => setIsDropdownOpen(false)}
-                    >
-                      Settings
-                    </Link>
                     <button
                       role="menuitem"
                       onClick={handleLogout}
