@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-
 import {
   formatCurrency,
   formatDate,
   formatPaymentMethod,
+  getPaymentStatus,
 } from "../../utils/formatters";
 
 export default function RecentPaymentsCard({ payments }) {
@@ -30,7 +30,9 @@ export default function RecentPaymentsCard({ payments }) {
                   <td>{formatCurrency(payment.amount)}</td>
                   <td>{formatPaymentMethod(payment.method)}</td>
                   <td>
-                    <span className="status-badge">{payment.status}</span>
+                    <span className="status-badge">
+                      {getPaymentStatus(payment)}
+                    </span>
                   </td>
                 </tr>
               ))}

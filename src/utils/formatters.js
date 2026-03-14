@@ -39,3 +39,14 @@ export function getStatusColor(status) {
 
   return statusColor[status];
 }
+
+export function getPaymentStatus(payment) {
+  if (payment.status === "completed") return "completed";
+
+  const today = new Date();
+  const date = payment.dueDate.toDate();
+
+  if (today > date) return "overdue";
+
+  return "due";
+}

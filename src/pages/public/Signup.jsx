@@ -94,14 +94,31 @@ export default function Signup() {
           memberName: name,
           amount: planPrice,
           date: Timestamp.now(),
-          dueDate: Timestamp.now(),
+          dueDate: Timestamp.fromDate(result.nextBilling),
           method: paymentMethod,
           status: "completed",
           description: `Monthly membership - ${membershipPlan}`,
           email: email,
         });
 
-        if (paymentResult.success) break;
+        if (paymentResult.success) {
+          const nextPayment = await createPayment({
+            memberId: uid,
+            memberName: name,
+            amount: 0,
+            date: Timestamp.now(),
+            dueDate: Timestamp.fromDate(result.nextBilling),
+            method: paymentMethod,
+            status: "due",
+            description: `Monthly membership - ${membershipPlan}`,
+            email: email,
+          });
+
+          if (!nextPayment.success) {
+            throw new Error("Failed to create next billing cycle");
+          }
+          break;
+        }
         attempts++;
       }
 

@@ -59,7 +59,7 @@ export const createMember = async (uid, memberData) => {
     };
 
     await setDoc(memberRef, memberDocument);
-    return { success: true, memberId: uid };
+    return { success: true, memberId: uid, nextBilling: nextBilling };
   } catch (error) {
     return { success: false, error: error.message };
   }
