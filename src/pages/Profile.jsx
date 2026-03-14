@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { getMemberById, updateMember } from "../services/db";
 import LoadingSpinner from "../components/LoadingSpinner";
 import BasicInfo from "../components/members/profile/BasicInfo";
-import EditPassword from "../components/members/EditPassword";
+import EditPassword from "../components/members/profile/EditPassword";
 
 export default function Profile() {
   const [member, setMember] = useState(null);
