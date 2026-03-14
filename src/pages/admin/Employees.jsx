@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
 import { deleteEmployee, fetchEmployees } from "../../services/employeesData";
+import AddEmployeeModal from "../../components/modals/AddEmployee";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
 export default function EmployeesTable() {
   const [employees, setEmployees] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const fetchAllEmployees = async () => {
@@ -43,6 +45,7 @@ export default function EmployeesTable() {
     <main aria-labelledby="employees-heading">
       <h1 id="employees-heading">Employees</h1>
       <div className="">
+        <button onClick={() => setIsModalOpen(true)}>Add Employee</button>
         <table>
           <thead>
             <tr>
@@ -71,6 +74,11 @@ export default function EmployeesTable() {
             ))}
           </tbody>
         </table>
+        <AddEmployeeModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSuccess={fetchAllEmployees}
+        />
       </div>
     </main>
   );
