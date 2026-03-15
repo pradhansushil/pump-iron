@@ -7,6 +7,7 @@ import {
   where,
   orderBy,
   Timestamp,
+  updateDoc,
 } from "firebase/firestore";
 
 import { db } from "../firebase";
@@ -68,5 +69,37 @@ export const getPaymentsByMember = async (memberId) => {
     }));
   } catch {
     return [];
+  }
+};
+
+export const getPaymentByStatus = async (uid, status) => {
+  try {
+    const paymentsRef = collection(db, PAYMENTS);
+
+    const q = query(
+      paymentsRef,
+      where("userId", "==", uid),
+      where("status", "==", status),
+      orderBy("date", "desc"),
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    return querySnapshot.docs.map((docSnapshot) => ({
+      id: docSnapshot.id,
+      ...docSnapshot.data(),
+    }))[0];
+  } catch {
+    return [];
+  }
+};
+
+export const updatePayment = async (paymentId, updates) => {
+  try {
+    const paymentRef = doc(db, PAYMENTS, paymentId);
+    await updateDoc(paymentRef, updates);
+    return { success: true, paymentId: paymentId };
+  } catch (error) {
+    return { success: false, error: error.message };
   }
 };
