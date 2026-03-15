@@ -1,6 +1,3 @@
-// Import the configured Firestore database instance
-import { db } from "../firebase";
-
 // Import Firestore functions for database operations
 import {
   collection,
@@ -10,22 +7,12 @@ import {
   setDoc,
   updateDoc,
   deleteDoc,
-  query,
-  where,
-  orderBy,
   Timestamp,
 } from "firebase/firestore";
 
+import { db } from "../firebase";
 import { calculateNextOccurrence } from "../utils/dateHelpers";
-
-// Collection name constants - prevents typos and ensures consistency
-export const MEMBERS = "members";
-export const PAYMENTS = "payments";
-export const CLASSES = "classes";
-export const TOUR_REQUESTS = "tourRequests";
-
-// Export the database instance for direct use if needed
-export { db };
+import { MEMBERS, PAYMENTS, CLASSES } from "../utils/constants";
 
 const dayOrder = {
   Monday: 0,
@@ -129,65 +116,8 @@ export const updateMember = async (uid, updates) => {
 };
 
 // 10.8: Create a new payment
-export const createPayment = async (paymentData) => {
-  try {
-    const paymentsRef = collection(db, PAYMENTS);
-    const newPaymentRef = doc(paymentsRef);
-
-    await setDoc(newPaymentRef, {
-      userId: paymentData.memberId,
-      amount: paymentData.amount,
-      date: paymentData.date || Timestamp.now(),
-      dueDate: paymentData.dueDate,
-      method: paymentData.method,
-      status: paymentData.status,
-      description: paymentData.description,
-      email: paymentData.email,
-      createdAt: Timestamp.now(),
-      memberName: paymentData.memberName,
-    });
-
-    return { success: true, paymentId: newPaymentRef.id };
-  } catch (error) {
-    return { success: false, error: error.message };
-  }
-};
 
 // 10.9: Get all payments for a specific member
-export const getPaymentsByMember = async (memberId) => {
-  try {
-    const paymentsRef = collection(db, PAYMENTS);
-
-    const q = query(
-      paymentsRef,
-      where("userId", "==", memberId),
-      orderBy("date", "desc"),
-    );
-
-    const querySnapshot = await getDocs(q);
-
-    return querySnapshot.docs.map((docSnapshot) => ({
-      id: docSnapshot.id,
-      ...docSnapshot.data(),
-    }));
-  } catch {
-    return [];
-  }
-};
-
-export const getAllPayments = async () => {
-  try {
-    const paymentsRef = collection(db, "payments");
-    const paymentsSnapshot = await getDocs(paymentsRef);
-
-    return paymentsSnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-  } catch {
-    return [];
-  }
-};
 
 // 10.10: Get all classes
 export const getAllClasses = async () => {
