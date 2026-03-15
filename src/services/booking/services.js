@@ -1,5 +1,6 @@
 import { doc, updateDoc, increment } from "firebase/firestore";
-import { db, getMemberById } from "../db";
+import { getMemberById } from "../db";
+import { db } from "../../firebase";
 
 export const cancelBooking = async (classId, userId) => {
   try {
