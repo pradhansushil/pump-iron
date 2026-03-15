@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
 import toast from "react-hot-toast";
 
-import { createPayment, updateMember } from "../../services/db";
+import { updateMember } from "../../services/db";
+import { createPayment } from "../../services/paymentsService";
 
 export default function RecordPaymentModal({ member, onClose, fetchMembers }) {
   const addMonths = (months) => {

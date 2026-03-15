@@ -4,7 +4,8 @@ import toast from "react-hot-toast";
 import { Timestamp } from "firebase/firestore";
 
 import { plans } from "../../data/plansData";
-import { createMember, createPayment } from "../../services/db";
+import { createMember } from "../../services/db";
+import { createPayment } from "../../services/paymentsService";
 
 export default function CreateMemberModal({ onClose, fetchMembers }) {
   const [name, setName] = useState("");

@@ -4,7 +4,8 @@ import { useAuth } from "../../context/AuthContext";
 import { Timestamp } from "firebase/firestore";
 
 import { plans } from "../../data/plansData";
-import { createMember, createPayment, updateMember } from "../../services/db";
+import { createMember, updateMember } from "../../services/db";
+import {createPayment} from "../../services/paymentsService"
 import CreditCardForm from "../../components/payment-forms/CreditCardForm";
 import BankTransferForm from "../../components/payment-forms/BankTransferForm";
 import QRCodeForm from "../../components/payment-forms/QRCodeForm";

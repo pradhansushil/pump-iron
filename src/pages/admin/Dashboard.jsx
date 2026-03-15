@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 
 import LoadingSpinner from "../../components/LoadingSpinner";
-import { getAllMembers, getAllPayments } from "../../services/db";
+import { getAllMembers } from "../../services/db";
+import { getAllPayments } from "../../services/paymentsService";
 import { getAllTourRequests } from "../../services/booking/tourService";
 import TourRequestsWidget from "../../components/admin/TourRequestsWidget";
 

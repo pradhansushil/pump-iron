@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { getAllPayments } from "../../services/db";
+import { getAllPayments } from "../../services/paymentsService";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import FilterSelect from "../../components/admin/FilterSelect";
 

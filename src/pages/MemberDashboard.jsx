@@ -5,13 +5,13 @@ import { toast } from "react-hot-toast";
 
 import {
   getMemberById,
-  getPaymentsByMember,
   getBookingsByMember,
   getClassById,
 } from "../services/db";
+import { getPaymentsByMember } from "../services/paymentsService";
+import { cancelBooking } from "../services/booking/services";
 import LoadingSpinner from "../components/LoadingSpinner";
 import ConfirmModal from "../components/modals/ConfirmModal";
-import { cancelBooking } from "../services/booking/services";
 import ClassDetails from "../components/ClassDetails";
 import DashboardHeader from "../components/members/DashboardHeader";
 import MembershipCard from "../components/members/MembershipCard";
