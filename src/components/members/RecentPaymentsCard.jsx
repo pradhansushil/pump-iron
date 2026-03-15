@@ -24,18 +24,20 @@ export default function RecentPaymentsCard({ payments }) {
               </tr>
             </thead>
             <tbody>
-              {payments.map((payment) => (
-                <tr key={payment.id}>
-                  <td>{formatDate(payment.date)}</td>
-                  <td>{formatCurrency(payment.amount)}</td>
-                  <td>{formatPaymentMethod(payment.method)}</td>
-                  <td>
-                    <span className="status-badge">
-                      {getPaymentStatus(payment)}
-                    </span>
-                  </td>
-                </tr>
-              ))}
+              {payments
+                .filter((payment) => getPaymentStatus(payment) !== null)
+                .map((payment) => (
+                  <tr key={payment.id}>
+                    <td>{formatDate(payment.date)}</td>
+                    <td>{formatCurrency(payment.amount)}</td>
+                    <td>{formatPaymentMethod(payment.method)}</td>
+                    <td>
+                      <span className="status-badge">
+                        {getPaymentStatus(payment)}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
           <Link to={"/payments"}>View Full Payment History</Link>
