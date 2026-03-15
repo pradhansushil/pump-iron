@@ -33,7 +33,7 @@ export function formatPaymentMethod(method) {
 export function getStatusColor(status) {
   const statusColor = {
     completed: "green",
-    pending: "yellow",
+    due: "yellow",
     overdue: "red",
   };
 
@@ -45,8 +45,13 @@ export function getPaymentStatus(payment) {
 
   const today = new Date();
   const date = payment.dueDate.toDate();
+  const daysUntilDue = (date - today) / (1000 * 60 * 60 * 24);
 
   if (today > date) return "overdue";
 
-  return "due";
+  if (daysUntilDue <= 7) {
+    return "due";
+  } else {
+    return null;
+  }
 }
