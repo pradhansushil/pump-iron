@@ -6,7 +6,7 @@ import {
   updateTourStatus,
 } from "../../services/booking/tourService";
 import LoadingSpinner from "../../components/LoadingSpinner";
-import { TOUR_STATUS } from "../../data/constants";
+import { TOUR_STATUS } from "../../utils/constants";
 
 const FILTER_OPTIONS = ["all", ...Object.values(TOUR_STATUS)];
 

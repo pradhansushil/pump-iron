@@ -8,7 +8,7 @@ import {
 } from "firebase/firestore";
 
 import { db } from "../../firebase";
-import { TOUR_STATUS } from "../../data/constants";
+import { TOUR_STATUS } from "../../utils/constants";
 
 export const submitTourRequest = async (tourData) => {
   const tourRequest = collection(db, "tourRequests");

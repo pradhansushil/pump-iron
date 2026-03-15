@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { TOUR_STATUS } from "../../data/constants";
+import { TOUR_STATUS } from "../../utils/constants";
 
 export default function TourRequestsWidget({ tourRequests }) {
   const totalPendingRequests = tourRequests.filter(
