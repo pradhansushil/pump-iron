@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { Timestamp } from "firebase/firestore";
-
-import { createPayment, getMemberById } from "../../services/db";
-import { plans } from "../../data/plansData";
-import LoadingSpinner from "../LoadingSpinner";
 import toast from "react-hot-toast";
 
+import { getMemberById } from "../../services/db";
+import { createPayment } from "../../services/paymentsService";
+import { plans } from "../../data/plansData";
+import LoadingSpinner from "../LoadingSpinner";
+import {
+  getPaymentByStatus,
+  updatePayment,
+} from "../../services/paymentsService";
 export default function MakePaymentModal({ isOpen, onClose, currentUser }) {
   const [paymentDetails, setPaymentDetails] = useState({
     name: "",
@@ -54,6 +58,8 @@ export default function MakePaymentModal({ isOpen, onClose, currentUser }) {
 
   const handleSubmit = async () => {
     try {
+      const result = await getPaymentByStatus(currentUser.uid, "due");
+      await updatePayment(result.id, { status: "completed" });
       const dueDate = new Date();
       dueDate.setMonth(dueDate.getMonth() + 1);
 
@@ -64,7 +70,7 @@ export default function MakePaymentModal({ isOpen, onClose, currentUser }) {
         method: paymentDetails.paymentMethod,
         email: paymentDetails.email,
         description: paymentDetails.description,
-        status: "completed",
+        status: "due",
         createdAt: Timestamp.now(),
         dueDate: Timestamp.fromDate(dueDate),
       };
