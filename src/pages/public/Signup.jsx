@@ -5,7 +5,7 @@ import { Timestamp } from "firebase/firestore";
 
 import { plans } from "../../data/plansData";
 import { createMember, updateMember } from "../../services/db";
-import {createPayment} from "../../services/paymentsService"
+import { createPayment } from "../../services/paymentsService";
 import CreditCardForm from "../../components/payment-forms/CreditCardForm";
 import BankTransferForm from "../../components/payment-forms/BankTransferForm";
 import QRCodeForm from "../../components/payment-forms/QRCodeForm";
@@ -106,7 +106,7 @@ export default function Signup() {
           const nextPayment = await createPayment({
             memberId: uid,
             memberName: name,
-            amount: 0,
+            amount: planPrice,
             date: Timestamp.now(),
             dueDate: Timestamp.fromDate(result.nextBilling),
             method: paymentMethod,
