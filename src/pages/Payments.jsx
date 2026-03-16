@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../context/AuthContext";
+
 import { getMemberById } from "../services/db";
 import { getPaymentsByMember } from "../services/paymentsService";
 import UpdatePaymentMethodModal from "../components/modals/UpdatePaymentMethodModal";
@@ -9,6 +10,9 @@ import {
   formatPaymentMethod,
 } from "../utils/formatters";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { filterPayments } from "../utils/filterPayments";
+import PaymentFilter from "../components/PaymentFilter";
+import { PAYMENT_STATUS } from "../utils/constants";
 
 export default function Payments() {
   const [loading, setLoading] = useState(true);
@@ -16,8 +20,13 @@ export default function Payments() {
   const [memberData, setMemberData] = useState(null);
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState(PAYMENT_STATUS.ALL);
 
   const { currentUser } = useAuth();
+
+  const filteredPayments = useMemo(() => {
+    return filterPayments(payments, selectedStatus);
+  }, [payments, selectedStatus]);
 
   useEffect(() => {
     if (!currentUser) return;
@@ -72,36 +81,50 @@ export default function Payments() {
         </div>
 
         {payments.length > 0 ? (
-          <div className="payments-history">
-            <table className="members-table">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Amount</th>
-                  <th>Method</th>
-                  <th>Description</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[...payments]
-                  .sort((a, b) => b.date.toDate() - a.date.toDate())
-                  .map((payment) => {
-                    return (
-                      <tr key={payment.id}>
-                        <td>{formatDate(payment.date)}</td>
-                        <td>{formatCurrency(payment.amount)}</td>
-                        <td>{formatPaymentMethod(payment.method)}</td>
-                        <td>{payment.description}</td>
-                        <td>
-                          <span className="status-badge">{payment.status}</span>
-                        </td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </table>
-          </div>
+          <>
+            <div className="payment-filter">
+              <PaymentFilter
+                onChange={setSelectedStatus}
+                selectedStatus={selectedStatus}
+              />
+            </div>
+            {filteredPayments.length > 0 ? (
+              <div className="payments-history">
+                <table className="members-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Amount</th>
+                      <th>Method</th>
+                      <th>Description</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[...filteredPayments]
+                      .sort((a, b) => b.date.toDate() - a.date.toDate())
+                      .map((payment) => {
+                        return (
+                          <tr key={payment.id}>
+                            <td>{formatDate(payment.date)}</td>
+                            <td>{formatCurrency(payment.amount)}</td>
+                            <td>{formatPaymentMethod(payment.method)}</td>
+                            <td>{payment.description}</td>
+                            <td>
+                              <span className="status-badge">
+                                {payment.status}
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p className="no-results">No payments found for this status.</p>
+            )}
+          </>
         ) : (
           <p className="no-results">No payment records found</p>
         )}
