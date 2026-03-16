@@ -79,8 +79,8 @@ export default function Payments() {
                   <th>Date</th>
                   <th>Amount</th>
                   <th>Method</th>
-                  <th>Status</th>
                   <th>Description</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -92,10 +92,10 @@ export default function Payments() {
                         <td>{formatDate(payment.date)}</td>
                         <td>{formatCurrency(payment.amount)}</td>
                         <td>{formatPaymentMethod(payment.method)}</td>
+                        <td>{payment.description}</td>
                         <td>
                           <span className="status-badge">{payment.status}</span>
                         </td>
-                        <td>{payment.description}</td>
                       </tr>
                     );
                   })}
