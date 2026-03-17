@@ -114,7 +114,6 @@ export default function RecordPaymentModal({ member, onClose, fetchMembers }) {
 
           <div className="form-field">
             <textarea
-              className="form-textarea"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Enter an optional description"
