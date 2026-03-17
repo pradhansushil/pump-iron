@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 
 import { getMemberById } from "../services/db";
@@ -10,8 +10,6 @@ import {
   formatPaymentMethod,
 } from "../utils/formatters";
 import LoadingSpinner from "../components/LoadingSpinner";
-import { filterPayments } from "../utils/filterPayments";
-import PaymentFilter from "../components/PaymentFilter";
 import { PAYMENT_STATUS } from "../utils/constants";
 
 export default function Payments() {
@@ -20,13 +18,12 @@ export default function Payments() {
   const [memberData, setMemberData] = useState(null);
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedStatus, setSelectedStatus] = useState(PAYMENT_STATUS.ALL);
 
   const { currentUser } = useAuth();
 
-  const filteredPayments = useMemo(() => {
-    return filterPayments(payments, selectedStatus);
-  }, [payments, selectedStatus]);
+  const completedPayments = payments.filter(
+    (p) => p.status === PAYMENT_STATUS.COMPLETED,
+  );
 
   useEffect(() => {
     if (!currentUser) return;
@@ -80,51 +77,35 @@ export default function Payments() {
           </button>
         </div>
 
-        {payments.length > 0 ? (
-          <>
-            <div className="payment-filter">
-              <PaymentFilter
-                onChange={setSelectedStatus}
-                selectedStatus={selectedStatus}
-              />
-            </div>
-            {filteredPayments.length > 0 ? (
-              <div className="payments-history">
-                <table className="members-table">
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Amount</th>
-                      <th>Method</th>
-                      <th>Description</th>
-                      <th>Status</th>
+        {completedPayments.length > 0 ? (
+          <div className="payments-history">
+            <table className="members-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Method</th>
+                  <th>Description</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[...completedPayments]
+                  .sort((a, b) => b.date.toDate() - a.date.toDate())
+                  .map((payment) => (
+                    <tr key={payment.id}>
+                      <td>{formatDate(payment.date)}</td>
+                      <td>{formatCurrency(payment.amount)}</td>
+                      <td>{formatPaymentMethod(payment.method)}</td>
+                      <td>{payment.description}</td>
+                      <td>
+                        <span className="status-badge">{payment.status}</span>
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {[...filteredPayments]
-                      .sort((a, b) => b.date.toDate() - a.date.toDate())
-                      .map((payment) => {
-                        return (
-                          <tr key={payment.id}>
-                            <td>{formatDate(payment.date)}</td>
-                            <td>{formatCurrency(payment.amount)}</td>
-                            <td>{formatPaymentMethod(payment.method)}</td>
-                            <td>{payment.description}</td>
-                            <td>
-                              <span className="status-badge">
-                                {payment.status}
-                              </span>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <p className="no-results">No payments found for this status.</p>
-            )}
-          </>
+                  ))}
+              </tbody>
+            </table>
+          </div>
         ) : (
           <p className="no-results">No payment records found</p>
         )}
