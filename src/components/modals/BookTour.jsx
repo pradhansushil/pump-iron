@@ -94,7 +94,7 @@ export default function BookTourModal({ isOpen, onClose }) {
         <form onSubmit={handleSubmit} noValidate>
           <div className="form-field">
             {errors.name && (
-              <p className="field-error" id="name-error">
+              <p className="field-error" id="name-error" role="alert">
                 {errors.name}
               </p>
             )}
@@ -113,7 +113,7 @@ export default function BookTourModal({ isOpen, onClose }) {
 
           <div className="form-field">
             {errors.email && (
-              <p className="field-error" id="email-error">
+              <p className="field-error" id="email-error" role="alert">
                 {errors.email}
               </p>
             )}
@@ -132,7 +132,7 @@ export default function BookTourModal({ isOpen, onClose }) {
 
           <div className="form-field">
             {errors.phone && (
-              <p className="field-error" id="phone-error">
+              <p className="field-error" id="phone-error" role="alert">
                 {errors.phone}
               </p>
             )}
