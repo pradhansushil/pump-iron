@@ -86,11 +86,11 @@ export default function Classes() {
   };
 
   return (
-    <main aria-labelledby="classes-heading">
+    <main className="classes-page">
       {error && (
-        <div className="booking-error" role="alert">
+        <p className="error-message" role="alert">
           {error}
-        </div>
+        </p>
       )}
       <section aria-labelledby="classes-heading">
         <h1 id="classes-heading">Classes</h1>
@@ -98,17 +98,16 @@ export default function Classes() {
           Browse and book from our range of classes. All fitness levels welcome.
         </p>
       </section>
-      <ul className="classes-list" aria-label="Available classes">
+      <ul aria-label="Available classes">
         {classes.map((c) => (
           <li className="class-card" key={c.id}>
-            <h3 className="class-name">{c.name}</h3>
+            <h3>{c.name}</h3>
             <p>Instructor: {c.instructor}</p>
             <p>Day: {c.day}</p>
             <p>Time: {c.time}</p>
             <p>Available spots: {c.capacity - c.currentBookings}</p>
             <p>{c.description}</p>
             <button
-              className="book-btn"
               disabled={c.id === bookingLoading}
               aria-label={`Book ${c.name}`}
               onClick={() => {
