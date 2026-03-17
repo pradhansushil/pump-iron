@@ -6,6 +6,7 @@ import { Timestamp } from "firebase/firestore";
 import { plans } from "../../data/plansData";
 import { createMember, updateMember } from "../../services/db";
 import { createPayment } from "../../services/paymentsService";
+import { PAYMENT_STATUS } from "../../utils/constants";
 import CreditCardForm from "../../components/payment-forms/CreditCardForm";
 import BankTransferForm from "../../components/payment-forms/BankTransferForm";
 import QRCodeForm from "../../components/payment-forms/QRCodeForm";
@@ -97,7 +98,7 @@ export default function Signup() {
           date: Timestamp.now(),
           dueDate: Timestamp.fromDate(result.nextBilling),
           method: paymentMethod,
-          status: "completed",
+          status: PAYMENT_STATUS.COMPLETED,
           description: `Monthly membership - ${membershipPlan}`,
           email: email,
         });
@@ -110,7 +111,7 @@ export default function Signup() {
             date: Timestamp.now(),
             dueDate: Timestamp.fromDate(result.nextBilling),
             method: paymentMethod,
-            status: "due",
+            status: PAYMENT_STATUS.DUE,
             description: `Monthly membership - ${membershipPlan}`,
             email: email,
           });
