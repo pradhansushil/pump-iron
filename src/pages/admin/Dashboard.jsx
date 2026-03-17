@@ -54,12 +54,15 @@ export default function AdminDashboard() {
     .reduce((sum, payment) => sum + payment.amount, 0);
 
   return (
-    <main aria-labelledby="admin-dashboard-heading" className="dashboard">
+    <main
+      aria-labelledby="admin-dashboard-heading"
+      className="admin-dashboard-page"
+    >
       <h1 id="admin-dashboard-heading" className="dashboard-title">
         Admin Dashboard
       </h1>
 
-      <div className="stats-container">
+      <div className="dashboard-stats">
         <p className="stat">
           Total Members: <span className="stat-value">{totalMembers}</span>
         </p>
