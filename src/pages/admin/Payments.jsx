@@ -60,7 +60,8 @@ export default function PaymentsTable() {
     .sort((a, b) => {
       if (sort === "az") return a.memberName.localeCompare(b.memberName);
       if (sort === "za") return b.memberName.localeCompare(a.memberName);
-      return 0;
+      // Default: newest date first
+      return b.date.toDate() - a.date.toDate();
     });
 
   if (loading) return <LoadingSpinner />;
