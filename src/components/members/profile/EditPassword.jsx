@@ -63,10 +63,10 @@ export default function EditPassword({ currentUser }) {
   };
 
   return (
-    <div className="">
+    <div className="profile-card">
       <h3>Password</h3>
       {!isEditing ? (
-        <section>
+        <section className="profile-card-view">
           <p>
             <span>Password: </span>
             ****
@@ -76,7 +76,7 @@ export default function EditPassword({ currentUser }) {
           </button>
         </section>
       ) : (
-        <section>
+        <section className="profile-card-edit">
           {errors.general && (
             <p id="general-error" role="alert">
               {errors.general}

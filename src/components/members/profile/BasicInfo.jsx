@@ -46,10 +46,10 @@ export default function BasicInfo({ member, updateMember, uid, setMember }) {
   };
 
   return (
-    <div className="">
+    <div className="profile-card">
       <h2>Basic Info</h2>
       {!isEditing ? (
-        <section>
+        <section className="profile-card-view">
           <p>
             <span>Name: </span>
             {member.name}
@@ -70,7 +70,7 @@ export default function BasicInfo({ member, updateMember, uid, setMember }) {
           </button>
         </section>
       ) : (
-        <section>
+        <section className="profile-card-edit">
           {errors.general && (
             <p id="general-error" role="alert">
               {errors.general}

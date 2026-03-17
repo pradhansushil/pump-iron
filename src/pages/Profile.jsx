@@ -33,7 +33,7 @@ export default function Profile() {
 
   return (
     <main aria-labelledby="profile-heading">
-      <div className="">
+      <div className="profile-page">
         <h1 id="profile-heading">Profile</h1>
         {member !== null && (
           <>
