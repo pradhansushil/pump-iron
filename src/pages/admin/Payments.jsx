@@ -4,13 +4,14 @@ import { getAllPayments } from "../../services/paymentsService";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import FilterSelect from "../../components/admin/FilterSelect";
 import { PAYMENT_STATUS } from "../../utils/constants";
+import { formatDate } from "../../utils/formatters";
 
 export default function PaymentsTable() {
   const [payments, setPayments] = useState([]);
   const [sort, setSort] = useState("");
   const [name, setName] = useState("");
   const [month, setMonth] = useState("");
-  const [status, setStatus] = useState("all");
+  const [status, setStatus] = useState(PAYMENT_STATUS.ALL);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -109,10 +110,10 @@ export default function PaymentsTable() {
           value={status}
           onChange={(e) => setStatus(e.target.value)}
           options={[
-            { value: "all", label: "All" },
-            { value: "completed", label: "Completed" },
-            { value: "due", label: "Due" },
-            { value: "overdue", label: "Overdue" },
+            { value: PAYMENT_STATUS.ALL, label: "All" },
+            { value: PAYMENT_STATUS.COMPLETED, label: "Completed" },
+            { value: PAYMENT_STATUS.DUE, label: "Due" },
+            { value: PAYMENT_STATUS.OVERDUE, label: "Overdue" },
           ]}
         />
 
@@ -121,6 +122,7 @@ export default function PaymentsTable() {
             <tr>
               <th>Name</th>
               <th>Date</th>
+              <th>Due Date</th>
               <th>Amount</th>
               <th>Status</th>
             </tr>
@@ -135,7 +137,12 @@ export default function PaymentsTable() {
               filteredPayments.map((payment) => (
                 <tr key={payment.id}>
                   <td>{payment.memberName}</td>
-                  <td>{payment.date.toDate().toLocaleDateString()}</td>
+                  <td>{formatDate(payment.date)}</td>
+                  <td>
+                    {payment.status !== "completed"
+                      ? formatDate(payment.dueDate)
+                      : "N/A"}
+                  </td>
                   <td>${payment.amount}</td>
                   <td>{payment.status}</td>
                 </tr>
