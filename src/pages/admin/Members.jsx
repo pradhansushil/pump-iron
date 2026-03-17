@@ -81,7 +81,12 @@ export default function AdminMembers() {
   };
 
   if (loading) return <LoadingSpinner message="Loading Members" />;
-  if (error) return <p role="alert">{error}</p>;
+  if (error)
+    return (
+      <p className="error-message" role="alert">
+        {error}
+      </p>
+    );
   if (members.length === 0) return <p>No members have signed up yet.</p>;
 
   return (

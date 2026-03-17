@@ -105,7 +105,7 @@ export default function MemberDashboard() {
     <main aria-labelledby="dashboard-heading">
       <div className="dashboard">
         {error && (
-          <div className="dashboard-error" role="alert">
+          <div className="error-message" role="alert">
             <p>Unable to load dashboard data</p>
             <button
               onClick={() => {

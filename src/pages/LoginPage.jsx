@@ -63,7 +63,7 @@ export default function LoginPage() {
         <h1 id="login-heading">Sign In</h1>
 
         {error && (
-          <p className="form-error" role="alert">
+          <p className="error-message" role="alert">
             {error}
           </p>
         )}

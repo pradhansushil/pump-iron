@@ -32,7 +32,11 @@ export default function GalleryUpload() {
   return (
     <main aria-labelledby="gallery-upload-heading">
       <h1 id="gallery-upload-heading">Gallery Upload</h1>
-      {errors && <p role="alert">{errors}</p>}
+      {errors && (
+        <p className="error-message" role="alert">
+          {errors}
+        </p>
+      )}
       <input
         type="file"
         ref={fileInputRef}

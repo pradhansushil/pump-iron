@@ -51,7 +51,12 @@ export default function TourRequests() {
   };
 
   if (loading) return <LoadingSpinner />;
-  if (error) return <p role="alert">{error}</p>;
+  if (error)
+    return (
+      <p className="error-message" role="alert">
+        {error}
+      </p>
+    );
 
   return (
     <main aria-labelledby="tour-requests-heading">

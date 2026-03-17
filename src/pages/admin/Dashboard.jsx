@@ -36,7 +36,12 @@ export default function AdminDashboard() {
   }, []);
 
   if (loading) return <LoadingSpinner />;
-  if (error) return <p role="alert">{error}</p>;
+  if (error)
+    return (
+      <p className="error-message" role="alert">
+        {error}
+      </p>
+    );
 
   const totalMembers = members.length;
   const activeMembers = members.filter((s) => s.status === "active").length;

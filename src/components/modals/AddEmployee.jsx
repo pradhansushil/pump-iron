@@ -86,7 +86,7 @@ export default function AddEmployeeModal({ isOpen, onClose, onSuccess }) {
         <form onSubmit={handleSubmit} noValidate>
           <div className="form-field">
             {error && (
-              <p className="field-error" role="alert">
+              <p className="error-message" role="alert">
                 {error}
               </p>
             )}

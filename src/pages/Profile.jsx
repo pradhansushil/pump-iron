@@ -29,7 +29,12 @@ export default function Profile() {
   }, [currentUser.uid]);
 
   if (loading) return <LoadingSpinner />;
-  if (error) return <p role="alert">{error}</p>;
+  if (error)
+    return (
+      <p className="error-message" role="alert">
+        {error}
+      </p>
+    );
 
   return (
     <main aria-labelledby="profile-heading">

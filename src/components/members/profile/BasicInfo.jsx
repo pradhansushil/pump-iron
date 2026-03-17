@@ -72,12 +72,12 @@ export default function BasicInfo({ member, updateMember, uid, setMember }) {
       ) : (
         <section className="profile-card-edit">
           {errors.general && (
-            <p id="general-error" role="alert">
+            <p className="error-message" id="general-error" role="alert">
               {errors.general}
             </p>
           )}
           {errors.name && (
-            <p id="name-error" role="alert">
+            <p className="field-error" id="name-error" role="alert">
               {errors.name}
             </p>
           )}
@@ -92,7 +92,7 @@ export default function BasicInfo({ member, updateMember, uid, setMember }) {
             aria-describedby={errors.name ? "name-error" : undefined}
           />
           {errors.email && (
-            <p id="email-error" role="alert">
+            <p className="field-error" id="email-error" role="alert">
               {errors.email}
             </p>
           )}
@@ -107,7 +107,7 @@ export default function BasicInfo({ member, updateMember, uid, setMember }) {
             aria-describedby={errors.email ? "email-error" : undefined}
           />
           {errors.phone && (
-            <p id="phone-error" role="alert">
+            <p className="field-error" id="phone-error" role="alert">
               {errors.phone}
             </p>
           )}
@@ -121,7 +121,6 @@ export default function BasicInfo({ member, updateMember, uid, setMember }) {
             }
             aria-describedby={errors.phone ? "phone-error" : undefined}
           />
-
           <button onClick={handleCancel}>Cancel</button>
           <button onClick={handleSubmit}>Save</button>
         </section>

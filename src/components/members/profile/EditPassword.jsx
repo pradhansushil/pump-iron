@@ -78,12 +78,12 @@ export default function EditPassword({ currentUser }) {
       ) : (
         <section className="profile-card-edit">
           {errors.general && (
-            <p id="general-error" role="alert">
+            <p className="error-message" id="general-error" role="alert">
               {errors.general}
             </p>
           )}
           {errors.currentPassword && (
-            <p id="current-error" role="alert">
+            <p className="field-error" id="current-error" role="alert">
               {errors.currentPassword}
             </p>
           )}
@@ -100,7 +100,7 @@ export default function EditPassword({ currentUser }) {
             }
           />
           {errors.newPassword && (
-            <p id="new-error" role="alert">
+            <p className="field-error" id="new-error" role="alert">
               {errors.newPassword}
             </p>
           )}
