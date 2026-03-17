@@ -5,7 +5,7 @@ export default function DashboardHeader({
 }) {
   return (
     <header className="dashboard-header">
-      <div>
+      <div className="dashboard-header-content">
         <h1 id="dashboard-heading">
           {isNewUser ? `Welcome, ${firstName}!` : `Welcome back, ${firstName}!`}
         </h1>

@@ -9,6 +9,7 @@ export default function UpcomingClasses({
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const visibleBookings = isExpanded ? bookings : bookings.slice(0, 2);
+
   return (
     <div className="upcoming-classes">
       <h2>Upcoming Classes</h2>
@@ -17,10 +18,10 @@ export default function UpcomingClasses({
           <div className="bookings-list">
             {visibleBookings.map((booking) => (
               <div className="booking-card" key={booking.id}>
-                <div>
+                <div className="booking-card-info">
                   <h3>{booking.className}</h3>
                 </div>
-                <div>
+                <div className="booking-card-details">
                   <p>
                     {booking.instructor} | {formatDate(booking.dateTime)}
                   </p>

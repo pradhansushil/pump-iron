@@ -4,7 +4,7 @@ export default function NextClassCard({ nextClass }) {
       <section aria-labelledby="next-class-heading">
         <h2 id="next-class-heading">Next Class</h2>
         {nextClass ? (
-          <div>
+          <div className="next-class-details">
             <p>{nextClass.className}</p>
             <p>
               {nextClass.dateTime.toDate().toLocaleString("en-US", {
