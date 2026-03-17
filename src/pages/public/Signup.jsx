@@ -149,7 +149,7 @@ export default function Signup() {
         <h1 id="signup-heading">Join Our Gym</h1>
 
         {error.general && (
-          <p className="form-error" role="alert">
+          <p className="error-message" role="alert">
             {error.general}
           </p>
         )}
@@ -157,7 +157,7 @@ export default function Signup() {
         <form onSubmit={handleSubmit} noValidate>
           <div className="form-field">
             {error.name && (
-              <p className="field-error" id="name-error">
+              <p className="field-error" id="name-error" role="alert">
                 {error.name}
               </p>
             )}
@@ -175,7 +175,7 @@ export default function Signup() {
 
           <div className="form-field">
             {error.email && (
-              <p className="field-error" id="email-error">
+              <p className="field-error" id="email-error" role="alert">
                 {error.email}
               </p>
             )}
@@ -193,7 +193,7 @@ export default function Signup() {
 
           <div className="form-field">
             {error.phone && (
-              <p className="field-error" id="phone-error">
+              <p className="field-error" id="phone-error" role="alert">
                 {error.phone}
               </p>
             )}
@@ -227,7 +227,7 @@ export default function Signup() {
 
           <div className="form-field">
             {error.paymentMethod && (
-              <p className="field-error" id="payment-method-error">
+              <p className="field-error" id="payment-method-error" role="alert">
                 {error.paymentMethod}
               </p>
             )}
@@ -273,7 +273,7 @@ export default function Signup() {
 
           <div className="form-field">
             {error.password && (
-              <p className="field-error" id="password-error">
+              <p className="field-error" id="password-error" role="alert">
                 {error.password}
               </p>
             )}
@@ -291,7 +291,11 @@ export default function Signup() {
 
           <div className="form-field">
             {error.confirmPassword && (
-              <p className="field-error" id="confirm-password-error">
+              <p
+                className="field-error"
+                id="confirm-password-error"
+                role="alert"
+              >
                 {error.confirmPassword}
               </p>
             )}
