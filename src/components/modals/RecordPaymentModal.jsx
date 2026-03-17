@@ -64,8 +64,16 @@ export default function RecordPaymentModal({ member, onClose, fetchMembers }) {
     <div className="modal-overlay">
       <div className="modal-box">
         <form onSubmit={handleSubmit} noValidate>
-          {error.general && <p className="form-error">{error.general}</p>}
-          {error.date && <p className="field-error">{error.date}</p>}
+          {error.general && (
+            <p className="error-message" role="alert">
+              {error.general}
+            </p>
+          )}
+          {error.date && (
+            <p className="field-error" role="alert">
+              {error.date}
+            </p>
+          )}
 
           <div className="form-field">
             <label htmlFor="amount">Amount </label>
