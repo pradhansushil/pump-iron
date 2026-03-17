@@ -61,6 +61,7 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
 
       const paymentResult = await createPayment({
         memberId: uid,
+        memberName: name,
         amount: planPrices[membershipPlan.toLowerCase()] || 0,
         date: Timestamp.now(),
         dueDate: Timestamp.fromDate(nextBilling),
@@ -68,11 +69,26 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
         status: PAYMENT_STATUS.COMPLETED,
         description: `Monthly membership - ${membershipPlan}`,
         email,
-        memberName: name,
       });
 
-      if (!paymentResult.success) {
-        throw new Error(paymentResult.error || "Failed to record payment");
+      if (paymentResult.success) {
+        const nextPayment = await createPayment({
+          memberId: uid,
+          memberName: name,
+          amount: planPrices[membershipPlan.toLowerCase()] || 0,
+          date: Timestamp.now(),
+          dueDate: Timestamp.fromDate(nextBilling),
+          method: paymentMethod,
+          status: PAYMENT_STATUS.DUE,
+          description: `Monthly membership - ${membershipPlan}`,
+          email,
+        });
+
+        if (!nextPayment.success) {
+          throw new Error(
+            nextPayment.error || "Failed to create next billing cycle",
+          );
+        }
       }
 
       toast.success("Member created successfully");
