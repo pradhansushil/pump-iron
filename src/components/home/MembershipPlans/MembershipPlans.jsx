@@ -3,7 +3,10 @@ import MembershipPlanCard from "./MembershipPlanCard";
 
 export default function MembershipPlans() {
   return (
-    <section aria-labelledby="membership-plans-heading">
+    <section
+      aria-labelledby="membership-plans-heading"
+      className="membership-plans"
+    >
       <h2 id="membership-plans-heading">Plans</h2>
       <ul>
         {plans.map((plan) => (

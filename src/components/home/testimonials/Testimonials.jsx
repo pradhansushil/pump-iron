@@ -3,7 +3,7 @@ import TestimonialCard from "./TestimonialCard";
 
 export default function Testimonials() {
   return (
-    <section aria-labelledby="testimonials-heading">
+    <section aria-labelledby="testimonials-heading" className="testimonials">
       <h2 id="testimonials-heading">What People Are Saying About Us</h2>
       <ul>
         {testimonials.map((testimonial) => (

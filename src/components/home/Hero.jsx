@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Hero({ onBookTour }) {
   return (
-    <section aria-labelledby="hero-title">
+    <section aria-labelledby="hero-title" className="hero">
       <h1 id="hero-title">Pump & Iron</h1>
       <p>Train Hard, Live Strong</p>
       <div className="cta-buttons">

@@ -3,7 +3,7 @@ import FeatureCard from "./FeatureCard";
 
 export default function Features() {
   return (
-    <section aria-labelledby="features-heading">
+    <section aria-labelledby="features-heading" className="features">
       <h2 id="features-heading">Why Join Us?</h2>
       <ul>
         {featuresData.map((feature) => (
