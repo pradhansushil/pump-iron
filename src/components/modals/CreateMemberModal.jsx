@@ -6,6 +6,7 @@ import { Timestamp } from "firebase/firestore";
 import { plans } from "../../data/plansData";
 import { createMember } from "../../services/db";
 import { createPayment } from "../../services/paymentsService";
+import { PAYMENT_STATUS } from "../../utils/constants";
 
 export default function CreateMemberModal({ onClose, fetchMembers }) {
   const [name, setName] = useState("");
@@ -64,7 +65,7 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
         date: Timestamp.now(),
         dueDate: Timestamp.fromDate(nextBilling),
         method: paymentMethod,
-        status: "completed",
+        status: PAYMENT_STATUS.COMPLETED,
         description: `Monthly membership - ${membershipPlan}`,
         email,
         memberName: name,

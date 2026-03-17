@@ -10,6 +10,8 @@ import {
   getPaymentByStatus,
   updatePayment,
 } from "../../services/paymentsService";
+import { PAYMENT_STATUS } from "../../utils/constants";
+
 export default function MakePaymentModal({ isOpen, onClose, currentUser }) {
   const [paymentDetails, setPaymentDetails] = useState({
     name: "",
@@ -58,8 +60,11 @@ export default function MakePaymentModal({ isOpen, onClose, currentUser }) {
 
   const handleSubmit = async () => {
     try {
-      const result = await getPaymentByStatus(currentUser.uid, "due");
-      await updatePayment(result.id, { status: "completed" });
+      const result = await getPaymentByStatus(
+        currentUser.uid,
+        PAYMENT_STATUS.DUE,
+      );
+      await updatePayment(result.id, { status: PAYMENT_STATUS.COMPLETED });
       const dueDate = new Date();
       dueDate.setMonth(dueDate.getMonth() + 1);
 
@@ -70,7 +75,7 @@ export default function MakePaymentModal({ isOpen, onClose, currentUser }) {
         method: paymentDetails.paymentMethod,
         email: paymentDetails.email,
         description: paymentDetails.description,
-        status: "due",
+        status: PAYMENT_STATUS.DUE,
         createdAt: Timestamp.now(),
         dueDate: Timestamp.fromDate(dueDate),
       };

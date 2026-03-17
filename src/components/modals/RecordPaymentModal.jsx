@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 
 import { updateMember } from "../../services/db";
 import { createPayment } from "../../services/paymentsService";
+import { PAYMENT_STATUS } from "../../utils/constants";
 
 export default function RecordPaymentModal({ member, onClose, fetchMembers }) {
   const addMonths = (months) => {
@@ -41,7 +42,7 @@ export default function RecordPaymentModal({ member, onClose, fetchMembers }) {
         date: Timestamp.fromDate(new Date(date)),
         dueDate: Timestamp.fromDate(new Date(dueDate)),
         method: "cash",
-        status: "completed",
+        status: PAYMENT_STATUS.COMPLETED,
         description: description,
         email: member.email,
         createdAt: Timestamp.now(),

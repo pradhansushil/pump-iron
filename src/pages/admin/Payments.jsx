@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { getAllPayments } from "../../services/paymentsService";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import FilterSelect from "../../components/admin/FilterSelect";
+import { PAYMENT_STATUS } from "../../utils/constants";
 
 export default function PaymentsTable() {
   const [payments, setPayments] = useState([]);
@@ -34,7 +35,7 @@ export default function PaymentsTable() {
       return payment.memberName.toLowerCase().includes(name.toLowerCase());
     })
     .filter((payment) => {
-      if (status === "all") return true;
+      if (status === PAYMENT_STATUS.ALL) return true;
       return payment.status === status;
     })
     .filter((payment) => {
