@@ -53,7 +53,7 @@ export default function EmployeesTable() {
   return (
     <main aria-labelledby="employees-heading">
       <h1 id="employees-heading">Employees</h1>
-      <div className="">
+      <div className="employees-page">
         <button onClick={() => setIsModalOpen(true)}>Add Employee</button>
         <table>
           <thead>
@@ -93,7 +93,8 @@ export default function EmployeesTable() {
           isOpen={confirmModal}
           onClose={() => setConfirmModal(false)}
           onConfirm={() =>
-            employeeToDelete && handleDelete(employeeToDelete.id, employeeToDelete.name)
+            employeeToDelete &&
+            handleDelete(employeeToDelete.id, employeeToDelete.name)
           }
           message={`Are you sure you want to delete ${employeeToDelete?.name}?`}
         />

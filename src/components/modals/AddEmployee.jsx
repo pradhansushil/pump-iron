@@ -135,7 +135,7 @@ export default function AddEmployeeModal({ isOpen, onClose, onSuccess }) {
             />
           </div>
 
-          <div className="form-buttons">
+          <div className="modal-buttons">
             <button type="button" className="cancel-btn" onClick={handleClose}>
               Cancel
             </button>
