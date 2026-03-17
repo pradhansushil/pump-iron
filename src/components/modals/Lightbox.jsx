@@ -15,7 +15,7 @@ export default function Lightbox({ img, isOpen, onClose }) {
 
   return (
     <div
-      className="backdrop-div"
+      className="modal-overlay"
       onClick={onClose}
       aria-label="close image"
       role="button"

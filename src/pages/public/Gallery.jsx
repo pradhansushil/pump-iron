@@ -21,9 +21,9 @@ export default function Gallery() {
     setLightboxOpen(true);
   };
   return (
-    <main aria-labelledby="gallery-heading">
+    <main aria-labelledby="gallery-heading" className="gallery-page">
       <h1 id="gallery-heading">Gallery</h1>
-      <div className="image-container">
+      <div className="gallery-grid">
         {images.map((image) => (
           <button
             onClick={() => handleImageClick(image)}
