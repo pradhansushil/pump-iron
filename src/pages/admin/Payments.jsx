@@ -60,7 +60,6 @@ export default function PaymentsTable() {
     .sort((a, b) => {
       if (sort === "az") return a.memberName.localeCompare(b.memberName);
       if (sort === "za") return b.memberName.localeCompare(a.memberName);
-      // Default: newest date first
       return b.date.toDate() - a.date.toDate();
     });
 
@@ -68,9 +67,10 @@ export default function PaymentsTable() {
   if (error) return <p role="alert">{error}</p>;
 
   return (
-    <main aria-labelledby="payments-heading">
+    <main aria-labelledby="payments-heading" className="admin-payments-page">
       <h1 id="payments-heading">Payments</h1>
-      <div className="">
+
+      <div className="members-toolbar">
         <label htmlFor="name-search">Name</label>
         <input
           type="text"
@@ -90,7 +90,6 @@ export default function PaymentsTable() {
             { value: "za", label: "Z-A" },
           ]}
         />
-
         <FilterSelect
           id="period"
           label="Period"
@@ -104,7 +103,6 @@ export default function PaymentsTable() {
             { value: "6months", label: "Last 6 Months" },
           ]}
         />
-
         <FilterSelect
           id="status"
           label="Status"
@@ -117,41 +115,40 @@ export default function PaymentsTable() {
             { value: PAYMENT_STATUS.OVERDUE, label: "Overdue" },
           ]}
         />
-
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Date</th>
-              <th>Due Date</th>
-              <th>Amount</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {filteredPayments.length === 0 ? (
-              <tr>
-                <td colSpan={4}>No payments found.</td>
-              </tr>
-            ) : (
-              filteredPayments.map((payment) => (
-                <tr key={payment.id}>
-                  <td>{payment.memberName}</td>
-                  <td>{formatDate(payment.date)}</td>
-                  <td>
-                    {payment.status !== "completed"
-                      ? formatDate(payment.dueDate)
-                      : "N/A"}
-                  </td>
-                  <td>${payment.amount}</td>
-                  <td>{payment.status}</td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
       </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Due Date</th>
+            <th>Amount</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredPayments.length === 0 ? (
+            <tr>
+              <td colSpan={4}>No payments found.</td>
+            </tr>
+          ) : (
+            filteredPayments.map((payment) => (
+              <tr key={payment.id}>
+                <td>{payment.memberName}</td>
+                <td>{formatDate(payment.date)}</td>
+                <td>
+                  {payment.status !== "completed"
+                    ? formatDate(payment.dueDate)
+                    : "N/A"}
+                </td>
+                <td>${payment.amount}</td>
+                <td>{payment.status}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
     </main>
   );
 }
