@@ -7,7 +7,7 @@ export default function PageLinks() {
   const links = userRole === "member" ? memberLinks : publicLinks;
 
   return (
-    <section aria-labelledby="navigation-links">
+    <section aria-labelledby="navigation-links" className="footer-nav">
       <h3 id="navigation-links">Links</h3>
       <ul>
         {links.map((link) => (

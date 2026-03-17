@@ -4,10 +4,14 @@ import SocialMediaLinks from "./SocialMediaLinks";
 export default function Footer() {
   return (
     <footer aria-label="site footer">
-      <a href="mailto:info@pumpandiron.com">info@pumpandiron.com</a>
-      <PageLinks />
-      <SocialMediaLinks />
-      <p>&copy; Pump & Iron 2026 </p>
+      <div className="footer-container">
+        <div className="footer-contact">
+          <a href="mailto:info@pumpandiron.com">info@pumpandiron.com</a>
+          <p>&copy; Pump & Iron 2026 </p>
+        </div>
+        <PageLinks />
+        <SocialMediaLinks />
+      </div>
     </footer>
   );
 }
