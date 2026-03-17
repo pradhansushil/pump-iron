@@ -109,7 +109,11 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
     <div className="modal-overlay">
       <div className="modal-box">
         <form onSubmit={handleSubmit} noValidate>
-          {error.general && <p className="form-error">{error.general}</p>}
+          {error.general && (
+            <p className="error-message" role="alert">
+              {error.general}
+            </p>
+          )}
 
           <div className="form-field">
             {error.name && <p className="field-error">{error.name}</p>}
