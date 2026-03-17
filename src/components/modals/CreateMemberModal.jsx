@@ -116,7 +116,11 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
           )}
 
           <div className="form-field">
-            {error.name && <p className="field-error">{error.name}</p>}
+            {error.name && (
+              <p className="field-error" role="alert">
+                {error.name}
+              </p>
+            )}
             <label htmlFor="name">Full Name *</label>
             <input
               type="text"
@@ -132,7 +136,11 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
           </div>
 
           <div className="form-field">
-            {error.email && <p className="field-error">{error.email}</p>}
+            {error.email && (
+              <p className="field-error" role="alert">
+                {error.email}
+              </p>
+            )}
             <label htmlFor="email">Email *</label>
             <input
               type="email"
@@ -148,7 +156,11 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
           </div>
 
           <div className="form-field">
-            {error.phone && <p className="field-error">{error.phone}</p>}
+            {error.phone && (
+              <p className="field-error" role="alert">
+                {error.phone}
+              </p>
+            )}
             <label htmlFor="phone">Phone Number *</label>
             <input
               type="tel"
@@ -195,7 +207,11 @@ export default function CreateMemberModal({ onClose, fetchMembers }) {
           </div>
 
           <div className="form-field">
-            {error.password && <p className="field-error">{error.password}</p>}
+            {error.password && (
+              <p className="field-error" role="alert">
+                {error.password}
+              </p>
+            )}
             <label htmlFor="password">Password *</label>
             <input
               type="password"
