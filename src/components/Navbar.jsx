@@ -3,35 +3,27 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import { useAuth } from "../context/AuthContext";
+import NavLinks from "./navbar/NavLinks";
+import AvatarDropdown from "./navbar/AvatarDropdown";
 
-const Navbar = () => {
-  // eslint-disable-next-line no-unused-vars
-  const [notificationCount, setNotificationCount] = useState(3);
+export default function Navbar() {
+  const [notificationCount, setNotificationCount] = useState(3); // eslint-disable-line no-unused-vars
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const { currentUser, logout, loading, userRole } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const avatarButtonRef = useRef(null);
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen((prev) => !prev);
-  };
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      navigate("/login");
-    } catch (error) {
-      console.error("Failed to logout:", error);
-    }
-  };
-
-  const isActive = (path) => {
-    return location.pathname === path;
-  };
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -43,7 +35,6 @@ const Navbar = () => {
     const handleEscapeKey = (event) => {
       if (event.key === "Escape") {
         setIsDropdownOpen(false);
-        avatarButtonRef.current?.focus();
       }
     };
 
@@ -58,128 +49,65 @@ const Navbar = () => {
     };
   }, [isDropdownOpen]);
 
+  const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/login");
+    } catch (error) {
+      console.error("Failed to logout:", error);
+    }
+  };
+
+  const isActive = (path) => location.pathname === path;
+
+  const linkClasses = (path) => {
+    if (isActive(path))
+      return "text-blue-400 font-bold border-b-2 border-blue-400";
+    return "text-gray-300 hover:text-white transition-colors duration-200";
+  };
+
   if (location.pathname.startsWith("/admin")) return null;
   if (loading) return null;
   if (userRole === "admin") return null;
 
+  const navBg = isHomePage && !isScrolled ? "" : "bg-gray-900";
+
   return (
-    <nav aria-label="main navigation">
-      <div className="nav-container">
-        <Link to="/" aria-hidden="true" tabIndex={-1} className="logo">
-          GymApp
+    <nav
+      aria-label="main navigation"
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${navBg}`}
+    >
+      <div className="flex items-center justify-between h-16 max-w-7xl mx-auto px-4">
+        <Link
+          to="/"
+          aria-hidden="true"
+          tabIndex={-1}
+          className="font-bold uppercase tracking-widest text-white"
+        >
+          Pump &amp; Iron
         </Link>
 
-        <div className="nav-links">
-          {!currentUser && (
-            <Link
-              to="/"
-              className={isActive("/") ? "nav-link active" : "nav-link"}
-            >
-              Home
-            </Link>
-          )}
-
-          <Link
-            to="/classes"
-            className={isActive("/classes") ? "nav-link active" : "nav-link"}
-          >
-            Classes
-          </Link>
-
-          {!currentUser ? (
-            // ========== GUEST NAVIGATION ==========
-            <>
-              <Link
-                to="/employees"
-                className={
-                  isActive("/employees") ? "nav-link active" : "nav-link"
-                }
-              >
-                Employees
-              </Link>
-
-              <Link
-                to="/gallery"
-                className={
-                  isActive("/gallery") ? "nav-link active" : "nav-link"
-                }
-              >
-                Gallery
-              </Link>
-
-              <Link to="/login" className="login-button">
-                Login
-              </Link>
-            </>
-          ) : (
-            // ========== MEMBER NAVIGATION ==========
-            <>
-              <Link
-                to="/dashboard"
-                className={
-                  isActive("/dashboard") ? "nav-link active" : "nav-link"
-                }
-              >
-                Dashboard
-              </Link>
-
-              <button
-                aria-label={
-                  notificationCount > 0
-                    ? `View ${notificationCount} notifications`
-                    : "View notifications"
-                }
-                onClick={() => toast("Notifications coming soon!")}
-              >
-                🔔
-                {notificationCount > 0 && <span>{notificationCount}</span>}
-              </button>
-
-              <div className="avatar-dropdown" ref={dropdownRef}>
-                <button
-                  ref={avatarButtonRef}
-                  onClick={toggleDropdown}
-                  className="avatar-button"
-                  aria-expanded={isDropdownOpen}
-                  aria-haspopup="true"
-                  aria-controls="user-dropdown-menu"
-                  aria-label="user menu"
-                >
-                  {currentUser.displayName
-                    ? currentUser.displayName.charAt(0).toUpperCase()
-                    : currentUser.email.charAt(0).toUpperCase()}
-                </button>
-
-                {isDropdownOpen && (
-                  <div
-                    className="dropdown-menu"
-                    id="user-dropdown-menu"
-                    role="menu"
-                  >
-                    <Link
-                      role="menuitem"
-                      to="dashboard/profile"
-                      className="dropdown-item"
-                      onClick={() => setIsDropdownOpen(false)}
-                    >
-                      Profile
-                    </Link>
-                    <button
-                      role="menuitem"
-                      onClick={handleLogout}
-                      className="dropdown-item logout-button"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                )}
-              </div>
-            </>
-          )}
-        </div>
+        <NavLinks
+          currentUser={currentUser}
+          linkClasses={linkClasses}
+          notificationCount={notificationCount}
+          onNotificationClick={() => toast("Notifications coming soon!")}
+          onAvatarSection={
+            currentUser && (
+              <AvatarDropdown
+                currentUser={currentUser}
+                isDropdownOpen={isDropdownOpen}
+                toggleDropdown={toggleDropdown}
+                handleLogout={handleLogout}
+                setIsDropdownOpen={setIsDropdownOpen}
+                dropdownRef={dropdownRef}
+              />
+            )
+          }
+        />
       </div>
     </nav>
   );
-};
-
-export default Navbar;
+}
