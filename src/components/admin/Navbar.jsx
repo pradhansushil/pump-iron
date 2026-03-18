@@ -24,14 +24,14 @@ export default function AdminNavbar() {
       <div className="admin-nav-links">
         <Link
           to="/admin"
-          className={isActive("/admin") ? "nav-link-active" : "nav-link"}
+          className={isActive("/admin") ? "nav-link active" : "nav-link"}
         >
           Dashboard
         </Link>
         <Link
           to="/admin/members"
           className={
-            isActive("/admin/members") ? "nav-link-active" : "nav-link"
+            isActive("/admin/members") ? "nav-link active" : "nav-link"
           }
         >
           Members
@@ -39,7 +39,7 @@ export default function AdminNavbar() {
         <Link
           to="/admin/tourRequests"
           className={
-            isActive("/admin/tourRequests") ? "nav-link-active" : "nav-link"
+            isActive("/admin/tourRequests") ? "nav-link active" : "nav-link"
           }
         >
           Tour Requests
@@ -47,7 +47,7 @@ export default function AdminNavbar() {
         <Link
           to="/admin/gallery"
           className={
-            isActive("/admin/gallery") ? "nav-link-active" : "nav-link"
+            isActive("/admin/gallery") ? "nav-link active" : "nav-link"
           }
         >
           Gallery
@@ -55,7 +55,7 @@ export default function AdminNavbar() {
         <Link
           to="/admin/employees"
           className={
-            isActive("/admin/employees") ? "nav-link-active" : "nav-link"
+            isActive("/admin/employees") ? "nav-link active" : "nav-link"
           }
         >
           Employees
@@ -63,7 +63,7 @@ export default function AdminNavbar() {
         <Link
           to="/admin/payments"
           className={
-            isActive("/admin/payments") ? "nav-link-active" : "nav-link"
+            isActive("/admin/payments") ? "nav-link active" : "nav-link"
           }
         >
           Payments
