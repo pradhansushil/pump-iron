@@ -35,7 +35,7 @@ export default function App() {
   const isAdminRoute = location.pathname.startsWith("/admin");
 
   return (
-    <div className="app">
+    <div className="app" style={{ paddingTop: "64px" }}>
       {/* Navbar component handles all navigation logic */}
       <Navbar />
       <Toaster position="top-right" />
