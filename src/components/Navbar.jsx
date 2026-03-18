@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
 import NavLinks from "./navbar/NavLinks";
 import AvatarDropdown from "./navbar/AvatarDropdown";
+import MobileMenu from "./navbar/MobileMenu";
 
 export default function Navbar() {
   const [notificationCount, setNotificationCount] = useState(3); // eslint-disable-line no-unused-vars
@@ -64,7 +65,12 @@ export default function Navbar() {
 
   const linkClasses = (path) => {
     if (isActive(path))
-      return "text-blue-400 font-bold border-b-2 border-blue-400";
+      return "text-blue-400 font-bold border-b-2 border-blue-400 inline-block";
+    return "text-gray-300 hover:text-white transition-colors duration-200";
+  };
+
+  const mobileLinkClasses = (path) => {
+    if (isActive(path)) return "text-blue-400 font-bold";
     return "text-gray-300 hover:text-white transition-colors duration-200";
   };
 
@@ -79,15 +85,24 @@ export default function Navbar() {
       aria-label="main navigation"
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${navBg}`}
     >
-      <div className="flex items-center justify-between h-16 max-w-7xl mx-auto px-4">
-        <Link
-          to="/"
-          aria-hidden="true"
-          tabIndex={-1}
-          className="font-bold uppercase tracking-widest text-white"
-        >
-          Pump &amp; Iron
-        </Link>
+      <div className="relative flex items-center justify-between h-16 max-w-7xl mx-auto px-4">
+        <div className="flex items-center gap-4">
+          <MobileMenu
+            isOpen={isMobileMenuOpen}
+            onClose={setIsMobileMenuOpen}
+            currentUser={currentUser}
+            linkClasses={mobileLinkClasses}
+            handleLogout={handleLogout}
+          />
+          <Link
+            to="/"
+            aria-hidden="true"
+            tabIndex={-1}
+            className="font-bold uppercase tracking-widest text-white"
+          >
+            Pump &amp; Iron
+          </Link>
+        </div>
 
         <NavLinks
           currentUser={currentUser}
