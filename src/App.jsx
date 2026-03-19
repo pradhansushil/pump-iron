@@ -34,8 +34,10 @@ export default function App() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
 
+  const appStyle = !isAdminRoute ? { paddingTop: "64px" } : null;
+
   return (
-    <div className="app" style={{ paddingTop: "64px" }}>
+    <div className="app" style={appStyle}>
       {/* Navbar component handles all navigation logic */}
       <Navbar />
       <Toaster position="top-right" />
