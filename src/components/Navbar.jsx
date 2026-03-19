@@ -52,6 +52,8 @@ export default function Navbar() {
   }, [isDropdownOpen]);
 
   if (location.pathname.startsWith("/admin")) return null;
+  if (loading) return null;
+  if (userRole === "admin") return null;
 
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
 
@@ -76,10 +78,6 @@ export default function Navbar() {
     if (isActive(path)) return "text-blue-400 font-bold";
     return "text-gray-300 hover:text-white transition-colors duration-200";
   };
-
-  if (location.pathname.startsWith("/admin")) return null;
-  if (loading) return null;
-  if (userRole === "admin") return null;
 
   const navBg = isHomePage && !isScrolled ? "" : "bg-gray-900";
 
