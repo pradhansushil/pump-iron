@@ -16,6 +16,7 @@ export default function Navbar() {
   const { currentUser, logout, loading, userRole } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
   const isHomePage = location.pathname === "/";
 
   const dropdownRef = useRef(null);
@@ -49,6 +50,8 @@ export default function Navbar() {
       document.removeEventListener("keydown", handleEscapeKey);
     };
   }, [isDropdownOpen]);
+
+  if (location.pathname.startsWith("/admin")) return null;
 
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
 
