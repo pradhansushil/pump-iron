@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { memberLinks, publicLinks } from "../../data/linksData";
 
@@ -12,7 +13,7 @@ export default function PageLinks() {
       <ul>
         {links.map((link) => (
           <li key={link.href}>
-            <a href={link.href}>{link.label}</a>
+            <Link to={link.href}>{link.label}</Link>
           </li>
         ))}
       </ul>
