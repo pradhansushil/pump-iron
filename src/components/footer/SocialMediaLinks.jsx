@@ -9,8 +9,11 @@ export default function SocialMediaLinks() {
       <h3 className={footerHeadingStyle} id="social-media-links">
         Social Media
       </h3>
-      <a href="https://github.com/pradhansushil">
-        <FontAwesomeIcon icon={faGithub} />
+      <a
+        className="hover:text-blue-300"
+        href="https://github.com/pradhansushil"
+      >
+        <FontAwesomeIcon className="text-2xl" icon={faGithub} />
       </a>
     </section>
   );
