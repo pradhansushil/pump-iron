@@ -37,7 +37,7 @@ export default function App() {
   const appStyle = !isAdminRoute ? { paddingTop: "64px" } : null;
 
   return (
-    <div className="app" style={appStyle}>
+    <div className="flex flex-col min-h-screen" style={appStyle}>
       {/* Navbar component handles all navigation logic */}
       <Navbar />
       <Toaster position="top-right" />

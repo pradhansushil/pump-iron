@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { memberLinks, publicLinks } from "../../data/linksData";
+import { footerHeadingStyle } from "../../utils/styles";
 
 export default function PageLinks() {
   const { userRole } = useAuth();
@@ -9,7 +10,9 @@ export default function PageLinks() {
 
   return (
     <section aria-labelledby="navigation-links" className="footer-nav">
-      <h3 id="navigation-links">Links</h3>
+      <h3 className={footerHeadingStyle} id="navigation-links">
+        Links
+      </h3>
       <ul>
         {links.map((link) => (
           <li key={link.href}>

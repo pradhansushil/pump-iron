@@ -3,10 +3,15 @@ import SocialMediaLinks from "./SocialMediaLinks";
 
 export default function Footer() {
   return (
-    <footer aria-label="site footer">
-      <div className="footer-container">
+    <footer
+      className="mt-auto bg-gray-900 px-4 py-6 text-white"
+      aria-label="site footer"
+    >
+      <div className="flex justify-between gap-1">
         <div className="footer-contact">
-          <a href="mailto:info@pumpandiron.com">info@pumpandiron.com</a>
+          <a className="text-blue-400" href="mailto:info@pumpandiron.com">
+            info@pumpandiron.com
+          </a>
           <p>&copy; Pump & Iron 2026 </p>
         </div>
         <PageLinks />
