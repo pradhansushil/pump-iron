@@ -1,6 +1,6 @@
 import {
   capitalizeFirstLetter,
-  cardHeading,
+  h2Heading,
   cardStyle,
   textColor,
   textSizeSmall,
@@ -10,7 +10,7 @@ export default function MembershipCard({ membershipPlan, status }) {
   return (
     <div className={cardStyle}>
       <section aria-labelledby="membership-header">
-        <h2 id="membership-header" className={cardHeading}>
+        <h2 id="membership-header" className={h2Heading}>
           Membership Status
         </h2>
         <div className="flex flex-col gap-2">
