@@ -5,41 +5,60 @@ import { getMemberById, updateMember } from "../services/db";
 import LoadingSpinner from "../components/LoadingSpinner";
 import BasicInfo from "../components/members/profile/BasicInfo";
 import EditPassword from "../components/members/profile/EditPassword";
+import {
+  containerStyle,
+  ctaButton,
+  errorBanner,
+  errorColor,
+  h1Style,
+  marginBottom,
+  pageStyle,
+} from "../utils/styles";
 
 export default function Profile() {
   const [member, setMember] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("test error");
 
   const { currentUser } = useAuth();
 
-  useEffect(() => {
-    const fetchMember = async () => {
-      try {
-        setLoading(true);
-        setMember(await getMemberById(currentUser.uid));
-      } catch {
-        setError("Failed to load profile. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchMember = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      setMember(await getMemberById(currentUser.uid));
+    } catch {
+      setError("Failed to load profile. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchMember();
   }, [currentUser.uid]);
 
   if (loading) return <LoadingSpinner />;
   if (error)
     return (
-      <p className="error-message" role="alert">
-        {error}
-      </p>
+      <main className={pageStyle}>
+        <div className={containerStyle}>
+          <div className={`${errorBanner} ${errorColor}`} role="alert">
+            <p>{error}</p>
+            <button onClick={fetchMember} className={ctaButton}>
+              Retry
+            </button>
+          </div>
+        </div>
+      </main>
     );
 
   return (
-    <main aria-labelledby="profile-heading">
-      <div className="profile-page">
-        <h1 id="profile-heading">Profile</h1>
+    <main className={pageStyle} aria-labelledby="profile-heading">
+      <div className={containerStyle}>
+        <h1 id="profile-heading" className={`${h1Style} ${marginBottom}`}>
+          Profile
+        </h1>
         {member !== null && (
           <>
             <BasicInfo

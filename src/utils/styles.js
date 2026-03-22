@@ -14,6 +14,7 @@ export const textSizeSmall = "text-sm";
 export const textSizeLarge = "text-lg";
 export const capitalizeFirstLetter = "capitalize";
 export const subText = "text-gray-400 mb-4";
+export const errorColor = "bg-red-600";
 
 // Components
 export const cardStyle =
