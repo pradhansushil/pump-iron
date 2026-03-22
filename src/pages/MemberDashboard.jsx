@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTriangleExclamation,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
 import {
   getMemberById,
@@ -19,6 +24,13 @@ import NextClassCard from "../components/members/NextClassCard";
 import QuickActionCard from "../components/members/QuickActionCard";
 import RecentPaymentsCard from "../components/members/RecentPaymentsCard";
 import UpcomingClasses from "../components/members/UpcomingClasses";
+import {
+  containerStyle,
+  errorBanner,
+  marginBottom,
+  pageStyle,
+  textSizeSmall,
+} from "../utils/styles";
 
 export default function MemberDashboard() {
   const [memberData, setMemberData] = useState(null);
@@ -102,19 +114,31 @@ export default function MemberDashboard() {
   };
 
   return (
-    <main aria-labelledby="dashboard-heading">
-      <div className="dashboard">
+    <main className={pageStyle} aria-labelledby="dashboard-heading">
+      <div className={containerStyle}>
         {error && (
-          <div className="error-message" role="alert">
-            <p>Unable to load dashboard data</p>
-            <button
-              onClick={() => {
-                setError(null);
-                window.location.reload();
-              }}
-            >
-              Retry
-            </button>
+          <div className={`${errorBanner} bg-red-600`} role="alert">
+            <div className="flex items-center gap-3">
+              <FontAwesomeIcon icon={faTriangleExclamation} />
+              <p>Unable to load dashboard data</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => {
+                  setError(null);
+                  window.location.reload();
+                }}
+                className={`border border-white px-3 py-1 rounded-lg ${textSizeSmall} hover:bg-red-700`}
+              >
+                Try again
+              </button>
+              <button
+                onClick={() => setError(null)}
+                className="hover:bg-red-700 px-2 py-1 rounded"
+              >
+                <FontAwesomeIcon icon={faXmark} />
+              </button>
+            </div>
           </div>
         )}
 
@@ -125,20 +149,30 @@ export default function MemberDashboard() {
         />
 
         {memberData.status === "inactive" && (
-          <div className="inactive-banner" role="alert">
-            <h3>Payment Processing Failed</h3>
-            <p>
-              Your account is inactive because we couldn't process your initial
-              payment. Please update your payment method to activate your
-              membership.
-            </p>
-            <button onClick={() => navigate("/payments")}>
+          <div className={`${errorBanner} bg-yellow-600`} role="alert">
+            <div className="flex items-center gap-3">
+              <FontAwesomeIcon icon={faTriangleExclamation} />
+              <div>
+                <h3 className="font-bold">Payment Processing Failed</h3>
+                <p className={textSizeSmall}>
+                  Your account is inactive because we couldn't process your
+                  initial payment. Please update your payment method to activate
+                  your membership.
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => navigate("/payments")}
+              className={`border border-white px-3 py-1 rounded-lg ${textSizeSmall} hover:bg-yellow-800 whitespace-nowrap`}
+            >
               Update Payment Method
             </button>
           </div>
         )}
 
-        <div className="dashboard-cards">
+        <div
+          className={`grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch text-center ${marginBottom}`}
+        >
           <MembershipCard
             membershipPlan={memberData.membershipPlan}
             status={memberData.status}

@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import MakePaymentModal from "../modals/MakePaymentModal";
 import UpdatePaymentMethodModal from "../modals/UpdatePaymentMethodModal";
+import { h2Heading, cardStyle, ctaButton } from "../../utils/styles";
 
 export default function QuickActionCard({
   onBookClass,
@@ -12,17 +13,27 @@ export default function QuickActionCard({
   const [updatePaymentModal, setUpdatePaymentModal] = useState(false);
 
   return (
-    <div className="dashboard-card">
+    <div className={cardStyle}>
       <section aria-labelledby="quick-action-header">
-        <h2 id="quick-action-header">Quick Action</h2>
-        <div className="quick-actions-button">
-          <button onClick={onBookClass}>Book a Class</button>
-        <button onClick={() => setMakePaymentModal(true)}>
-          Make a Payment
-        </button>
-        <button onClick={() => setUpdatePaymentModal(true)}>
-          Update Payment Method
-        </button>
+        <h2 id="quick-action-header" className={h2Heading}>
+          Quick Action
+        </h2>
+        <div className="inline-flex flex-col gap-3">
+          <button className={ctaButton} onClick={onBookClass}>
+            Book a Class
+          </button>
+          <button
+            className={ctaButton}
+            onClick={() => setMakePaymentModal(true)}
+          >
+            Make a Payment
+          </button>
+          <button
+            className={ctaButton}
+            onClick={() => setUpdatePaymentModal(true)}
+          >
+            Update Payment Method
+          </button>
         </div>
 
         <MakePaymentModal

@@ -1,15 +1,17 @@
+import { h1Style, marginBottom, textColor } from "../../utils/styles";
+
 export default function DashboardHeader({
   isNewUser,
   firstName,
   formattedDate,
 }) {
   return (
-    <header className="dashboard-header">
+    <header className={marginBottom}>
       <div className="dashboard-header-content">
-        <h1 id="dashboard-heading">
+        <h1 className={h1Style} id="dashboard-heading">
           {isNewUser ? `Welcome, ${firstName}!` : `Welcome back, ${firstName}!`}
         </h1>
-        <p>{formattedDate}</p>
+        <p className={textColor}>{formattedDate}</p>
       </div>
     </header>
   );
