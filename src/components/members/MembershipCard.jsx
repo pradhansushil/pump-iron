@@ -3,6 +3,7 @@ import {
   h2Heading,
   cardStyle,
   textColor,
+  textColorWhite,
   textSizeSmall,
 } from "../../utils/styles";
 
@@ -20,7 +21,7 @@ export default function MembershipCard({ membershipPlan, status }) {
             {membershipPlan}
           </p>
           <span
-            className={`inline-block px-3 py-1 rounded-full mx-auto ${textSizeSmall} font-semibold text-white ${status === "active" ? "bg-green-600" : "bg-red-600"}`}
+            className={`inline-block px-3 py-1 rounded-full mx-auto ${textSizeSmall} font-semibold ${textColorWhite} ${status === "active" ? "bg-green-600" : "bg-red-600"}`}
           >
             {status}
           </span>
