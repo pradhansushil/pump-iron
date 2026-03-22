@@ -18,7 +18,7 @@ import {
 export default function Profile() {
   const [member, setMember] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("test error");
+  const [error, setError] = useState(null);
 
   const { currentUser } = useAuth();
 
@@ -38,7 +38,7 @@ export default function Profile() {
     fetchMember();
   }, [currentUser.uid]);
 
-  if (loading) return <LoadingSpinner />;
+  if (loading) return <LoadingSpinner message="Loading your profile..." />;
   if (error)
     return (
       <main className={pageStyle}>
