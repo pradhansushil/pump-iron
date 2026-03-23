@@ -67,7 +67,10 @@ export default function Profile() {
               uid={currentUser.uid}
               setMember={setMember}
             />
-            <EditPassword currentUser={currentUser} />
+
+            <div className="mt-8">
+              <EditPassword currentUser={currentUser} />
+            </div>
           </>
         )}
       </div>
