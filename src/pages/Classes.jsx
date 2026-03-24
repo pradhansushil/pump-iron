@@ -139,7 +139,7 @@ export default function Classes() {
         </p>
       </section>
       <ul
-        className={`${containerStyle} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-16`}
+        className={`${containerStyle} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6`}
         aria-label="Available classes"
       >
         {classes.map((c) => (
