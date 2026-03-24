@@ -1,13 +1,37 @@
 import { Link } from "react-router-dom";
+import { ctaButton, h1Style, textColorWhite } from "../../utils/styles";
+
+const heroImage =
+  "https://raw.githubusercontent.com/pradhansushil/gym-app-assets/main/hero-banner.png";
 
 export default function Hero({ onBookTour }) {
   return (
-    <section aria-labelledby="hero-title" className="hero">
-      <h1 id="hero-title">Pump & Iron</h1>
-      <p>Train Hard, Live Strong</p>
-      <div className="cta-buttons">
-        <Link to="/signup">Join Now</Link>
-        <button onClick={() => onBookTour()}>Book a Tour</button>
+    <section
+      aria-labelledby="hero-title"
+      className="relative min-h-screen flex items-center justify-center"
+      style={{
+        backgroundImage: `url(${heroImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="absolute inset-0 bg-black/60" />
+
+      <div className="relative z-10 text-center">
+        <h1 id="hero-title" className={h1Style}>
+          Pump & Iron
+        </h1>
+        <p className={`${textColorWhite} text-lg mb-6`}>
+          Train Hard, Live Strong
+        </p>
+        <div className="flex gap-4 justify-center">
+          <Link className={ctaButton} to="/signup">
+            Join Now
+          </Link>
+          <button className={ctaButton} onClick={() => onBookTour()}>
+            Book a Tour
+          </button>
+        </div>
       </div>
     </section>
   );
