@@ -43,7 +43,7 @@ export default function App() {
       <Toaster position="top-right" />
 
       {/* Routes define which component renders for each URL path */}
-      <div className="flex-1 pb-16">
+      <div className="flex-1 pb-16 bg-gray-950">
         <Routes>
           <Route
             path="/"
