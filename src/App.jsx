@@ -43,106 +43,108 @@ export default function App() {
       <Toaster position="top-right" />
 
       {/* Routes define which component renders for each URL path */}
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <PublicRoute>
-              <Home />
-            </PublicRoute>
-          }
-        />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/classes" element={<Classes />} />
-        <Route path="/employees" element={<Employees />} />
-        <Route path="/gallery" element={<Gallery />} />
+      <div className="flex-1 pb-16">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <PublicRoute>
+                <Home />
+              </PublicRoute>
+            }
+          />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/classes" element={<Classes />} />
+          <Route path="/employees" element={<Employees />} />
+          <Route path="/gallery" element={<Gallery />} />
 
-        <Route
-          path="/dashboard"
-          element={
-            <MemberRoute>
-              <MemberDashboard />
-            </MemberRoute>
-          }
-        />
-        <Route
-          path="/dashboard/profile"
-          element={
-            <MemberRoute>
-              <Profile />
-            </MemberRoute>
-          }
-        />
-        <Route
-          path="/payments"
-          element={
-            <MemberRoute>
-              <Payments />
-            </MemberRoute>
-          }
-        />
-        <Route
-          path="/admin"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <AdminDashboard />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/members"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <AdminMembers />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/tourRequests"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <TourRequests />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/gallery"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <GalleryUpload />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/employees"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <EmployeesTable />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/payments"
-          element={
-            <AdminRoute>
-              <AdminLayout>
-                <PaymentsTable />
-              </AdminLayout>
-            </AdminRoute>
-          }
-        />
-      </Routes>
+          <Route
+            path="/dashboard"
+            element={
+              <MemberRoute>
+                <MemberDashboard />
+              </MemberRoute>
+            }
+          />
+          <Route
+            path="/dashboard/profile"
+            element={
+              <MemberRoute>
+                <Profile />
+              </MemberRoute>
+            }
+          />
+          <Route
+            path="/payments"
+            element={
+              <MemberRoute>
+                <Payments />
+              </MemberRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminLayout>
+                  <AdminDashboard />
+                </AdminLayout>
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/members"
+            element={
+              <AdminRoute>
+                <AdminLayout>
+                  <AdminMembers />
+                </AdminLayout>
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/tourRequests"
+            element={
+              <AdminRoute>
+                <AdminLayout>
+                  <TourRequests />
+                </AdminLayout>
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/gallery"
+            element={
+              <AdminRoute>
+                <AdminLayout>
+                  <GalleryUpload />
+                </AdminLayout>
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/employees"
+            element={
+              <AdminRoute>
+                <AdminLayout>
+                  <EmployeesTable />
+                </AdminLayout>
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/payments"
+            element={
+              <AdminRoute>
+                <AdminLayout>
+                  <PaymentsTable />
+                </AdminLayout>
+              </AdminRoute>
+            }
+          />
+        </Routes>
+      </div>
       {!isAdminRoute && <Footer />}
     </div>
   );
