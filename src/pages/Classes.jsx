@@ -3,6 +3,11 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { increment } from "firebase/firestore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTriangleExclamation,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
 import {
   getAllClasses,
@@ -11,6 +16,19 @@ import {
   updateMember,
 } from "../services/db";
 import LoadingSpinner from "../components/LoadingSpinner";
+import {
+  cardStyle,
+  containerStyle,
+  ctaButton,
+  errorBanner,
+  errorColor,
+  h1Style,
+  h3Heading,
+  pageStyle,
+  subText,
+  textColor,
+  textSizeSmall,
+} from "../utils/styles";
 
 export default function Classes() {
   const [classes, setClasses] = useState([]);
@@ -86,44 +104,77 @@ export default function Classes() {
   };
 
   return (
-    <main className="classes-page">
+    <main className={pageStyle}>
       {error && (
-        <p className="error-message" role="alert">
-          {error}
-        </p>
+        <div className={`${errorBanner} ${errorColor}`} role="alert">
+          <div className="flex items-center gap-3">
+            <FontAwesomeIcon icon={faTriangleExclamation} />
+            <p>{error}</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => navigate("/")}
+              className={`border border-white px-3 py-1 rounded-lg ${textSizeSmall} hover:bg-red-700`}
+            >
+              Go to Plans
+            </button>
+            <button
+              onClick={() => setError(null)}
+              className="hover:bg-red-700 px-2 py-1 rounded"
+            >
+              <FontAwesomeIcon icon={faXmark} />
+            </button>
+          </div>
+        </div>
       )}
-      <section aria-labelledby="classes-heading">
-        <h1 id="classes-heading">Classes</h1>
-        <p>
+      <section
+        className="max-w-7xl mx-auto px-4 pt-8 text-center"
+        aria-labelledby="classes-heading"
+      >
+        <h1 id="classes-heading" className={h1Style}>
+          Classes
+        </h1>
+        <p className={subText}>
           Browse and book from our range of classes. All fitness levels welcome.
         </p>
       </section>
-      <ul aria-label="Available classes">
+      <ul
+        className={`${containerStyle} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-16`}
+        aria-label="Available classes"
+      >
         {classes.map((c) => (
-          <li className="class-card" key={c.id}>
-            <h3>{c.name}</h3>
-            <p>Instructor: {c.instructor}</p>
-            <p>Day: {c.day}</p>
-            <p>Time: {c.time}</p>
-            <p>Available spots: {c.capacity - c.currentBookings}</p>
-            <p>{c.description}</p>
-            <button
-              disabled={c.id === bookingLoading}
-              aria-label={`Book ${c.name}`}
-              onClick={() => {
-                if (!currentUser) {
-                  navigate("/login");
-                } else {
-                  handleBookClass(c.id);
-                }
-              }}
-            >
-              {c.id === bookingLoading
-                ? "Booking..."
-                : currentUser
-                  ? "Book"
-                  : "Login to Book"}
-            </button>
+          <li
+            className={`${cardStyle} list-none flex flex-col justify-between`}
+            key={c.id}
+          >
+            <h3 className={h3Heading}>{c.name}</h3>
+            <div className={textColor}>
+              <p>Instructor: {c.instructor}</p>
+              <p>Day: {c.day}</p>
+              <p>Time: {c.time}</p>
+              <p>Available spots: {c.capacity - c.currentBookings}</p>
+            </div>
+            <p className={subText}>{c.description}</p>
+            <div className="mt-4">
+              <button
+                className={ctaButton}
+                disabled={c.id === bookingLoading}
+                aria-label={`Book ${c.name}`}
+                onClick={() => {
+                  if (!currentUser) {
+                    navigate("/login");
+                  } else {
+                    handleBookClass(c.id);
+                  }
+                }}
+              >
+                {c.id === bookingLoading
+                  ? "Booking..."
+                  : currentUser
+                    ? "Book"
+                    : "Login to Book"}
+              </button>
+            </div>
           </li>
         ))}
       </ul>
