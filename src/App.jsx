@@ -33,17 +33,18 @@ import PaymentsTable from "./pages/admin/Payments";
 export default function App() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
+  const isAuthRoute = ["/login", "/signup"].includes(location.pathname);
 
   const appStyle = !isAdminRoute ? { paddingTop: "64px" } : null;
 
   return (
     <div className="flex flex-col min-h-screen" style={appStyle}>
       {/* Navbar component handles all navigation logic */}
-      <Navbar />
+      {!isAdminRoute && !isAuthRoute && <Navbar />}
       <Toaster position="top-right" />
 
       {/* Routes define which component renders for each URL path */}
-      <div className="flex-1 pb-16 bg-gray-950">
+      <div className="flex-1 pb-16 ">
         <Routes>
           <Route
             path="/"
@@ -145,7 +146,7 @@ export default function App() {
           />
         </Routes>
       </div>
-      {!isAdminRoute && <Footer />}
+      {!isAdminRoute && !isAuthRoute && <Footer />}
     </div>
   );
 }
