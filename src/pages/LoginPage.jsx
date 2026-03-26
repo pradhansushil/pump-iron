@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { textColorWhite, textSizeSmall } from "../utils/styles";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -58,48 +59,92 @@ export default function LoginPage() {
   }
 
   return (
-    <main aria-labelledby="login-heading" className="auth-page">
-      <div className="member-form-container">
-        <h1 id="login-heading">Sign In</h1>
+    <main aria-labelledby="login-heading" className="flex h-screen">
+      <div className="hidden md:flex w-1/2 bg-gradient-to-b from-blue-950 to-blue-900 flex-col items-center justify-center p-12">
+        <p className="text-blue-400 text-sm font-bold tracking-widest uppercase mb-6">
+          Pump & Iron
+        </p>
+        <h1
+          className={`${textColorWhite} text-5xl font-bold text-center leading-tight mb-6`}
+        >
+          Train Hard.
+          <br />
+          Live
+          <br />
+          Strong.
+        </h1>
+        <div className="w-12 h-0.5 bg-blue-500 mb-6" />
+        <p
+          className={`text-gray-400 ${textSizeSmall} tracking-widest uppercase text-center`}
+        >
+          Your performance. Your community. Your gym.
+        </p>
+      </div>
 
-        {error && (
-          <p className="error-message" role="alert">
-            {error}
-          </p>
-        )}
+      <div className="flex flex-col items-center justify-center w-1/2 min-h-screen bg-white relative px-4">
+        <div className="w-full max-w-[400px] flex flex-col space-y-6">
+          <h2 id="login-heading" className="text-3xl font-bold text-gray-900">
+            Sign In
+          </h2>
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-field">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={loading}
-            />
+          {error && (
+            <p className="error-message text-red-500 text-sm" role="alert">
+              {error}
+            </p>
+          )}
+
+          <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-1">
+              <label
+                htmlFor="email"
+                className="text-sm font-medium text-gray-700"
+              >
+                Email
+              </label>
+              <input
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={loading}
+              />
+            </div>
+
+            <div className="flex flex-col space-y-1">
+              <label
+                htmlFor="password"
+                className="text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
+              <input
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={loading}
+              />
+            </div>
+
+            <div className="pt-2">
+              <button
+                className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200"
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? "Logging in..." : "Log In"}
+              </button>
+            </div>
+          </form>
+
+          <div className="text-center text-sm text-gray-600 mt-4">
+            Don't have an account?{" "}
+            <Link to="/signup" className="text-blue-600 hover:underline">
+              Sign up
+            </Link>
           </div>
-
-          <div className="form-field">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              disabled={loading}
-            />
-          </div>
-
-          <div className="form-buttons">
-            <button className="submit-btn" type="submit" disabled={loading}>
-              {loading ? "Logging in..." : "Log In"}
-            </button>
-          </div>
-        </form>
-
-        <div className="auth-redirect">
-          Don't have an account? <Link to="/signup">Sign up</Link>
         </div>
       </div>
     </main>
