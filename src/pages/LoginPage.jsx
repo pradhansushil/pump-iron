@@ -60,6 +60,7 @@ export default function LoginPage() {
 
   return (
     <main aria-labelledby="login-heading" className="flex h-screen">
+      {/* Left brand panel */}
       <div className="hidden md:flex w-1/2 bg-gradient-to-b from-blue-950 to-blue-900 flex-col items-center justify-center p-12">
         <p className="text-blue-400 text-sm font-bold tracking-widest uppercase mb-6">
           Pump & Iron
@@ -81,28 +82,32 @@ export default function LoginPage() {
         </p>
       </div>
 
-      <div className="flex flex-col items-center justify-center w-1/2 min-h-screen bg-white relative px-4">
-        <div className="w-full max-w-[400px] flex flex-col space-y-6">
-          <h2 id="login-heading" className="text-3xl font-bold text-gray-900">
+      {/* Right form panel */}
+      <div className="flex flex-col justify-center w-1/2 h-full px-16 bg-gray-950">
+        <div className="w-full max-w-sm mx-auto">
+          <h2
+            id="login-heading"
+            className={`${textColorWhite} text-3xl font-bold mb-8`}
+          >
             Sign In
           </h2>
 
           {error && (
-            <p className="error-message text-red-500 text-sm" role="alert">
+            <p className="text-red-500 text-sm mb-6" role="alert">
               {error}
             </p>
           )}
 
-          <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-            <div className="flex flex-col space-y-1">
+          <form onSubmit={handleSubmit} className="w-full">
+            <div className="mb-6">
               <label
                 htmlFor="email"
-                className="text-sm font-medium text-gray-700"
+                className="block text-gray-400 text-xs tracking-widest uppercase mb-2"
               >
                 Email
               </label>
               <input
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 type="email"
                 id="email"
                 value={email}
@@ -111,15 +116,15 @@ export default function LoginPage() {
               />
             </div>
 
-            <div className="flex flex-col space-y-1">
+            <div className="mb-8">
               <label
                 htmlFor="password"
-                className="text-sm font-medium text-gray-700"
+                className="block text-gray-400 text-xs tracking-widest uppercase mb-2"
               >
                 Password
               </label>
               <input
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 type="password"
                 id="password"
                 value={password}
@@ -128,23 +133,24 @@ export default function LoginPage() {
               />
             </div>
 
-            <div className="pt-2">
-              <button
-                className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200"
-                type="submit"
-                disabled={loading}
-              >
-                {loading ? "Logging in..." : "Log In"}
-              </button>
-            </div>
+            <button
+              className="w-full bg-blue-500 text-white py-3 rounded-md font-semibold tracking-wide hover:bg-blue-600 transition-colors duration-200"
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? "Logging in..." : "Log In"}
+            </button>
           </form>
 
-          <div className="text-center text-sm text-gray-600 mt-4">
+          <p className="text-center text-sm text-gray-400 mt-6">
             Don't have an account?{" "}
-            <Link to="/signup" className="text-blue-600 hover:underline">
+            <Link
+              to="/signup"
+              className="text-blue-400 hover:text-blue-300 transition-colors duration-200"
+            >
               Sign up
             </Link>
-          </div>
+          </p>
         </div>
       </div>
     </main>
