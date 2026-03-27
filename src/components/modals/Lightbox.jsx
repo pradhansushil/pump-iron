@@ -11,7 +11,7 @@ export default function Lightbox({ img, isOpen, onClose }) {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !img) return null;
 
   return (
     <div
@@ -20,7 +20,11 @@ export default function Lightbox({ img, isOpen, onClose }) {
       aria-label="close image"
       role="button"
     >
-      <img src={img.src} alt={img.alt} onClick={(e) => e.stopPropagation()} />
+      <img
+        src={img.imageUrl}
+        alt={img.description}
+        onClick={(e) => e.stopPropagation()}
+      />
     </div>
   );
 }
