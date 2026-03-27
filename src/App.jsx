@@ -35,7 +35,7 @@ export default function App() {
     !isAdminRoute && !isAuthRoute ? { paddingTop: "64px" } : null;
 
   return (
-    <div className="flex flex-col min-h-screen" style={appStyle}>
+    <div className="flex flex-col  bg-gray-950 min-h-screen" style={appStyle}>
       {!isAdminRoute && !isAuthRoute && <Navbar />}
       <Toaster position="top-right" />
       <div className={`flex-1 ${!isAdminRoute && !isAuthRoute ? "pb-16" : ""}`}>
