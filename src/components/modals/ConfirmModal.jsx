@@ -1,4 +1,14 @@
 import { useEffect } from "react";
+import {
+  cancelBtn,
+  dangerButton,
+  modalBox,
+  modalButtons,
+  modalOverlay,
+  textColor,
+  textColorWhite,
+  textSizeSmall,
+} from "../../utils/styles";
 
 export default function ConfirmModal({ isOpen, onClose, onConfirm, message }) {
   useEffect(() => {
@@ -19,17 +29,24 @@ export default function ConfirmModal({ isOpen, onClose, onConfirm, message }) {
 
   return (
     isOpen && (
-      <div className="modal-overlay" onClick={onClose}>
+      <div className={modalOverlay}>
         <div
-          className="modal-box"
+          className={modalBox}
           role="dialog"
           aria-modal="true"
           onClick={(e) => e.stopPropagation()}
         >
-          <p>{message}</p>
-          <div className="modal-buttons">
-            <button onClick={onClose}>Go Back</button>
-            <button onClick={onConfirm}>Confirm</button>
+          <h2 className={`${textColorWhite} text-base font-bold`}>
+            Confirm Action
+          </h2>
+          <p className={`${textColor} ${textSizeSmall}`}>{message}</p>
+          <div className={modalButtons}>
+            <button onClick={onClose} className={cancelBtn}>
+              Go Back
+            </button>
+            <button onClick={onConfirm} className={dangerButton}>
+              Confirm
+            </button>
           </div>
         </div>
       </div>
