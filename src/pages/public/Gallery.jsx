@@ -25,7 +25,7 @@ const itemVariants = {
 
 export default function Gallery() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null);
   const [images, setImages] = useState([]);
 
   useEffect(() => {
@@ -36,8 +36,8 @@ export default function Gallery() {
     loadImages();
   }, []);
 
-  const handleImageClick = (img) => {
-    setSelectedImage(img);
+  const handleImageClick = (index) => {
+    setSelectedIndex(index);
     setLightboxOpen(true);
   };
 
@@ -51,20 +51,17 @@ export default function Gallery() {
           <p className={subText}>Explore our world-class facility.</p>
         </div>
 
-        {/* CHANGE: Switched from 'columns-1 sm:columns-2 lg:columns-3' 
-            to a structured Grid with a consistent gap-6.
-        */}
         <Motion.div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          {images.map((image) => (
+          {images.map((image, index) => (
             <Motion.button
               key={image.id}
               variants={itemVariants}
-              onClick={() => handleImageClick(image)}
+              onClick={() => handleImageClick(index)}
               aria-label={image.description}
               className="
                 group relative w-full overflow-hidden rounded-xl
@@ -73,9 +70,6 @@ export default function Gallery() {
                 transition-all duration-300 cursor-pointer block
               "
             >
-              {/* TECHNIQUE: Fixed Aspect Ratio + Object-Cover.
-                  This ensures all grid items align perfectly regardless of source image size.
-              */}
               <div className="aspect-video w-full overflow-hidden bg-gray-900">
                 <img
                   src={image.imageUrl}
@@ -84,10 +78,8 @@ export default function Gallery() {
                 />
               </div>
 
-              {/* Overlay Gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-              {/* Content Overlay */}
               <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
                 <span className="block text-blue-500 text-[10px] font-bold uppercase tracking-[0.2em] mb-1">
                   Premium Facility
@@ -102,7 +94,9 @@ export default function Gallery() {
       </div>
 
       <Lightbox
-        img={selectedImage}
+        images={images}
+        selectedIndex={selectedIndex}
+        setSelectedIndex={setSelectedIndex}
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
       />
