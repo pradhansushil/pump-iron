@@ -88,7 +88,10 @@ export default function Payments() {
     memberData && (
       <main aria-labelledby="payments-heading" className={pageStyle}>
         <div className={containerStyle}>
-          <h1 id="payments-heading" className={h1Style}>
+          <h1
+            id="payments-heading"
+            className={`${h1Style} text-center ${marginBottom}`}
+          >
             Payments
           </h1>
           <div
