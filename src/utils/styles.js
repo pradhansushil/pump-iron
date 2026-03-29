@@ -27,3 +27,17 @@ export const ctaButton =
   "bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors duration-200";
 export const dangerButton =
   "bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors duration-200";
+
+// modals
+export const modalOverlay =
+  "fixed inset-0 z-50 bg-black/60 flex items-center justify-center";
+export const modalBox =
+  "bg-gray-800 border border-gray-700 p-6 rounded-xl max-w-md w-full overflow-auto";
+export const formField = "mb-4";
+export const formLabel = "text-gray-400 text-sm mb-1 block";
+export const formInput =
+  "bg-gray-900 border border-gray-700 text-white text-sm rounded-md px-3 py-2 w-full";
+export const errorMessage = "text-red-500 text-xs mb-1";
+export const modalButtons = "flex justify-end gap-3 mt-6";
+export const cancelBtn =
+  "border border-gray-600 text-gray-400 px-4 py-2 rounded-md hover:bg-gray-700 transition-colors duration-200";
