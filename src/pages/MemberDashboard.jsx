@@ -15,6 +15,7 @@ import {
 } from "../services/db";
 import { getPaymentsByMember } from "../services/paymentsService";
 import { cancelBooking } from "../services/booking/services";
+import { getPaymentStatus } from "../utils/formatters";
 import LoadingSpinner from "../components/LoadingSpinner";
 import ConfirmModal from "../components/modals/ConfirmModal";
 import ClassDetails from "../components/ClassDetails";
@@ -70,7 +71,9 @@ export default function MemberDashboard() {
           .sort((a, b) => a.dateTime.toDate() - b.dateTime.toDate());
 
         setMemberData(member);
-        setPayments(paymentsData.slice(0, 3));
+        setPayments(
+          paymentsData.filter((p) => getPaymentStatus(p) !== null).slice(0, 3),
+        );
         setNextClass(upcomingBookings[0] || null);
         setBookings(upcomingBookings);
       } catch (error) {
