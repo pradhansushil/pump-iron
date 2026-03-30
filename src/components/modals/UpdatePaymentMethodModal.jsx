@@ -5,6 +5,16 @@ import CreditCardForm from "../payment-forms/CreditCardForm";
 import BankTransferForm from "../payment-forms/BankTransferForm";
 import QRCodeForm from "../payment-forms/QRCodeForm";
 import { updateMember } from "../../services/db";
+import {
+  formField,
+  formLabel,
+  formInput,
+  modalOverlay,
+  modalBox,
+  modalButtons,
+  cancelBtn,
+  ctaButton,
+} from "../../utils/styles";
 
 export default function UpdatePaymentMethodModal({
   isOpen,
@@ -29,7 +39,6 @@ export default function UpdatePaymentMethodModal({
     setCCV("");
     setAccountNumber("");
     setRoutingNumber("");
-
     onClose();
   };
 
@@ -61,18 +70,21 @@ export default function UpdatePaymentMethodModal({
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={handleClose}>
-      <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-        <select
-          className="form-field"
-          value={selectedMethod}
-          onChange={(e) => setSelectedMethod(e.target.value)}
-        >
-          <option value="credit card">Credit Card</option>
-          <option value="cash">Cash</option>
-          <option value="bank transfer">Bank Transfer</option>
-          <option value="qr code">QR Code</option>
-        </select>
+    <div className={modalOverlay} onClick={handleClose}>
+      <div className={modalBox} onClick={(e) => e.stopPropagation()}>
+        <div className={formField}>
+          <label className={formLabel}>Payment Method</label>
+          <select
+            value={selectedMethod}
+            onChange={(e) => setSelectedMethod(e.target.value)}
+            className={formInput}
+          >
+            <option value="credit card">Credit Card</option>
+            <option value="cash">Cash</option>
+            <option value="bank transfer">Bank Transfer</option>
+            <option value="qr code">QR Code</option>
+          </select>
+        </div>
 
         {selectedMethod === "credit card" && (
           <CreditCardForm
@@ -94,11 +106,11 @@ export default function UpdatePaymentMethodModal({
         )}
         {selectedMethod === "qr code" && <QRCodeForm />}
 
-        <div className="form-buttons">
-          <button className="cancel-btn" onClick={handleClose}>
+        <div className={modalButtons}>
+          <button className={cancelBtn} onClick={handleClose}>
             Cancel
           </button>
-          <button className="submit-btn" onClick={handleSubmit}>
+          <button className={ctaButton} onClick={handleSubmit}>
             Save
           </button>
         </div>
