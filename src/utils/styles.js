@@ -32,11 +32,12 @@ export const dangerButton =
 export const modalOverlay =
   "fixed inset-0 z-50 bg-black/60 flex items-center justify-center";
 export const modalBox =
-  "bg-gray-800 border border-gray-700 p-6 rounded-xl max-w-md w-full overflow-auto";
-export const formField = "mb-4";
-export const formLabel = "text-gray-400 text-sm mb-1 block";
+  "bg-gray-800 border border-gray-700 p-6 rounded-xl max-w-md w-full overflow-auto text-left";
+export const formField = "mb-6";
+export const formLabel =
+  "block text-gray-400 text-xs tracking-widest uppercase mb-2";
 export const formInput =
-  "bg-gray-900 border border-gray-700 text-white text-sm rounded-md px-3 py-2 w-full";
+  "w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent";
 export const errorMessage = "text-red-500 text-xs mb-1";
 export const modalButtons = "flex justify-end gap-3 mt-6";
 export const cancelBtn =

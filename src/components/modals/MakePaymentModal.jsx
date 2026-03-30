@@ -11,6 +11,16 @@ import {
   updatePayment,
 } from "../../services/paymentsService";
 import { PAYMENT_STATUS } from "../../utils/constants";
+import {
+  modalOverlay,
+  modalBox,
+  formField,
+  formInput,
+  formLabel,
+  modalButtons,
+  cancelBtn,
+  ctaButton,
+} from "../../utils/styles";
 
 export default function MakePaymentModal({ isOpen, onClose, currentUser }) {
   const [paymentDetails, setPaymentDetails] = useState({
@@ -31,7 +41,6 @@ export default function MakePaymentModal({ isOpen, onClose, currentUser }) {
           (plan) =>
             plan.name.toLowerCase() === memberData.membershipPlan.toLowerCase(),
         );
-
         setPaymentDetails({
           name: memberData.name,
           paymentMethod: memberData.paymentMethod,
@@ -45,7 +54,6 @@ export default function MakePaymentModal({ isOpen, onClose, currentUser }) {
         setLoading(false);
       }
     };
-
     fetchPaymentDetails();
   }, [currentUser.uid]);
 
@@ -54,7 +62,6 @@ export default function MakePaymentModal({ isOpen, onClose, currentUser }) {
       if (event.key === "Escape") return onClose();
     };
     window.addEventListener("keydown", handleEscKey);
-
     return () => window.removeEventListener("keydown", handleEscKey);
   }, [onClose]);
 
@@ -67,7 +74,6 @@ export default function MakePaymentModal({ isOpen, onClose, currentUser }) {
       await updatePayment(result.id, { status: PAYMENT_STATUS.COMPLETED });
       const dueDate = new Date();
       dueDate.setMonth(dueDate.getMonth() + 1);
-
       const paymentData = {
         memberId: currentUser.uid,
         memberName: paymentDetails.name,
@@ -79,9 +85,7 @@ export default function MakePaymentModal({ isOpen, onClose, currentUser }) {
         createdAt: Timestamp.now(),
         dueDate: Timestamp.fromDate(dueDate),
       };
-
       await createPayment(paymentData);
-
       toast.success("Payment successful!");
       onClose();
     } catch {
@@ -90,38 +94,60 @@ export default function MakePaymentModal({ isOpen, onClose, currentUser }) {
   };
 
   if (!isOpen) return null;
-
   if (loading) return <LoadingSpinner />;
 
   return (
     isOpen && (
-      <div className="modal-overlay">
-        <div className="modal-box">
-          <label htmlFor="name">Full Name *</label>
-          <p id="name">{paymentDetails.name}</p>
+      <div className={modalOverlay}>
+        <div className={modalBox}>
+          <div className={formField}>
+            <label htmlFor="name" className={formLabel}>
+              Full Name *
+            </label>
+            <p id="name" className={`${formInput} cursor-default`}>
+              {paymentDetails.name}
+            </p>
+          </div>
 
-          <label htmlFor="payment-method">Payment Method *</label>
-          <select
-            id="payment-method"
-            value={paymentDetails.paymentMethod}
-            onChange={(e) =>
-              setPaymentDetails({
-                ...paymentDetails,
-                paymentMethod: e.target.value,
-              })
-            }
-          >
-            <option value="credit card">Credit Card</option>
-            <option value="bank transfer">Bank Transfer</option>
-            <option value="cash">Cash</option>
-            <option value="qr code">QR Code</option>
-          </select>
+          <div className={formField}>
+            <label htmlFor="payment-method" className={formLabel}>
+              Payment Method *
+            </label>
+            <select
+              id="payment-method"
+              className={`${formInput} cursor-default`}
+              value={paymentDetails.paymentMethod}
+              onChange={(e) =>
+                setPaymentDetails({
+                  ...paymentDetails,
+                  paymentMethod: e.target.value,
+                })
+              }
+            >
+              <option value="credit card">Credit Card</option>
+              <option value="bank transfer">Bank Transfer</option>
+              <option value="cash">Cash</option>
+              <option value="qr code">QR Code</option>
+            </select>
+          </div>
 
-          <label htmlFor="price">Charge *</label>
-          <p id="price">{paymentDetails.plan}</p>
+          <div className={formField}>
+            <label htmlFor="price" className={formLabel}>
+              Charge *
+            </label>
+            <p id="price" className={`${formInput} cursor-default`}>
+              {paymentDetails.plan}
+            </p>
+          </div>
 
-          <button onClick={onClose}>Cancel</button>
-          <button onClick={handleSubmit}>Make a Payment</button>
+          <div className={modalButtons}>
+            <button onClick={onClose} className={cancelBtn}>
+              Cancel
+            </button>
+            <button onClick={handleSubmit} className={ctaButton}>
+              Make a Payment
+            </button>
+          </div>
         </div>
       </div>
     )

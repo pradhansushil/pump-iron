@@ -2,6 +2,18 @@ import { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 
 import { submitTourRequest } from "../../services/booking/tourService";
+import {
+  cancelBtn,
+  ctaButton,
+  errorMessage,
+  formField,
+  formInput,
+  formLabel,
+  h1Style,
+  modalBox,
+  modalButtons,
+  modalOverlay,
+} from "../../utils/styles";
 
 export default function BookTourModal({ isOpen, onClose }) {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
@@ -80,9 +92,9 @@ export default function BookTourModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="modal-overlay" onClick={handleClose}>
+    <div className={modalOverlay} onClick={handleClose}>
       <div
-        className="modal-box"
+        className={modalBox}
         ref={modalRef}
         tabIndex={-1}
         role="dialog"
@@ -90,18 +102,23 @@ export default function BookTourModal({ isOpen, onClose }) {
         aria-labelledby="modal-title"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 id="modal-title">Book a Tour</h2>
+        <h2 id="modal-title" className={`${h1Style} text-center mb-2`}>
+          Book a Tour
+        </h2>
         <form onSubmit={handleSubmit} noValidate>
-          <div className="form-field">
+          <div className={formField}>
             {errors.name && (
-              <p className="field-error" id="name-error" role="alert">
+              <p className={errorMessage} id="name-error" role="alert">
                 {errors.name}
               </p>
             )}
-            <label htmlFor="name">Full Name *</label>
+            <label htmlFor="name" className={formLabel}>
+              Full Name *
+            </label>
             <input
               type="text"
               id="name"
+              className={formInput}
               name="name"
               required
               aria-describedby={errors.name ? "name-error" : undefined}
@@ -111,16 +128,19 @@ export default function BookTourModal({ isOpen, onClose }) {
             />
           </div>
 
-          <div className="form-field">
+          <div className={formField}>
             {errors.email && (
-              <p className="field-error" id="email-error" role="alert">
+              <p className={errorMessage} id="email-error" role="alert">
                 {errors.email}
               </p>
             )}
-            <label htmlFor="email">Email *</label>
+            <label htmlFor="email" className={formLabel}>
+              Email *
+            </label>
             <input
               type="email"
               id="email"
+              className={formInput}
               name="email"
               required
               aria-describedby={errors.email ? "email-error" : undefined}
@@ -130,16 +150,19 @@ export default function BookTourModal({ isOpen, onClose }) {
             />
           </div>
 
-          <div className="form-field">
+          <div className={formField}>
             {errors.phone && (
-              <p className="field-error" id="phone-error" role="alert">
+              <p className={errorMessage} id="phone-error" role="alert">
                 {errors.phone}
               </p>
             )}
-            <label htmlFor="phone">Phone # *</label>
+            <label htmlFor="phone" className={formLabel}>
+              Phone # *
+            </label>
             <input
               type="text"
               id="phone"
+              className={formInput}
               name="phone"
               required
               aria-describedby={errors.phone ? "phone-error" : undefined}
@@ -149,11 +172,11 @@ export default function BookTourModal({ isOpen, onClose }) {
             />
           </div>
 
-          <div className="form-buttons">
-            <button type="button" className="cancel-btn" onClick={handleClose}>
+          <div className={modalButtons}>
+            <button type="button" className={cancelBtn} onClick={handleClose}>
               Cancel
             </button>
-            <button type="submit" className="submit-btn">
+            <button type="submit" className={ctaButton}>
               Submit
             </button>
           </div>
