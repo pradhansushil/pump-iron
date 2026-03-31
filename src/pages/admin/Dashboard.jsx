@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { getAllMembers } from "../../services/db";
 import { getAllPayments } from "../../services/paymentsService";
 import { getAllTourRequests } from "../../services/booking/tourService";
 import TourRequestsWidget from "../../components/admin/TourRequestsWidget";
+import { containerStyle, h1Style } from "../../utils/styles";
+import StatCard from "../../components/admin/statCard";
 
 export default function AdminDashboard() {
   const [members, setMembers] = useState([]);
@@ -21,7 +22,6 @@ export default function AdminDashboard() {
           getAllPayments(),
           getAllTourRequests(),
         ]);
-
         setMembers(allMembers);
         setPayments(allPayments);
         setTourRequests(allTourRequests);
@@ -31,7 +31,6 @@ export default function AdminDashboard() {
         setLoading(false);
       }
     };
-
     fetchMembers();
   }, []);
 
@@ -47,44 +46,35 @@ export default function AdminDashboard() {
   const activeMembers = members.filter((s) => s.status === "active").length;
 
   const today = new Date();
-  const month = today.getMonth();
-  const year = today.getFullYear();
-
   const monthlyRevenue = payments
     .filter(
       (total) =>
-        total.date.toDate().getMonth() === month &&
-        total.date.toDate().getFullYear() === year,
+        total.date.toDate().getMonth() === today.getMonth() &&
+        total.date.toDate().getFullYear() === today.getFullYear(),
     )
     .reduce((sum, payment) => sum + payment.amount, 0);
 
   return (
-    <main
-      aria-labelledby="admin-dashboard-heading"
-      className="admin-dashboard-page"
-    >
-      <h1 id="admin-dashboard-heading" className="dashboard-title">
+    <main aria-labelledby="admin-dashboard-heading" className={containerStyle}>
+      <h1
+        id="admin-dashboard-heading"
+        className={`${h1Style} text-center mb-6`}
+      >
         Admin Dashboard
       </h1>
 
-      <div className="dashboard-stats">
-        <p className="stat">
-          Total Members: <span className="stat-value">{totalMembers}</span>
-        </p>
-        <p className="stat">
-          Active Members: <span className="stat-value">{activeMembers}</span>
-        </p>
-        <p className="stat">
-          Monthly Revenue:{" "}
-          <span className="stat-value">
-            {monthlyRevenue.toLocaleString("en-us", {
-              style: "currency",
-              currency: "USD",
-            })}
-          </span>
-        </p>
+      <div className="grid grid-cols-3 gap-6">
+        <StatCard label="Members" value={totalMembers} />
+        <StatCard label="Active Members" value={activeMembers} />
+        <StatCard
+          label="Monthly Revenue"
+          value={monthlyRevenue.toLocaleString("en-us", {
+            style: "currency",
+            currency: "USD",
+          })}
+        />
+        <TourRequestsWidget tourRequests={tourRequests} />
       </div>
-      <TourRequestsWidget tourRequests={tourRequests} />
     </main>
   );
 }
