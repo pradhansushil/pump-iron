@@ -11,7 +11,6 @@ import {
   h1Style,
   marginBottom,
   textColor,
-  textColorWhite,
 } from "../../utils/styles";
 
 export default function EmployeesTable() {
@@ -34,11 +33,7 @@ export default function EmployeesTable() {
   };
 
   useEffect(() => {
-    const loadEmployees = async () => {
-      await fetchAllEmployees();
-    };
-
-    loadEmployees();
+    fetchAllEmployees();
   }, []);
 
   const handleDeleteClick = (id, name) => {
@@ -78,68 +73,69 @@ export default function EmployeesTable() {
         </button>
       </div>
 
-      <div className="w-full overflow-x-auto">
-        <table className="w-full">
+      <div className="w-full overflow-x-auto rounded-lg border border-gray-600 shadow-xl">
+        <table className="w-full border-collapse">
           <thead>
-            <tr className={textColor}>
-              <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+            <tr
+              className={`${textColor} bg-gray-900 border-b-2 border-gray-500`}
+            >
+              <th className="w-40 px-6 py-4 text-left text-xs font-bold uppercase tracking-widest">
                 Name
               </th>
-              <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest">
                 Bio
               </th>
-              <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+              <th className="w-48 px-6 py-4 text-center text-xs font-bold uppercase tracking-widest">
                 Position
               </th>
-              <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+              <th className="w-32 px-6 py-4 text-center text-xs font-bold uppercase tracking-widest">
                 Actions
               </th>
             </tr>
           </thead>
           <tbody>
-            {employees.map((emp) => (
-              <tr
-                key={emp.id}
-                className="odd:bg-gray-800 even:bg-gray-700 text-white"
-              >
-                <td className="px-4 py-3 text-sm">{emp.name}</td>
-                <td className="px-4 py-3 text-sm max-w-xs">
-                  {emp.bio?.length > 60 && !expandedBios[emp.id] ? (
-                    <p className="text-sm leading-snug break-words">
-                      <span className="line-clamp-1">{emp.bio}</span>
+            {employees.map((emp) => {
+              const isExpanded = expandedBios[emp.id];
+              const hasLongBio = emp.bio?.length > 60;
+
+              return (
+                <tr
+                  key={emp.id}
+                  className="odd:bg-gray-800 even:bg-gray-700 text-white"
+                >
+                  <td className="px-6 py-4 text-sm font-semibold border-r border-gray-600 whitespace-nowrap">
+                    {emp.name}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-200 border-r border-gray-600">
+                    <p
+                      className={`leading-relaxed break-words ${!isExpanded ? "line-clamp-1" : ""}`}
+                    >
+                      {emp.bio}
+                    </p>
+                    {hasLongBio && (
                       <button
                         onClick={() => toggleBio(emp.id)}
-                        className="text-xs text-gray-400 hover:text-white transition-colors duration-150 whitespace-nowrap"
+                        className="mt-1 text-[10px] uppercase font-bold tracking-tight text-blue-400 hover:text-blue-300 transition-colors"
                       >
-                        Read more
+                        {isExpanded ? "Read Less" : "Read More"}
                       </button>
-                    </p>
-                  ) : (
-                    <p className="text-sm leading-snug break-words">
-                      {emp.bio}
-                      {emp.bio?.length > 60 && (
-                        <button
-                          onClick={() => toggleBio(emp.id)}
-                          className="block mt-1 text-xs text-gray-400 hover:text-white transition-colors duration-150 whitespace-nowrap"
-                        >
-                          Read less
-                        </button>
-                      )}
-                    </p>
-                  )}
-                </td>
-                <td className="px-4 py-3 text-sm">{emp.specialization}</td>
-                <td className="px-4 py-3 text-sm">
-                  <button
-                    onClick={() => handleDeleteClick(emp.id, emp.name)}
-                    aria-label={`delete ${emp.name}`}
-                    className={`bg-red-600 ${textColorWhite} px-3 py-1 rounded-md text-xs hover:bg-red-700 transition-colors duration-200`}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
+                    )}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-center text-gray-300 border-r border-gray-600 whitespace-nowrap">
+                    {emp.specialization}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-center">
+                    <button
+                      onClick={() => handleDeleteClick(emp.id, emp.name)}
+                      aria-label={`delete ${emp.name}`}
+                      className="bg-red-600 text-white px-3 py-1 rounded-md text-xs uppercase font-semibold hover:bg-red-700 transition-colors duration-200"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
