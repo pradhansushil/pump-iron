@@ -1,4 +1,9 @@
 import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTriangleExclamation,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
 
 import {
@@ -7,6 +12,14 @@ import {
 } from "../../services/booking/tourService";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { TOUR_STATUS } from "../../utils/constants";
+import {
+  containerStyle,
+  errorBanner,
+  h1Style,
+  marginBottom,
+  textColor,
+  textSizeSmall,
+} from "../../utils/styles";
 
 const FILTER_OPTIONS = ["all", ...Object.values(TOUR_STATUS)];
 
@@ -53,48 +66,96 @@ export default function TourRequests() {
   if (loading) return <LoadingSpinner />;
   if (error)
     return (
-      <p className="error-message" role="alert">
-        {error}
-      </p>
+      <main className={containerStyle}>
+        <div className={`${errorBanner} bg-red-600`} role="alert">
+          <FontAwesomeIcon icon={faTriangleExclamation} />
+          <p>{error}</p>
+          <button
+            className={`${textSizeSmall} hover:bg-red-700`}
+            onClick={() => {
+              setError(null);
+              window.location.reload();
+            }}
+          >
+            Try again
+          </button>
+          <button
+            aria-label="Dismiss error"
+            className="hover:bg-red-700"
+            onClick={() => setError(null)}
+          >
+            <FontAwesomeIcon icon={faXmark} />
+          </button>
+        </div>
+      </main>
     );
 
   return (
-    <main aria-labelledby="tour-requests-heading">
-      <h1 id="tour-requests-heading">Tour Requests</h1>
-      <div className="">
+    <main aria-labelledby="tour-requests-heading" className={containerStyle}>
+      <h1
+        id="tour-requests-heading"
+        className={`${h1Style} ${marginBottom} text-center`}
+      >
+        Tour Requests
+      </h1>
+
+      {/* Filter Buttons */}
+      <div className="flex flex-wrap gap-2 mb-6">
         {FILTER_OPTIONS.map((f) => (
           <button
             key={f}
             onClick={() => setSelectedFilter(f)}
             aria-pressed={selectedFilter === f}
+            className={`px-4 py-1.5 rounded-md border text-sm capitalize transition-colors duration-150
+              ${
+                selectedFilter === f
+                  ? "bg-blue-500 border-blue-500 text-white"
+                  : "bg-transparent border-gray-700 text-gray-400 hover:bg-gray-800 hover:text-white"
+              }`}
           >
             {f}
           </button>
         ))}
       </div>
-      <div className="">
+
+      {/* Table */}
+      <div className="w-full overflow-x-auto">
         {statusFilter.length === 0 ? (
-          <p>No data found</p>
+          <p className="text-center text-gray-400 py-12 text-sm">
+            No data found
+          </p>
         ) : (
-          <table>
+          <table className="w-full">
             <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-                <th>Status</th>
+              <tr className={textColor}>
+                <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+                  Name
+                </th>
+                <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+                  Email
+                </th>
+                <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+                  Phone Number
+                </th>
+                <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+                  Status
+                </th>
               </tr>
             </thead>
             <tbody>
               {statusFilter.map((s) => (
-                <tr key={s.id}>
-                  <td>{s.name}</td>
-                  <td>{s.email}</td>
-                  <td>{s.phone}</td>
-                  <td>
+                <tr
+                  key={s.id}
+                  className="odd:bg-gray-800 even:bg-gray-700 text-white"
+                >
+                  <td className="px-4 py-3 text-sm">{s.name}</td>
+                  <td className="px-4 py-3 text-sm">{s.email}</td>
+                  <td className="px-4 py-3 text-sm">{s.phone}</td>
+                  <td className="px-4 py-3 text-sm">
                     <select
                       value={s.status}
                       onChange={(e) => handleStatusChange(s.id, e.target.value)}
+                      className="bg-gray-800 border border-gray-700 text-gray-200 text-sm rounded-md px-3 py-1.5 capitalize cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       {Object.values(TOUR_STATUS).map((status) => (
                         <option key={status} value={status}>
