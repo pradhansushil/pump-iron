@@ -5,6 +5,14 @@ import { deleteEmployee, fetchEmployees } from "../../services/employeesData";
 import AddEmployeeModal from "../../components/modals/AddEmployee";
 import ConfirmModal from "../../components/modals/ConfirmModal";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import {
+  containerStyle,
+  ctaButton,
+  h1Style,
+  marginBottom,
+  textColor,
+  textColorWhite,
+} from "../../utils/styles";
 
 export default function EmployeesTable() {
   const [employees, setEmployees] = useState([]);
@@ -12,6 +20,7 @@ export default function EmployeesTable() {
   const [employeeToDelete, setEmployeeToDelete] = useState(null);
   const [confirmModal, setConfirmModal] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [expandedBios, setExpandedBios] = useState({});
 
   const fetchAllEmployees = async () => {
     try {
@@ -48,33 +57,83 @@ export default function EmployeesTable() {
     }
   };
 
+  const toggleBio = (id) => {
+    setExpandedBios((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
   if (loading) return <LoadingSpinner />;
 
   return (
-    <main aria-labelledby="employees-heading">
-      <h1 id="employees-heading">Employees</h1>
-      <div className="employees-page">
-        <button onClick={() => setIsModalOpen(true)}>Add Employee</button>
-        <table>
+    <main aria-labelledby="employees-heading" className={containerStyle}>
+      <h1
+        id="employees-heading"
+        className={`${h1Style} text-center ${marginBottom}`}
+      >
+        Employees
+      </h1>
+
+      <div className={`flex justify-end ${marginBottom}`}>
+        <button className={ctaButton} onClick={() => setIsModalOpen(true)}>
+          Add Employee
+        </button>
+      </div>
+
+      <div className="w-full overflow-x-auto">
+        <table className="w-full">
           <thead>
-            <tr>
-              <th>Name</th>
-              <th>Bio</th>
-              <th>Position</th>
-              <th>Action</th>
+            <tr className={textColor}>
+              <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+                Name
+              </th>
+              <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+                Bio
+              </th>
+              <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+                Position
+              </th>
+              <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+                Actions
+              </th>
             </tr>
           </thead>
-
           <tbody>
             {employees.map((emp) => (
-              <tr key={emp.id}>
-                <td>{emp.name}</td>
-                <td>{emp.bio}</td>
-                <td>{emp.specialization}</td>
-                <td>
+              <tr
+                key={emp.id}
+                className="odd:bg-gray-800 even:bg-gray-700 text-white"
+              >
+                <td className="px-4 py-3 text-sm">{emp.name}</td>
+                <td className="px-4 py-3 text-sm max-w-xs">
+                  {emp.bio?.length > 60 && !expandedBios[emp.id] ? (
+                    <p className="text-sm leading-snug break-words">
+                      <span className="line-clamp-1">{emp.bio}</span>
+                      <button
+                        onClick={() => toggleBio(emp.id)}
+                        className="text-xs text-gray-400 hover:text-white transition-colors duration-150 whitespace-nowrap"
+                      >
+                        Read more
+                      </button>
+                    </p>
+                  ) : (
+                    <p className="text-sm leading-snug break-words">
+                      {emp.bio}
+                      {emp.bio?.length > 60 && (
+                        <button
+                          onClick={() => toggleBio(emp.id)}
+                          className="block mt-1 text-xs text-gray-400 hover:text-white transition-colors duration-150 whitespace-nowrap"
+                        >
+                          Read less
+                        </button>
+                      )}
+                    </p>
+                  )}
+                </td>
+                <td className="px-4 py-3 text-sm">{emp.specialization}</td>
+                <td className="px-4 py-3 text-sm">
                   <button
                     onClick={() => handleDeleteClick(emp.id, emp.name)}
                     aria-label={`delete ${emp.name}`}
+                    className={`bg-red-600 ${textColorWhite} px-3 py-1 rounded-md text-xs hover:bg-red-700 transition-colors duration-200`}
                   >
                     Delete
                   </button>
@@ -83,22 +142,23 @@ export default function EmployeesTable() {
             ))}
           </tbody>
         </table>
-        <AddEmployeeModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onSuccess={fetchAllEmployees}
-        />
-
-        <ConfirmModal
-          isOpen={confirmModal}
-          onClose={() => setConfirmModal(false)}
-          onConfirm={() =>
-            employeeToDelete &&
-            handleDelete(employeeToDelete.id, employeeToDelete.name)
-          }
-          message={`Are you sure you want to delete ${employeeToDelete?.name}?`}
-        />
       </div>
+
+      <AddEmployeeModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSuccess={fetchAllEmployees}
+      />
+
+      <ConfirmModal
+        isOpen={confirmModal}
+        onClose={() => setConfirmModal(false)}
+        onConfirm={() =>
+          employeeToDelete &&
+          handleDelete(employeeToDelete.id, employeeToDelete.name)
+        }
+        message={`Are you sure you want to delete ${employeeToDelete?.name}?`}
+      />
     </main>
   );
 }
