@@ -1,10 +1,21 @@
 import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTriangleExclamation,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
+
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { getAllMembers } from "../../services/db";
 import { getAllPayments } from "../../services/paymentsService";
 import { getAllTourRequests } from "../../services/booking/tourService";
 import TourRequestsWidget from "../../components/admin/TourRequestsWidget";
-import { containerStyle, h1Style } from "../../utils/styles";
+import {
+  containerStyle,
+  errorBanner,
+  h1Style,
+  textSizeSmall,
+} from "../../utils/styles";
 import StatCard from "../../components/admin/statCard";
 
 export default function AdminDashboard() {
@@ -37,9 +48,28 @@ export default function AdminDashboard() {
   if (loading) return <LoadingSpinner />;
   if (error)
     return (
-      <p className="error-message" role="alert">
-        {error}
-      </p>
+      <main className={containerStyle}>
+        <div className={`${errorBanner} bg-red-600`} role="alert">
+          <FontAwesomeIcon icon={faTriangleExclamation} />
+          <p>{error}</p>
+          <button
+            className={`${textSizeSmall} hover:bg-red-700`}
+            onClick={() => {
+              setError(null);
+              window.location.reload();
+            }}
+          >
+            Try again
+          </button>
+          <button
+            aria-label="Dismiss error"
+            className="hover:bg-red-700"
+            onClick={() => setError(null)}
+          >
+            <FontAwesomeIcon icon={faXmark} />
+          </button>
+        </div>
+      </main>
     );
 
   const totalMembers = members.length;

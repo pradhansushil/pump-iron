@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTriangleExclamation,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
 import { getAllMembers, deleteMember, updateMember } from "../../services/db";
 import { formatDate } from "../../utils/formatters";
@@ -10,10 +15,12 @@ import ConfirmModal from "../../components/modals/ConfirmModal";
 import {
   containerStyle,
   ctaButton,
+  errorBanner,
   h1Style,
   marginBottom,
   textColor,
   textColorWhite,
+  textSizeSmall,
 } from "../../utils/styles";
 
 export default function AdminMembers() {
@@ -87,11 +94,37 @@ export default function AdminMembers() {
   if (loading) return <LoadingSpinner message="Loading Members" />;
   if (error)
     return (
-      <p className="error-message" role="alert">
-        {error}
-      </p>
+      <main className={containerStyle}>
+        <div className={`${errorBanner} bg-red-600`} role="alert">
+          <FontAwesomeIcon icon={faTriangleExclamation} />
+          <p>{error}</p>
+          <button
+            className={`${textSizeSmall} hover:bg-red-700`}
+            onClick={() => {
+              setError(null);
+              window.location.reload();
+            }}
+          >
+            Try again
+          </button>
+          <button
+            aria-label="Dismiss error"
+            className="hover:bg-red-700"
+            onClick={() => setError(null)}
+          >
+            <FontAwesomeIcon icon={faXmark} />
+          </button>
+        </div>
+      </main>
     );
-  if (members.length === 0) return <p>No members have signed up yet.</p>;
+  if (members.length === 0)
+    return (
+      <main className={containerStyle}>
+        <p className="text-center text-gray-400 py-12 text-sm">
+          No members have signed up yet.
+        </p>
+      </main>
+    );
 
   return (
     <main aria-labelledby="admin-members-heading" className={containerStyle}>

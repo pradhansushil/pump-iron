@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTriangleExclamation,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
+import { useAuth } from "../context/AuthContext";
 import { getMemberById } from "../services/db";
 import { getPaymentsByMember } from "../services/paymentsService";
 import UpdatePaymentMethodModal from "../components/modals/UpdatePaymentMethodModal";
@@ -17,6 +22,7 @@ import {
   h1Style,
   containerStyle,
   cardStyle,
+  errorBanner,
   marginBottom,
   ctaButton,
   textColor,
@@ -79,9 +85,30 @@ export default function Payments() {
   if (loading) return <LoadingSpinner message="Loading payment data..." />;
   if (error)
     return (
-      <p className="error-message" role="alert">
-        {error}
-      </p>
+      <main className={pageStyle}>
+        <div className={containerStyle}>
+          <div className={`${errorBanner} bg-red-600`} role="alert">
+            <FontAwesomeIcon icon={faTriangleExclamation} />
+            <p>{error}</p>
+            <button
+              className={`${textSizeSmall} hover:bg-red-700`}
+              onClick={() => {
+                setError(null);
+                window.location.reload();
+              }}
+            >
+              Try again
+            </button>
+            <button
+              aria-label="Dismiss error"
+              className="hover:bg-red-700"
+              onClick={() => setError(null)}
+            >
+              <FontAwesomeIcon icon={faXmark} />
+            </button>
+          </div>
+        </div>
+      </main>
     );
 
   return (
