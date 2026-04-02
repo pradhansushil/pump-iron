@@ -11,6 +11,8 @@ import {
   h1Style,
   marginBottom,
   textColor,
+  dangerButton,
+  cancelBtn,
 } from "../../utils/styles";
 
 export default function EmployeesTable() {
@@ -35,6 +37,10 @@ export default function EmployeesTable() {
   useEffect(() => {
     fetchAllEmployees();
   }, []);
+
+  const handleEditClick = (employee) => {
+    console.log("Edit employee:", employee);
+  };
 
   const handleDeleteClick = (id, name) => {
     setEmployeeToDelete({ id, name });
@@ -88,7 +94,7 @@ export default function EmployeesTable() {
               <th className="w-48 px-6 py-4 text-center text-xs font-bold uppercase tracking-widest">
                 Position
               </th>
-              <th className="w-32 px-6 py-4 text-center text-xs font-bold uppercase tracking-widest">
+              <th className="w-40 px-6 py-4 text-center text-xs font-bold uppercase tracking-widest">
                 Actions
               </th>
             </tr>
@@ -124,14 +130,23 @@ export default function EmployeesTable() {
                   <td className="px-6 py-4 text-sm text-center text-gray-300 border-r border-gray-600 whitespace-nowrap">
                     {emp.specialization}
                   </td>
-                  <td className="px-6 py-4 text-sm text-center">
-                    <button
-                      onClick={() => handleDeleteClick(emp.id, emp.name)}
-                      aria-label={`delete ${emp.name}`}
-                      className="bg-red-600 text-white px-3 py-1 rounded-md text-xs uppercase font-semibold hover:bg-red-700 transition-colors duration-200"
-                    >
-                      Delete
-                    </button>
+                  <td className="px-6 py-4 text-sm">
+                    <div className="flex justify-center gap-2">
+                      <button
+                        onClick={() => handleEditClick(emp)}
+                        aria-label={`edit ${emp.name}`}
+                        className={`${cancelBtn} text-xs py-1 px-3 uppercase font-semibold`}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDeleteClick(emp.id, emp.name)}
+                        aria-label={`delete ${emp.name}`}
+                        className={`${dangerButton} text-xs py-1 px-3 uppercase font-semibold`}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </td>
                 </tr>
               );
