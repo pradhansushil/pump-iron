@@ -25,6 +25,7 @@ import TourRequests from "./pages/admin/TourRequests";
 import GalleryUpload from "./pages/admin/GalleryUpload";
 import EmployeesTable from "./pages/admin/Employees";
 import PaymentsTable from "./pages/admin/Payments";
+import { pageStyle } from "./utils/styles";
 
 export default function App() {
   const location = useLocation();
@@ -35,7 +36,7 @@ export default function App() {
     !isAdminRoute && !isAuthRoute ? { paddingTop: "64px" } : null;
 
   return (
-    <div className="flex flex-col  bg-gray-950 min-h-screen" style={appStyle}>
+    <div className={`flex flex-col ${pageStyle}`} style={appStyle}>
       {!isAdminRoute && !isAuthRoute && <Navbar />}
       <Toaster position="top-right" />
       <div className={`flex-1 ${!isAdminRoute && !isAuthRoute ? "pb-16" : ""}`}>
