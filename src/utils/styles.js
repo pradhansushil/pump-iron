@@ -42,3 +42,10 @@ export const errorMessage = "text-red-500 text-xs mb-1";
 export const modalButtons = "flex justify-end gap-3 mt-6";
 export const cancelBtn =
   "border border-gray-600 text-gray-400 px-4 py-2 rounded-md hover:bg-gray-700 transition-colors duration-200";
+
+// status colors
+export const statusStyles = {
+  completed: "bg-green-600 text-white",
+  due: "bg-yellow-600 text-white",
+  overdue: "bg-red-600 text-white",
+};
