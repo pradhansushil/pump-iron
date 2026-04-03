@@ -29,20 +29,34 @@ export default function RecentPaymentsCard({ payments }) {
       ) : (
         <>
           {/* Table — hidden on mobile, visible on md and up */}
-          <div className="hidden md:block w-full overflow-x-auto">
+          <div className="hidden md:block w-full overflow-x-auto rounded-lg border border-gray-600 shadow-xl">
             <table className="w-full">
               <thead>
-                <tr className={textColor}>
-                  <th className="px-4 py-2 text-left" scope="col">
+                <tr
+                  className={`${textColor} bg-gray-900 border-b-2 border-gray-500`}
+                >
+                  <th
+                    className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest"
+                    scope="col"
+                  >
                     Date
                   </th>
-                  <th className="px-4 py-2 text-left" scope="col">
+                  <th
+                    className="px-6 py-4 text-right text-xs font-bold uppercase tracking-widest"
+                    scope="col"
+                  >
                     Amount
                   </th>
-                  <th className="px-4 py-2 text-left" scope="col">
+                  <th
+                    className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest"
+                    scope="col"
+                  >
                     Payment Method
                   </th>
-                  <th className="px-4 py-2 text-left" scope="col">
+                  <th
+                    className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest"
+                    scope="col"
+                  >
                     Status
                   </th>
                 </tr>
@@ -52,17 +66,19 @@ export default function RecentPaymentsCard({ payments }) {
                   .filter((payment) => getPaymentStatus(payment) !== null)
                   .map((payment) => (
                     <tr
-                      className={`even:bg-gray-800 odd:bg-gray-700 ${textColorWhite}`}
+                      className={`even:bg-gray-700 odd:bg-gray-800 ${textColorWhite}`}
                       key={payment.id}
                     >
-                      <td className="px-4 py-2">{formatDate(payment.date)}</td>
-                      <td className="px-4 py-2">
+                      <td className="px-6 py-4 text-sm border-r border-gray-600">
+                        {formatDate(payment.date)}
+                      </td>
+                      <td className="px-6 py-4 text-right text-sm border-r border-gray-600">
                         {formatCurrency(payment.amount)}
                       </td>
-                      <td className="px-4 py-2">
+                      <td className="px-6 py-4 text-sm border-r border-gray-600">
                         {formatPaymentMethod(payment.method)}
                       </td>
-                      <td className="px-4 py-2">
+                      <td className="px-6 py-4 text-sm">
                         <span
                           className={`inline-block px-3 py-1 rounded-full ${textSizeSmall} font-semibold ${textColorWhite} ${getStatusColor(payment)}`}
                         >
