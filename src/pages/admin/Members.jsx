@@ -189,29 +189,31 @@ export default function AdminMembers() {
 
       {fetchedMembers.length !== 0 ? (
         /* WRAPPER FOR HORIZONTAL SCROLL */
-        <div className="w-full overflow-x-auto">
+        <div className="w-full overflow-x-auto rounded-lg border border-gray-600 shadow-xl">
           <table className="w-full">
             <thead>
-              <tr className={textColor}>
-                <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+              <tr
+                className={`${textColor} bg-gray-900 border-b-2 border-gray-500`}
+              >
+                <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest">
                   Name
                 </th>
-                <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest">
                   Email
                 </th>
-                <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest">
                   Phone Number
                 </th>
-                <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest">
                   Plan
                 </th>
-                <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest">
                   Join Date
                 </th>
-                <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-bold uppercase tracking-widest">
                   Status
                 </th>
-                <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+                <th className="px-6 py-4 text-center text-xs font-bold uppercase tracking-widest">
                   Actions
                 </th>
               </tr>
@@ -222,14 +224,22 @@ export default function AdminMembers() {
                   key={member.id}
                   className="odd:bg-gray-800 even:bg-gray-700 text-white"
                 >
-                  <td className="px-4 py-3 text-sm">{member.name}</td>
-                  <td className="px-4 py-3 text-sm">{member.email}</td>
-                  <td className="px-4 py-3 text-sm">{member.phone}</td>
-                  <td className="px-4 py-3 text-sm">{member.membershipPlan}</td>
-                  <td className="px-4 py-3 text-sm">
+                  <td className="px-6 py-4 text-sm border-r border-gray-600">
+                    {member.name}
+                  </td>
+                  <td className="px-6 py-4 text-sm border-r border-gray-600">
+                    {member.email}
+                  </td>
+                  <td className="px-6 py-4 text-sm border-r border-gray-600">
+                    {member.phone}
+                  </td>
+                  <td className="px-6 py-4 text-sm border-r border-gray-600">
+                    {member.membershipPlan}
+                  </td>
+                  <td className="px-6 py-4 text-sm border-r border-gray-600">
                     {formatDate(member.joinDate)}
                   </td>
-                  <td className="px-4 py-3 text-sm">
+                  <td className="px-6 py-4 text-sm border-r border-gray-600">
                     <span
                       className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${textColorWhite} ${
                         member.status === "active"
@@ -242,30 +252,36 @@ export default function AdminMembers() {
                       {member.status}
                     </span>
                   </td>
-                  <td className="px-4 py-3 flex items-center gap-2">
-                    <button
-                      aria-label={`record payment for ${member.name}`}
-                      className={`bg-blue-500 ${textColorWhite} px-3 py-1 rounded-md text-xs hover:bg-blue-600 transition-colors duration-200`}
-                      onClick={() => setSelectedMember(member)}
-                    >
-                      Record Payment
-                    </button>
-                    <button
-                      aria-label={`delete ${member.name}`}
-                      className={`bg-red-600 ${textColorWhite} px-3 py-1 rounded-md text-xs hover:bg-red-700 transition-colors duration-200`}
-                      onClick={() => setMemberToDelete(member)}
-                    >
-                      Delete
-                    </button>
-                    <button
-                      aria-label={`${
-                        member.status === "suspended" ? "Unsuspend" : "Suspend"
-                      } ${member.name}`}
-                      className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md text-xs transition-colors duration-200"
-                      onClick={() => handleSuspend(member)}
-                    >
-                      {member.status === "suspended" ? "Unsuspend" : "Suspend"}
-                    </button>
+                  <td className="px-6 py-4 flex items-center gap-2">
+                    <div className="flex justify-center gap-2">
+                      <button
+                        aria-label={`record payment for ${member.name}`}
+                        className={`bg-blue-500 ${textColorWhite} px-3 py-1 rounded-md text-xs hover:bg-blue-600 transition-colors duration-200 uppercase font-semibold`}
+                        onClick={() => setSelectedMember(member)}
+                      >
+                        Record Payment
+                      </button>
+                      <button
+                        aria-label={`delete ${member.name}`}
+                        className={`bg-red-600 ${textColorWhite} px-3 py-1 rounded-md text-xs hover:bg-red-700 transition-colors duration-200 uppercase font-semibold`}
+                        onClick={() => setMemberToDelete(member)}
+                      >
+                        Delete
+                      </button>
+                      <button
+                        aria-label={`${
+                          member.status === "suspended"
+                            ? "Unsuspend"
+                            : "Suspend"
+                        } ${member.name}`}
+                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md text-xs transition-colors duration-200 uppercase font-semibold"
+                        onClick={() => handleSuspend(member)}
+                      >
+                        {member.status === "suspended"
+                          ? "Unsuspend"
+                          : "Suspend"}
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
