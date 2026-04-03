@@ -18,7 +18,6 @@ import {
 import LoadingSpinner from "../components/LoadingSpinner";
 import { PAYMENT_STATUS } from "../utils/constants";
 import {
-  pageStyle,
   h1Style,
   containerStyle,
   cardStyle,
@@ -85,7 +84,7 @@ export default function Payments() {
   if (loading) return <LoadingSpinner message="Loading payment data..." />;
   if (error)
     return (
-      <main className={pageStyle}>
+      <main>
         <div className={containerStyle}>
           <div className={`${errorBanner} bg-red-600`} role="alert">
             <FontAwesomeIcon icon={faTriangleExclamation} />
@@ -113,7 +112,7 @@ export default function Payments() {
 
   return (
     memberData && (
-      <main aria-labelledby="payments-heading" className={pageStyle}>
+      <main aria-labelledby="payments-heading">
         <div className={containerStyle}>
           <h1
             id="payments-heading"

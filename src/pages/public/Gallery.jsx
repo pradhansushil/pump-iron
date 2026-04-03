@@ -2,12 +2,7 @@ import { useEffect, useState } from "react";
 import { motion as Motion } from "framer-motion";
 import { fetchGallery } from "../../services/galleryService";
 import Lightbox from "../../components/modals/Lightbox";
-import {
-  pageStyle,
-  h1Style,
-  subText,
-  containerStyle,
-} from "../../utils/styles";
+import { h1Style, subText, containerStyle } from "../../utils/styles";
 
 const containerVariants = {
   hidden: {},
@@ -42,7 +37,7 @@ export default function Gallery() {
   };
 
   return (
-    <main aria-labelledby="gallery-heading" className={pageStyle}>
+    <main aria-labelledby="gallery-heading">
       <div className={containerStyle}>
         <div className="text-center mb-10">
           <h1 id="gallery-heading" className={h1Style}>

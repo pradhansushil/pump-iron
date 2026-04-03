@@ -29,7 +29,6 @@ import {
   containerStyle,
   errorBanner,
   marginBottom,
-  pageStyle,
   textSizeSmall,
 } from "../utils/styles";
 
@@ -117,7 +116,7 @@ export default function MemberDashboard() {
   };
 
   return (
-    <main className={pageStyle} aria-labelledby="dashboard-heading">
+    <main aria-labelledby="dashboard-heading">
       <div className={containerStyle}>
         {error && (
           <div className={`${errorBanner} bg-red-600`} role="alert">

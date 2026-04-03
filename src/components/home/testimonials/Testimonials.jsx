@@ -3,14 +3,13 @@ import {
   containerStyle,
   h1Style,
   marginBottom,
-  pageStyle,
   subText,
 } from "../../../utils/styles";
 import TestimonialCard from "./TestimonialCard";
 
 export default function Testimonials() {
   return (
-    <section aria-labelledby="testimonials-heading" className={pageStyle}>
+    <section aria-labelledby="testimonials-heading">
       <div className={containerStyle}>
         <div className={`${marginBottom} text-center`}>
           <h2 id="testimonials-heading" className={h1Style}>

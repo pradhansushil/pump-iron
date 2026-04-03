@@ -24,7 +24,6 @@ import {
   errorColor,
   h1Style,
   h3Heading,
-  pageStyle,
   subText,
   textColor,
   textSizeSmall,
@@ -104,7 +103,7 @@ export default function Classes() {
   };
 
   return (
-    <main className={pageStyle}>
+    <main>
       {error && (
         <div className={`${errorBanner} ${errorColor}`} role="alert">
           <div className="flex items-center gap-3">

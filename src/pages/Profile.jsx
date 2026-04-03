@@ -12,7 +12,6 @@ import {
   errorColor,
   h1Style,
   marginBottom,
-  pageStyle,
 } from "../utils/styles";
 
 export default function Profile() {
@@ -41,7 +40,7 @@ export default function Profile() {
   if (loading) return <LoadingSpinner message="Loading your profile..." />;
   if (error)
     return (
-      <main className={pageStyle}>
+      <main>
         <div className={containerStyle}>
           <div className={`${errorBanner} ${errorColor}`} role="alert">
             <p>{error}</p>
@@ -54,7 +53,7 @@ export default function Profile() {
     );
 
   return (
-    <main className={pageStyle} aria-labelledby="profile-heading">
+    <main aria-labelledby="profile-heading">
       <div className={containerStyle}>
         <h1 id="profile-heading" className={`${h1Style} ${marginBottom}`}>
           Profile
