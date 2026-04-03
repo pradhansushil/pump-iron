@@ -119,7 +119,7 @@ export default function TourRequests() {
       </div>
 
       {/* Table */}
-      <div className="w-full overflow-x-auto">
+      <div className="w-full overflow-x-auto rounded-lg border border-gray-600 shadow-xl">
         {statusFilter.length === 0 ? (
           <p className="text-center text-gray-400 py-12 text-sm">
             No data found
@@ -127,17 +127,19 @@ export default function TourRequests() {
         ) : (
           <table className="w-full">
             <thead>
-              <tr className={textColor}>
-                <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+              <tr
+                className={`${textColor} bg-gray-900 border-b-2 border-gray-500`}
+              >
+                <th className="px-6 py-4 text-left text-sm font-bold uppercase tracking-widest">
                   Name
                 </th>
-                <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-sm font-bold uppercase tracking-widest">
                   Email
                 </th>
-                <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-sm font-bold uppercase tracking-widest">
                   Phone Number
                 </th>
-                <th className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-sm font-bold uppercase tracking-widest">
                   Status
                 </th>
               </tr>
@@ -148,10 +150,16 @@ export default function TourRequests() {
                   key={s.id}
                   className="odd:bg-gray-800 even:bg-gray-700 text-white"
                 >
-                  <td className="px-4 py-3 text-sm">{s.name}</td>
-                  <td className="px-4 py-3 text-sm">{s.email}</td>
-                  <td className="px-4 py-3 text-sm">{s.phone}</td>
-                  <td className="px-4 py-3 text-sm">
+                  <td className="px-6 py-4 text-sm border-r border-gray-600">
+                    {s.name}
+                  </td>
+                  <td className="px-6 py-4 text-sm border-r border-gray-600">
+                    {s.email}
+                  </td>
+                  <td className="px-6 py-4 text-sm border-r border-gray-600">
+                    {s.phone}
+                  </td>
+                  <td className="px-6 py-4 text-sm">
                     <select
                       value={s.status}
                       onChange={(e) => handleStatusChange(s.id, e.target.value)}
