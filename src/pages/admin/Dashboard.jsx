@@ -16,7 +16,7 @@ import {
   h1Style,
   textSizeSmall,
 } from "../../utils/styles";
-import StatCard from "../../components/admin/statCard";
+import StatCard from "../../components/admin/StatCard";
 
 export default function AdminDashboard() {
   const [members, setMembers] = useState([]);
