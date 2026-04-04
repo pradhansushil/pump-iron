@@ -8,7 +8,7 @@ export default function Hero({ onBookTour }) {
   return (
     <section
       aria-labelledby="hero-title"
-      className="relative min-h-screen flex items-center justify-center"
+      className="relative min-h-[60vh] sm:min-h-[75vh] md:min-h-screen flex items-center justify-center"
       style={{
         backgroundImage: `url(${heroImage})`,
         backgroundSize: "cover",
@@ -18,7 +18,10 @@ export default function Hero({ onBookTour }) {
       <div className="absolute inset-0 bg-black/60" />
 
       <div className="relative z-10 text-center">
-        <h1 id="hero-title" className={h1Style}>
+        <h1
+          id="hero-title"
+          className={`${h1Style} text-3xl sm:text-4xl md:text-4xl lg:text-5xl`}
+        >
           Pump & Iron
         </h1>
         <p className={`${textColorWhite} text-lg mb-6`}>
