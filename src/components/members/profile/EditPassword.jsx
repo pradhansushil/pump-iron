@@ -29,11 +29,8 @@ export default function EditPassword({ currentUser }) {
 
   const handleCancel = () => {
     setIsEditing(false);
-    setPassword({
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    });
+    setPassword({ currentPassword: "", newPassword: "", confirmPassword: "" });
+    setErrors({});
   };
 
   const handleSubmit = async () => {
@@ -44,16 +41,15 @@ export default function EditPassword({ currentUser }) {
       password.newPassword === "" ||
       password.confirmPassword === ""
     )
-      return setErrors({ currentPassword: "Please fill all fields" });
+      return setErrors({ general: "Please fill all fields" }); // was errors.currentPassword
 
-    if (password.newPassword.length < 6) {
+    if (password.newPassword.length < 6)
       return setErrors({
-        newPassword: "Field must be at least 6 characters long",
-      });
-    }
+        general: "New password must be at least 6 characters long",
+      }); // was errors.newPassword
 
     if (password.newPassword !== password.confirmPassword)
-      return setErrors({ general: "Passwords do not match. Try again" });
+      return setErrors({ general: "Passwords do not match. Try again" }); // unchanged
 
     try {
       const emailCredential = EmailAuthProvider.credential(
@@ -71,9 +67,13 @@ export default function EditPassword({ currentUser }) {
         confirmPassword: "",
       });
     } catch {
-      setErrors({ general: "Failed to update password. Please try again." });
+      setErrors({ general: "Failed to update password. Please try again." }); // unchanged
     }
   };
+
+  const generalErrorProps = errors.general
+    ? { "aria-describedby": "general-error" }
+    : {};
 
   return (
     <div className={cardStyle}>
@@ -104,15 +104,6 @@ export default function EditPassword({ currentUser }) {
             </p>
           )}
           <div className={marginBottomSm}>
-            {errors.currentPassword && (
-              <p
-                className="text-red-400 text-sm mb-1"
-                id="current-error"
-                role="alert"
-              >
-                {errors.currentPassword}
-              </p>
-            )}
             <label
               htmlFor="current"
               className={`${textColor} ${textSizeSmall}`}
@@ -126,22 +117,11 @@ export default function EditPassword({ currentUser }) {
               onChange={(e) =>
                 setPassword({ ...password, currentPassword: e.target.value })
               }
-              aria-describedby={
-                errors.currentPassword ? "current-error" : undefined
-              }
+              {...generalErrorProps}
               className="w-full bg-gray-900 border border-gray-700 text-white rounded-md px-3 py-2 mt-1 text-sm focus:outline-none focus:border-blue-400"
             />
           </div>
           <div className={marginBottomSm}>
-            {errors.newPassword && (
-              <p
-                className="text-red-400 text-sm mb-1"
-                id="new-error"
-                role="alert"
-              >
-                {errors.newPassword}
-              </p>
-            )}
             <label htmlFor="new" className={`${textColor} ${textSizeSmall}`}>
               New Password
             </label>
@@ -152,7 +132,7 @@ export default function EditPassword({ currentUser }) {
               onChange={(e) =>
                 setPassword({ ...password, newPassword: e.target.value })
               }
-              aria-describedby={errors.newPassword ? "new-error" : undefined}
+              {...generalErrorProps}
               className="w-full bg-gray-900 border border-gray-700 text-white rounded-md px-3 py-2 mt-1 text-sm focus:outline-none focus:border-blue-400"
             />
           </div>
@@ -170,6 +150,7 @@ export default function EditPassword({ currentUser }) {
               onChange={(e) =>
                 setPassword({ ...password, confirmPassword: e.target.value })
               }
+              {...generalErrorProps}
               className="w-full bg-gray-900 border border-gray-700 text-white rounded-md px-3 py-2 mt-1 text-sm focus:outline-none focus:border-blue-400"
             />
           </div>
