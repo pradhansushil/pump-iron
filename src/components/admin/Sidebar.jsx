@@ -40,7 +40,7 @@ export default function Sidebar({ isOpen, onToggle }) {
     <aside
       className={[
         "flex flex-col bg-slate-800 h-screen overflow-hidden transition-all duration-300 ease-in-out border-r border-slate-700",
-        isOpen ? "w-64" : "w-20",
+        isOpen ? "w-64" : "w-16",
       ].join(" ")}
     >
       {/* Header */}
