@@ -1,4 +1,4 @@
-import { h2Heading, textColor, textSizeSmall } from "../utils/styles";
+import { h2Heading, textColor } from "../utils/styles";
 
 export default function EmployeeCard({ img, name, specialization, bio }) {
   return (
@@ -11,7 +11,7 @@ export default function EmployeeCard({ img, name, specialization, bio }) {
       <div className="p-4">
         <h2 className={`${h2Heading} text-center mb-1`}>{name}</h2>
         <p className={`${textColor} text-center mb-2`}>{specialization}</p>
-        <p className={`${textSizeSmall} ${textColor}`}>{bio}</p>
+        <p className={`text-base ${textColor}`}>{bio}</p>
       </div>
     </li>
   );

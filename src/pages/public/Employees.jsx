@@ -30,10 +30,13 @@ export default function Employees() {
   return (
     <main aria-labelledby="employees-heading" className="employees-page">
       <div className={containerStyle}>
-        <h1 id="employees-heading" className={`${h1Style} ${marginBottom} text-center`}>
+        <h1
+          id="employees-heading"
+          className={`${h1Style} ${marginBottom} text-center`}
+        >
           Meet Our Family
         </h1>
-        <ul className="grid grid-cols-3 gap-6">
+        <ul className="grid grid cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {employees.map((e) => (
             <EmployeeCard
               key={e.id}
