@@ -1,6 +1,9 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
+import { pageStyle } from "./utils/styles";
+import ScrollToTop from "./components/ScrollToTop";
+
 import Home from "./pages/public/Home";
 import Footer from "./components/footer/Footer";
 import LoginPage from "./pages/LoginPage";
@@ -13,6 +16,8 @@ import MemberRoute from "./components/routes/Member";
 import AdminRoute from "./components/routes/Admin";
 import PublicRoute from "./components/routes/Public";
 
+import TourRequests from "./pages/admin/TourRequests";
+
 import Payments from "./pages/Payments";
 import MemberDashboard from "./pages/MemberDashboard";
 import Classes from "./pages/Classes";
@@ -21,11 +26,9 @@ import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminMembers from "./pages/admin/Members";
 import AdminLayout from "./components/admin/Layout";
-import TourRequests from "./pages/admin/TourRequests";
 import GalleryUpload from "./pages/admin/GalleryUpload";
 import EmployeesTable from "./pages/admin/Employees";
 import PaymentsTable from "./pages/admin/Payments";
-import { pageStyle } from "./utils/styles";
 
 export default function App() {
   const location = useLocation();
@@ -39,6 +42,7 @@ export default function App() {
     <div className={`flex flex-col ${pageStyle}`} style={appStyle}>
       {!isAdminRoute && !isAuthRoute && <Navbar />}
       <Toaster position="top-right" />
+      <ScrollToTop />
       <div className={`flex-1 ${!isAdminRoute && !isAuthRoute ? "pb-16" : ""}`}>
         <Routes>
           <Route
