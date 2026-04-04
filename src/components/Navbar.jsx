@@ -79,12 +79,15 @@ export default function Navbar() {
     return "text-gray-300 hover:text-white transition-colors duration-200";
   };
 
-  const navBg = isHomePage && !isScrolled ? "" : "bg-gray-900";
+  const navBg =
+    isHomePage && !isScrolled
+      ? "bg-transparent backdrop-blur-sm"
+      : "bg-gray-900 shadow-lg shadow-black/30";
 
   return (
     <nav
       aria-label="main navigation"
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${navBg}`}
+      className={`fixed top-0 left-0 w-full z-50 transition-colors duration-200 ${navBg}`}
     >
       <div className="relative flex items-center justify-between h-16 max-w-7xl mx-auto px-4">
         <div className="flex items-center gap-4">
