@@ -39,11 +39,12 @@ export default function Sidebar({ isOpen, onToggle }) {
   return (
     <aside
       className={[
-        "flex flex-col bg-gray-900 h-screen overflow-hidden transition-all duration-300 ease-in-out",
+        "flex flex-col bg-slate-800 h-screen overflow-hidden transition-all duration-300 ease-in-out border-r border-slate-700",
         isOpen ? "w-64" : "w-20",
       ].join(" ")}
     >
-      <div className="flex items-center h-16 border-b border-gray-700 px-4">
+      {/* Header */}
+      <div className="flex items-center h-16 border-b border-slate-700 px-4">
         {isOpen && (
           <span className="flex-1 text-white font-bold text-lg whitespace-nowrap">
             Gym Admin
@@ -52,7 +53,7 @@ export default function Sidebar({ isOpen, onToggle }) {
         <button
           onClick={onToggle}
           className={[
-            "p-1.5 rounded-lg text-gray-400 hover:bg-gray-700 hover:text-white transition-colors",
+            "p-1.5 rounded-lg text-gray-400 hover:bg-slate-700 hover:text-white transition-colors",
             !isOpen && "w-full flex justify-center",
           ].join(" ")}
           aria-label="Toggle Sidebar"
@@ -64,6 +65,7 @@ export default function Sidebar({ isOpen, onToggle }) {
         </button>
       </div>
 
+      {/* Nav Items */}
       <nav className="flex-1 px-3 py-4 space-y-1">
         {NAV_ITEMS.map((item) => (
           <NavLink
@@ -74,8 +76,8 @@ export default function Sidebar({ isOpen, onToggle }) {
               [
                 "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors duration-150",
                 isActive
-                  ? "bg-gray-700 text-white"
-                  : "text-gray-400 hover:bg-gray-800 hover:text-white",
+                  ? "bg-indigo-600 text-white"
+                  : "text-gray-400 hover:bg-slate-700 hover:text-white",
                 !isOpen && "justify-center",
               ].join(" ")
             }
@@ -91,13 +93,13 @@ export default function Sidebar({ isOpen, onToggle }) {
       </nav>
 
       {/* Profile + Logout */}
-      <div className="px-3 py-4 border-t border-gray-700 relative">
-        {/* Logout dropdown — shown above the avatar when isProfileOpen is true */}
+      <div className="px-3 py-4 border-t border-slate-700 relative">
+        {/* Logout dropdown */}
         {isProfileOpen && (
-          <div className="absolute bottom-full left-3 right-3 mb-2 bg-gray-800 rounded-lg overflow-hidden shadow-lg">
+          <div className="absolute bottom-full left-3 right-3 mb-2 bg-slate-900 rounded-lg overflow-hidden shadow-lg border border-slate-700">
             <button
               onClick={handleLogout}
-              className="flex items-center gap-3 w-full px-4 py-3 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"
+              className="flex items-center gap-3 w-full px-4 py-3 text-sm text-gray-300 hover:bg-slate-700 hover:text-white transition-colors"
             >
               <FontAwesomeIcon icon={faRightFromBracket} className="w-4 h-4" />
               {isOpen && <span>Logout</span>}
@@ -109,7 +111,7 @@ export default function Sidebar({ isOpen, onToggle }) {
         <button
           onClick={() => setIsProfileOpen(!isProfileOpen)}
           className={[
-            "flex items-center gap-3 px-3 py-2 w-full rounded-lg hover:bg-gray-800 transition-colors",
+            "flex items-center gap-3 px-3 py-2 w-full rounded-lg hover:bg-slate-700 transition-colors",
             !isOpen && "justify-center",
           ].join(" ")}
         >
