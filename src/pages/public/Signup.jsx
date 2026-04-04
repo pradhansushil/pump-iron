@@ -169,7 +169,7 @@ export default function Signup() {
       </div>
 
       {/* Right form panel */}
-      <div className="flex flex-col justify-start w-1/2 h-full px-16 bg-gray-950 overflow-y-auto">
+      <div className="flex flex-col justify-start w-full md:w-1/2 h-full px-16 bg-gray-950 overflow-y-auto">
         <div className="w-full max-w-sm mx-auto py-12">
           <h2
             id="signup-heading"
