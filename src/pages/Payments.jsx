@@ -121,9 +121,9 @@ export default function Payments() {
             Payments
           </h1>
           <div
-            className={`${cardStyle} ${marginBottom} flex items-center justify-between`}
+            className={`${cardStyle} ${marginBottom} flex flex-col gap-2 md:flex-row md:items-center md:justify-between`}
           >
-            <p className={textColor}>
+            <p className={`${textColor} text-center md:text-left`}>
               Current Payment Method:{" "}
               <span className={textColorWhite}>
                 {memberData.paymentMethod
