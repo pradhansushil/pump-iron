@@ -83,7 +83,7 @@ export default function LoginPage() {
       </div>
 
       {/* Right form panel */}
-      <div className="flex flex-col justify-center w-1/2 h-full px-16 bg-gray-950">
+      <div className="flex flex-col justify-center w-full md:w-1/2 h-full px-16 bg-gray-950">
         <div className="w-full max-w-sm mx-auto">
           <h2
             id="login-heading"
