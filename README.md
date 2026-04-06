@@ -83,13 +83,15 @@ React communicates with Firestore directly via the Firebase SDK. The database is
 
 ## Tech Stack
 
-- **React** — component-based UI
+- **React 19** — component-based UI
+- **Vite** — build tool and development server
 - **Firebase** — Firestore (database), Firebase Auth (authentication)
 - **Tailwind CSS** — utility-first styling
-- **Vercel** — deployment
+- **React Router v6** — client-side routing
+- **react-hot-toast** — toast notifications
 - **Font Awesome** — icons
-- **Wave** — SVG wave dividers
-- **Google Gemini Nano Banana** — AI-generated images
+- **WAVE Evaluation Tool** — Chrome extension for testing accessibility
+- **Google Gemini** — AI-generated images
 - **Chrome DevTools** — debugging and layout inspection
 
 ---
@@ -110,7 +112,7 @@ The project follows a feature- and role-scoped folder structure under `src/`:
 
 - `components/` — UI components organized into subdirectories: `admin/`, `footer/`, `home/`, `members/`, `modals/`, `navbar/`, `payment-forms/`, and `routes/`
 - `pages/` — top-level route views, split into `admin/` and `public/` subdirectories
-- `context/` — React context providers including `AuthContext`
+- `context/` — `AuthContext.jsx`, which makes the logged-in user's identity and role available across all components
 - `services/` — Firebase service logic separated from component files
 - `data/` — static data files
 - `utils/` — helper functions such as `dateHelpers.js`
@@ -127,7 +129,7 @@ Features were tested manually in the browser in three passes: logic first, then 
 
 ## Prerequisites
 
-- Node.js v18+
+- Node.js v20+
 - npm
 - A Firebase project with Firestore and Authentication enabled
 
@@ -670,17 +672,7 @@ Firebase configuration values — including the API key and project identifiers 
 
 - **Calendar view for classes** — convert the class card grid into a weekly/monthly calendar layout
 - **Virtual gym tour** — embed a video walkthrough of the gym so prospective members don't need to visit in person to get a feel for the space
-- **Additional OAuth providers** — allow members to sign in using existing accounts such as Google, Outlook, and Yahoo as alternatives to email and password
-
----
-
-## Refactoring Notes
-
-These are architectural decisions I'd approach differently if starting over. None of them affect the current functionality or UI of the app — they're noted here for completeness and future reference.
-
-- **Component reuse** — some components could have been generalized and reused across different views
-- **Handler function module** — shared handler logic could have been extracted into a dedicated module rather than defined per-component
-- **Base table component** — the app implements several data tables across different admin views. A shared base table component would have eliminated a lot of repetition. This wasn't refactored because it doesn't impact the UI or functionality, and the time investment wasn't justified at this stage of the project.
+- **Additional OAuth providers** — allow members to sign in using existing accounts such as Google, Outlook, and Yahoo as alternatives to email and password.
 
 ---
 
