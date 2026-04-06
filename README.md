@@ -17,7 +17,6 @@ Live demo: https://pump-iron.vercel.app/
 - [What I Learned](#what-i-learned)
 - [Problems and Fixes](#problems-and-fixes)
 - [What I Might Add](#what-i-might-add)
-- [Refactoring Notes](#refactoring-notes)
 - [Known Issues](#known-issues)
 - [License](#license)
 
